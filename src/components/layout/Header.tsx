@@ -1,12 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Search, Menu, X } from "lucide-react";
 import {
   NavigationMenu,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
@@ -21,12 +20,25 @@ const Header = () => {
     e.preventDefault();
     if (searchQuery.trim()) {
       console.log("Searching for:", searchQuery);
-      // Implement search functionality here
     }
   };
 
+  // Disable/enable body scroll when sidebar is open/closed
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isMobileMenuOpen]);
+
   return (
-    <header className="w-full min-h-[15vh] bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 ">
+    <header className="w-full min-h-[15vh] bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-100">
       {/*SEARCH*/}
       <div className="hidden md:flex flex-row justify-end items-center gap-2 w-full p-2">
         <form
@@ -112,9 +124,9 @@ const Header = () => {
 
           {/* Mobile Menu Button */}
           <Button
-            variant="ghost"
+            variant="default"
             size="icon-lg"
-            className="md:hidden ml-auto"
+            className="md:hidden ml-auto rounded-full"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {isMobileMenuOpen ? (
@@ -125,59 +137,153 @@ const Header = () => {
           </Button>
         </div>
 
-        {/* Mobile Navigation Menu */}
+        {/* Mobile Sidebar Overlay */}
         {isMobileMenuOpen && (
-          <div className="md:hidden mt-4 pt-4 border-t">
-            <nav className="flex flex-col space-y-3">
-              {/* Mobile Search */}
-              <div className="pb-3 border-b">
-                <form
-                  onSubmit={handleSearch}
-                  className="flex items-center space-x-2"
+          <div
+            className="fixed inset-0 z-[9999] md:hidden"
+            style={{
+              zIndex: 9999,
+              isolation: "isolate",
+              transform: "translateZ(0)",
+            }}
+          >
+            {/* Disable body scroll */}
+            <div
+              className="absolute inset-0 bg-black/50"
+              style={{ zIndex: 1 }}
+              onClick={() => setIsMobileMenuOpen(false)}
+            />
+
+            {/* Sidebar */}
+            <div
+              className="absolute right-0 top-0 h-screen w-80 bg-white shadow-xl transform transition-transform duration-300 ease-in-out"
+              style={{ zIndex: 2, transform: "translateZ(0)" }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Sidebar Header */}
+              <div className="flex items-center justify-between p-4 border-b">
+                <h2 className="text-lg font-bold">Menu</h2>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="rounded-full"
                 >
-                  <div className="flex flex-row gap-2 items-center border border-gray-800 p-1 rounded-md flex-1">
-                    <Search size="20" className="text-gray-600" />
-                    <input
-                      type="text"
-                      placeholder="Search"
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      className="flex-1 border-none outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
-                    />
-                  </div>
-                </form>
+                  <X className="h-5 w-5" />
+                </Button>
               </div>
 
-              <Link
-                href="/"
-                className="text-sm font-medium hover:text-primary transition-colors"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Beranda
-              </Link>
+              {/* Sidebar Content */}
+              <div className="flex-1 overflow-y-auto">
+                {/* Mobile Search */}
+                <div className="p-4 border-b">
+                  <form
+                    onSubmit={handleSearch}
+                    className="flex items-center space-x-2"
+                  >
+                    <div className="flex flex-row gap-2 items-center border border-gray-800 p-2 rounded-md flex-1">
+                      <Search size="20" className="text-gray-600" />
+                      <input
+                        type="text"
+                        placeholder="Search"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="flex-1 border-none outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                      />
+                    </div>
+                  </form>
+                </div>
 
-              <Link
-                href="/tentang"
-                className="text-sm font-medium hover:text-primary transition-colors"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Tentang
-              </Link>
-              <Button
-                variant="outline"
-                className="border-2 border-red-500 bg-red-400/10 font-semibold text-red-500 hover:text-red-600 hover:bg-red-400/20 w-full"
-              >
-                JOIN NOW
-              </Button>
-            </nav>
+                {/* Navigation Menu - Same as Desktop */}
+                <nav className="p-4 bg-white z-30">
+                  <div className="space-y-2">
+                    {/* MYANMAR */}
+                    <div className="border-b border-gray-200 pb-2">
+                      <Link
+                        href="/"
+                        className="block w-full text-left font-bold text-red-600 py-3 px-4 hover:bg-gray-50 rounded transition-colors"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        MYANMAR
+                      </Link>
+                    </div>
+
+                    {/* CONFLICT */}
+                    <div className="border-b border-gray-200 pb-2">
+                      <Link
+                        href="/"
+                        className="block w-full text-left font-bold py-3 px-4 hover:bg-gray-50 rounded transition-colors"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        CONFLICT
+                      </Link>
+                    </div>
+
+                    {/* HIUMANTARIAN */}
+                    <div className="border-b border-gray-200 pb-2">
+                      <Link
+                        href="/"
+                        className="block w-full text-left font-bold py-3 px-4 hover:bg-gray-50 rounded transition-colors"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        HIUMANTARIAN
+                      </Link>
+                    </div>
+
+                    {/* TRADE */}
+                    <div className="border-b border-gray-200 pb-2">
+                      <Link
+                        href="/"
+                        className="block w-full text-left font-bold py-3 px-4 hover:bg-gray-50 rounded transition-colors"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        TRADE
+                      </Link>
+                    </div>
+
+                    {/* GEOPOLITICS */}
+                    <div className="border-b border-gray-200 pb-2">
+                      <Link
+                        href="/"
+                        className="block w-full text-left font-bold py-3 px-4 hover:bg-gray-50 rounded transition-colors"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        GEOPOLITICS
+                      </Link>
+                    </div>
+
+                    {/* SPACES */}
+                    <div className="pb-4">
+                      <Link
+                        href="/"
+                        className="block w-full text-left font-bold py-3 px-4 hover:bg-gray-50 rounded transition-colors"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        SPACES
+                      </Link>
+                    </div>
+                  </div>
+
+                  {/* JOIN NOW Button */}
+                  <div className="mt-6 pt-4 border-t">
+                    <Button
+                      variant="outline"
+                      className="border-2 border-red-500 bg-red-400/10 font-semibold text-red-500 hover:text-red-600 hover:bg-red-400/20 w-full"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      JOIN NOW
+                    </Button>
+                  </div>
+                </nav>
+              </div>
+            </div>
           </div>
         )}
       </nav>
-      {/*FOOTER*/}
+      {/*FOOTER Headers*/}
       <div className="bg-red-500 w-full min-h-[20px]"></div>
       <div className="bg-black w-full min-h-[20px] flex">
-        {/* kiri: marquee jalan */}
-        <div className="w-1/2 mx-auto">
+        <div className="w-[90%] md:w-1/2 mx-auto">
           <Marquee
             gradient={false}
             speed={40}

@@ -1,6 +1,21 @@
+import Image from "next/image";
+import Link from "next/link";
 import { Clock } from "lucide-react";
+import moment from "moment";
+import { Article } from "@/types";
 
-export default function EditorChoise({ background }: { background: string }) {
+interface EditorChoiseProps {
+  background: string;
+  article: Article[];
+}
+
+export default function EditorChoise({
+  background,
+  article,
+}: EditorChoiseProps) {
+  // Create array of 4 articles with the main article as first item
+  // In real implementation, you might want to fetch 4 articles instead
+  const articles = article ? article : [];
   return (
     <section className="container mx-auto my-2">
       <div className={`${background} p-2 flex flex-col`}>
@@ -8,38 +23,56 @@ export default function EditorChoise({ background }: { background: string }) {
           Editors <span className="text-red-500">Choice</span>
         </h3>
         <div className="w-full flex flex-col md:flex-row md:justify-around md:items-start gap-4 mt-4">
-          {Array(4)
-            .fill(null)
-            .map((_, index) => (
-              <div
-                key={index}
-                className="w-full md:w-1/4 flex relative flex-col gap-2"
+          {articles.length > 0 &&
+            articles.map((post, index) => (
+              <Link
+                key={post.slug.current}
+                href={`/article/${post.slug.current}`}
+                className="w-full md:w-1/4 flex relative flex-col gap-2 block"
               >
                 <div className="w-full relative">
-                  <div className="w-full h-52 bg-white" />
+                  {post.mainImage?.asset ? (
+                    <div className="w-full h-48 shrink-0">
+                      <Image
+                        src={
+                          "url" in post.mainImage.asset
+                            ? post.mainImage.asset.url
+                            : ""
+                        }
+                        alt={post.mainImage.alt || post.title}
+                        fill
+                        className="object-cover h-52"
+                        sizes="(min-width: 1024px) 25vw, 100vw"
+                      />
+                    </div>
+                  ) : (
+                    <div className="w-full h-52 bg-gray-300" />
+                  )}
                   {/* category */}
                   <div className="w-24 p-1 text-center font-bold text-sm text-white bg-red-500 absolute top-0 left-0">
-                    WAR
+                    {post.tags[0]?.title || "NEWS"}
                   </div>
                 </div>
                 {/* content */}
                 <div className="w-full">
                   {/* title */}
                   <h3 className="font-semibold text-sm md:text-base">
-                    Armoured Columns Move Toward River Crossings
+                    {post.title}
                   </h3>
                   {/* credit */}
                   <div className="text-sm flex flex-wrap items-center gap-2 mt-1">
                     <span>
-                      by <span className="font-bold">Jonh Doe</span>
+                      by <span className="font-bold">{post.author.name}</span>
                     </span>
                     <div className="flex items-center gap-2 text-xs font-semibold">
                       <Clock size={14} />
-                      <span>October 10, 2025</span>
+                      <span>
+                        {moment(post.publishedAt).format("MMMM DD, YYYY")}
+                      </span>
                     </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
         </div>
       </div>

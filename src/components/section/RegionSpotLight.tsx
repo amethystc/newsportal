@@ -1,61 +1,10 @@
 // src/components/RegionSpotlight.tsx
 export function RegionSpotlight() {
-  const leftCards = [
-    {
-      id: 1,
-      region: "MYANMAR",
-      title: "Armoured Columns Move Toward River Crossings",
-    },
-    {
-      id: 2,
-      region: "ASIA",
-      title: "Armoured Columns Move Toward River Crossings",
-    },
-    {
-      id: 3,
-      region: "ASIA",
-      title: "Armoured Columns Move Toward River Crossings",
-    },
-    {
-      id: 4,
-      region: "ASIA",
-      title: "Armoured Columns Move Toward River Crossings",
-    },
-    {
-      id: 5,
-      region: "LATIN AMERICA",
-      title: "Armoured Columns Move Toward River Crossings",
-    },
-    {
-      id: 6,
-      region: "EUROPE",
-      title: "Armoured Columns Move Toward River Crossings",
-    },
-  ];
+  // Skeleton data for left cards
+  const leftCards = Array(6).fill(null);
 
-  const rightList = [
-    {
-      id: 1,
-      title: "Armoured Columns Move Toward River Crossings",
-      excerpt:
-        "Worem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero at velit interdum, eu aliquet orci dictum.",
-    },
-    {
-      id: 2,
-      title: "Armoured Columns Move Toward River Crossings",
-      excerpt: "Worem ipsum dolor sit amet, consectetur adipiscing elit.",
-    },
-    {
-      id: 3,
-      title: "Armoured Columns Move Toward River Crossings",
-      excerpt: "Worem ipsum dolor sit amet, consectetur adipiscing elit.",
-    },
-    {
-      id: 4,
-      title: "Armoured Columns Move Toward River Crossings",
-      excerpt: "Worem ipsum dolor sit amet, consectetur adipiscing elit.",
-    },
-  ];
+  // Skeleton data for right list
+  const rightList = Array(4).fill(null);
 
   return (
     <section className="w-full bg-white">
@@ -70,37 +19,19 @@ export function RegionSpotlight() {
           {/* LEFT column (2/3) */}
           <div className="md:col-span-2 bg-[#f5f5f5] p-4 rounded-sm">
             <div className="grid gap-4 sm:grid-cols-2">
-              {leftCards.map((card) => (
+              {leftCards.map((_, index) => (
                 <article
-                  key={card.id}
+                  key={index}
                   className="bg-white border border-gray-200 rounded-sm overflow-hidden"
                 >
-                  {/* image dummy */}
-                  <div className="relative h-28 bg-gray-300">
-                    <span
-                      className={`absolute top-2 left-2 px-2 py-1 text-[10px] font-semibold uppercase text-white ${
-                        card.region === "MYANMAR"
-                          ? "bg-red-600"
-                          : card.region === "LATIN AMERICA"
-                            ? "bg-blue-700"
-                            : card.region === "EUROPE"
-                              ? "bg-yellow-500 text-black"
-                              : "bg-teal-500"
-                      }`}
-                    >
-                      {card.region}
-                    </span>
+                  {/* image skeleton */}
+                  <div className="relative h-28 bg-gray-300 animate-pulse">
+                    <span className="absolute top-2 left-2 px-2 py-2 text-[10px] font-semibold uppercase text-white bg-red-600 animate-pulse w-16 h-4 rounded"></span>
                   </div>
-                  {/* content */}
+                  {/* content skeleton */}
                   <div className="p-3">
-                    <h3 className="text-sm font-semibold leading-snug mb-2">
-                      {card.title}
-                    </h3>
-                    <p className="text-[10px] text-gray-500 flex gap-1 items-center">
-                      <span>By John Doe</span>
-                      <span>•</span>
-                      <span>October 10, 2025</span>
-                    </p>
+                    <div className="h-4 bg-gray-300 animate-pulse rounded mb-2" />
+                    <div className="h-3 bg-gray-300 animate-pulse rounded w-3/4" />
                   </div>
                 </article>
               ))}
@@ -109,46 +40,31 @@ export function RegionSpotlight() {
 
           {/* RIGHT column */}
           <div className="flex flex-col gap-4">
-            {/* top big item */}
+            {/* top big item skeleton */}
             <article className="border border-gray-200 rounded-sm overflow-hidden bg-white">
-              {/* image dummy */}
-              <div className="relative h-28 bg-gray-300">
-                <span className="absolute top-2 left-2 bg-red-600 text-white text-[10px] font-semibold uppercase px-2 py-1">
-                  WAR
+              {/* image skeleton */}
+              <div className="relative h-28 bg-gray-300 animate-pulse">
+                <span className="absolute top-2 left-2 bg-gray-400 text-white text-[10px] font-semibold uppercase px-2 py-1 animate-pulse w-12 h-4 rounded">
+                  ...
                 </span>
               </div>
               <div className="p-3">
-                <h3 className="text-sm font-semibold leading-snug mb-2">
-                  Armoured Columns Move Toward River Crossings
-                </h3>
-                <p className="text-[10px] text-gray-500 flex gap-1 items-center mb-2">
-                  <span>By John Doe</span>
-                  <span>•</span>
-                  <span>October 10, 2025</span>
-                </p>
-                <p className="text-[11px] text-gray-600">
-                  Worem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-                  vulputate libero at velit interdum, eu aliquet ornare.
-                </p>
+                <div className="h-4 bg-gray-300 animate-pulse rounded mb-2" />
+                <div className="h-3 bg-gray-300 animate-pulse rounded w-3/4 mb-2" />
+                <div className="h-3 bg-gray-300 animate-pulse rounded w-full" />
               </div>
             </article>
 
             {/* list items below */}
             <div className="flex flex-col gap-3">
-              {rightList.map((item) => (
+              {rightList.map((_, index) => (
                 <article
-                  key={item.id}
+                  key={index}
                   className="border-b border-gray-200 pb-3 last:border-0"
                 >
-                  <h4 className="text-sm font-semibold leading-snug mb-1">
-                    {item.title}
-                  </h4>
-                  <p className="text-[10px] text-gray-500 flex gap-1 items-center mb-1">
-                    <span>By John Doe</span>
-                    <span>•</span>
-                    <span>October 10, 2025</span>
-                  </p>
-                  <p className="text-[11px] text-gray-600">{item.excerpt}</p>
+                  <div className="h-4 bg-gray-300 animate-pulse rounded mb-1" />
+                  <div className="h-3 bg-gray-300 animate-pulse rounded w-3/4 mb-1" />
+                  <div className="h-3 bg-gray-300 animate-pulse rounded w-full" />
                 </article>
               ))}
             </div>
