@@ -58,7 +58,7 @@ newsportal/
 
 ### Prerequisites
 
-- Node.js 18+ 
+- Node.js 18+
 - npm, yarn, pnpm, or bun
 - Sanity CMS account (free tier works!)
 
@@ -80,7 +80,7 @@ newsportal/
    ```
 
 3. **Environment Setup**
-   
+
    Create a `.env.local` file in the root directory:
    ```env
    NEXT_PUBLIC_SANITY_PROJECT_ID=your_project_id
@@ -112,7 +112,6 @@ newsportal/
    ```
 
 3. **Configure your schema**
-   - Use the schema files in `docs/schemaTypes/`
    - Customize article, author, region, and tag schemas
 
 ### Connecting to Sanity
@@ -196,7 +195,7 @@ GET /api/articles/breaking-conflict
     "excerpt": "Comprehensive coverage...",
     "body": [...], // Portable Text content
     "mainImage": { ... },
-    "author": { 
+    "author": {
       "name": "John Doe",
       "slug": { "current": "john-doe" },
       "bio": "Veteran conflict correspondent..."
@@ -326,7 +325,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🆘 Support
 
-Got questions? Need help? 
+Got questions? Need help?
 
 - 📧 **Email**: support@conflictnewsportal.com
 - 💬 **Discord**: [Join our community](https://discord.gg/conflictnews)
