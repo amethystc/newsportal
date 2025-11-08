@@ -28,7 +28,7 @@ export default function EditorChoise({
               <Link
                 key={post.slug.current}
                 href={`/article/${post.slug.current}`}
-                className="w-full md:w-1/4 flex relative flex-col gap-2 block"
+                className="w-full md:w-1/4 flex relative flex-col gap-2 "
               >
                 <div className="w-full relative">
                   {post.mainImage?.asset ? (
@@ -41,7 +41,7 @@ export default function EditorChoise({
                         }
                         alt={post.mainImage.alt || post.title}
                         fill
-                        className="object-cover h-52"
+                        className="object-cover h-52 z-0"
                         sizes="(min-width: 1024px) 25vw, 100vw"
                       />
                     </div>

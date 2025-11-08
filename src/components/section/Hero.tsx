@@ -10,7 +10,7 @@ interface HeroProps {
 
 export default function Hero({ articles }: HeroProps) {
   return (
-    <section className="max-w-full p-2 sm:p-0 relative" style={{ zIndex: 1 }}>
+    <section className="max-w-full p-2 sm:p-0 relative z-0">
       {/* mobile: horizontal scroll */}
       <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory md:hidden">
         {articles.slice(0, 3).map((post, idx) => (
@@ -38,7 +38,10 @@ export default function Hero({ articles }: HeroProps) {
             ) : (
               <div className="absolute inset-0 bg-gray-400" />
             )}
-            <div className="relative h-full flex flex-col justify-end gap-3 p-5" style={{ zIndex: 2 }}>
+            <div
+              className="relative h-full flex flex-col justify-end gap-3 p-5"
+              style={{ zIndex: 2 }}
+            >
               <span
                 className={`inline-block ${
                   idx === 0
@@ -99,7 +102,10 @@ export default function Hero({ articles }: HeroProps) {
               </div>
 
               {/* text */}
-              <div className="absolute inset-0 flex flex-col justify-end gap-3 p-6" style={{ zIndex: 2 }}>
+              <div
+                className="absolute inset-0 flex flex-col justify-end gap-3 p-6"
+                style={{ zIndex: 2 }}
+              >
                 <span
                   className={`inline-block bg-red-500 p-2 text-[10px] font-bold uppercase rounded w-20 text-white`}
                 >

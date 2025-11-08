@@ -134,7 +134,7 @@ export default async function Home() {
         <EditorChoise background="bg-gray-200" article={data.editoChoice} />
         <Footer />
       </main>
-
+      
       {/* Back to Top Button */}
       <BackToTop />
     </>

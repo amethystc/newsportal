@@ -141,8 +141,8 @@ export default async function ArticlePage({
 
             {/* Article Body */}
             {article.body && (
-              <PortableText 
-                value={article.body} 
+              <PortableText
+                value={article.body}
                 className="max-w-none mb-12 text-gray-800 leading-relaxed"
               />
             )}
