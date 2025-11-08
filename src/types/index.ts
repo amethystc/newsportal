@@ -31,7 +31,7 @@ export interface Author {
     _type: "slug";
   };
   image?: {
-    asset: SanityAsset | SanityImageAsset;
+    asset: SanityImageAsset;
     alt?: string;
   };
   bio?: string;
@@ -59,7 +59,7 @@ export interface Tag {
 
 // Main Image types
 export interface MainImage {
-  asset: SanityAsset | SanityImageAsset;
+  asset: SanityImageAsset;
   alt?: string;
   caption?: string;
 }

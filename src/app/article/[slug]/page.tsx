@@ -4,9 +4,8 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import Header from "@/components/layout/Header";
 import { Footer } from "@/components/section/Footer";
-import { client } from "@/sanity/client";
-import { articleQuery } from "@/sanity/queries";
-import { Article, Tag } from "@/types";
+import { getArticleBySlug } from "@/lib/api";
+import { Tag } from "@/types";
 import { PortableText } from "@/components/ui/portable-text";
 import { ArticleBreadcrumb } from "@/components/article/ArticleBreadcrumb";
 import { ArticleHeader } from "@/components/article/ArticleHeader";
@@ -22,7 +21,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   try {
     const { slug } = await params;
-    const article = await client.fetch(articleQuery, { slug });
+    const article = await getArticleBySlug(slug);
 
     if (!article) {
       return {
@@ -67,7 +66,7 @@ export async function generateMetadata({
   } catch {
     return {
       title: "Article - Conflict News Portal",
-      description: "Read the latest articles from Conflict News Portal.",
+      description: "Read latest articles from Conflict News Portal.",
     };
   }
 }
@@ -79,7 +78,8 @@ export default async function ArticlePage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const article = await client.fetch(articleQuery, { slug });
+  const article = await getArticleBySlug(slug);
+
   // Handle not found
   if (!article) {
     notFound();

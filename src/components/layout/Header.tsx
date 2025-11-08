@@ -12,7 +12,6 @@ import Image from "next/image";
 import Marquee from "react-fast-marquee";
 
 const Header = () => {
-
   return (
     <header className="w-full min-h-[15vh] bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-1000">
       {/*SEARCH*/}
@@ -99,7 +98,10 @@ const Header = () => {
             size="icon-lg"
             className="md:hidden ml-auto rounded-full"
             onClick={() => {
-              if (typeof window !== 'undefined' && (window as any).openMobileMenu) {
+              if (
+                typeof window !== "undefined" &&
+                (window as any).openMobileMenu
+              ) {
                 (window as any).openMobileMenu();
               }
             }}
