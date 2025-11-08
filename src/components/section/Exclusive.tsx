@@ -1,7 +1,7 @@
 export default function Exclusive() {
   return (
     <div className="container mx-auto my-16">
-      <h1 className="text-2xl text-red-500 font-extrabold uppercase">
+      <h1 className="text-2xl text-red-500 font-unbounded-extrabold uppercase">
         Exclusive
       </h1>
 

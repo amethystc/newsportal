@@ -1,16 +1,20 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Be_Vietnam_Pro, Unbounded } from "next/font/google";
 import "./globals.css";
 import MobileNavigationWrapper from "@/components/layout/MobileNavigationWrapper";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const beVietnamPro = Be_Vietnam_Pro({
+  variable: "--font-be-vietnam-pro",
   subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const unbounded = Unbounded({
+  variable: "--font-unbounded",
   subsets: ["latin"],
+  weight: ["200", "300", "400", "500", "600", "700", "800", "900"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -26,7 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${beVietnamPro.variable} ${unbounded.variable} font-sans antialiased`}
       >
         <MobileNavigationWrapper>
           {children}

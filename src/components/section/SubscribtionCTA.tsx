@@ -22,7 +22,7 @@ export function SubscriptionCTA() {
 
         {/* content */}
         <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4">
-          <h2 className="text-white text-2xl md:text-3xl font-bold mb-2">
+          <h2 className="text-white text-2xl md:text-3xl font-unbounded-extrabold mb-2">
             Get the inside story on the world’s update
           </h2>
           <p className="text-white/90 text-sm md:text-base mb-5">

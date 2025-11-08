@@ -118,6 +118,54 @@
         @apply border-border outline-ring/50;
     }
     body {
-        @apply bg-background text-foreground;
+        @apply bg-background text-foreground font-sans;
+        font-family: var(--font-be-vietnam-pro), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+}
+
+/* Unbounded Font Classes */
+@layer utilities {
+    .font-unbounded {
+        font-family: var(--font-unbounded), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+    
+    .font-unbounded-extralight {
+        font-family: var(--font-unbounded), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        font-weight: 200;
+    }
+    
+    .font-unbounded-light {
+        font-family: var(--font-unbounded), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        font-weight: 300;
+    }
+    
+    .font-unbounded-regular {
+        font-family: var(--font-unbounded), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        font-weight: 400;
+    }
+    
+    .font-unbounded-medium {
+        font-family: var(--font-unbounded), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        font-weight: 500;
+    }
+    
+    .font-unbounded-semibold {
+        font-family: var(--font-unbounded), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        font-weight: 600;
+    }
+    
+    .font-unbounded-bold {
+        font-family: var(--font-unbounded), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        font-weight: 700;
+    }
+    
+    .font-unbounded-extrabold {
+        font-family: var(--font-unbounded), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        font-weight: 800;
+    }
+    
+    .font-unbounded-black {
+        font-family: var(--font-unbounded), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        font-weight: 900;
     }
 }

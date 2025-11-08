@@ -29,7 +29,7 @@ export function ArticleHeader({ article }: ArticleHeaderProps) {
       </div>
 
       {/* Title */}
-      <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
+      <h1 className="text-2xl md:text-3xl font-unbounded-bold text-gray-900 mb-6 leading-tight">
         {article.title}
       </h1>
 
@@ -54,12 +54,10 @@ export function ArticleHeader({ article }: ArticleHeaderProps) {
             By {article.author.name}
           </div>
           {article.author.bio && (
-            <div className="text-sm text-gray-600">
-              {article.author.bio}
-            </div>
+            <div className="text-sm text-gray-600">{article.author.bio}</div>
           )}
         </div>
-        
+
         {/* Action Buttons */}
         <div className="flex items-center gap-2">
           <button className="p-2 text-gray-600 hover:text-red-600 transition-colors">

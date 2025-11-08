@@ -18,8 +18,8 @@ export default function EditorChoise({
   const articles = article ? article : [];
   return (
     <section className="container mx-auto my-2">
-      <div className={`${background} p-2 flex flex-col`}>
-        <h3 className="text-2xl uppercase font-extrabold">
+      <div className={`${background} p-2 flex flex-col p-4`}>
+        <h3 className="text-2xl uppercase font-unbounded-extrabold">
           Editors <span className="text-red-500">Choice</span>
         </h3>
         <div className="w-full flex flex-col md:flex-row md:justify-around md:items-start gap-4 mt-4">
@@ -49,7 +49,7 @@ export default function EditorChoise({
                     <div className="w-full h-52 bg-gray-300" />
                   )}
                   {/* category */}
-                  <div className="w-24 p-1 text-center font-bold text-sm text-white bg-red-500 absolute top-0 left-0">
+                  <div className="w-24 p-1 uppercase text-center font-semibold text-xs text-white bg-red-500 absolute top-1 left-1 rounded">
                     {post.tags[0]?.title || "NEWS"}
                   </div>
                 </div>

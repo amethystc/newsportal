@@ -49,11 +49,11 @@ export default function Hero({ articles }: HeroProps) {
                     : idx === 1
                       ? "bg-yellow-500"
                       : "bg-green-600"
-                } px-3 py-1 text-[10px] font-bold uppercase rounded`}
+                } px-3 py-1 text-[10px] font-bold uppercase rounded w-1/3 text-white`}
               >
-                {post.region.title}
+                {post.tags[0]?.title || "NEWS"}
               </span>
-              <h2 className="text-white text-2xl font-bold leading-tight">
+              <h2 className="text-white text-2xl font-unbounded-bold leading-tight">
                 {post.title}
               </h2>
               <p className="text-xs text-white/80 flex gap-2 items-center">
@@ -112,7 +112,7 @@ export default function Hero({ articles }: HeroProps) {
                   {post.tags[0]?.title || "NEWS"}
                 </span>
                 <h2
-                  className={`text-white font-bold leading-tight ${
+                  className={`text-white font-unbounded-bold leading-tight ${
                     idx === 0 ? "text-3xl" : "text-2xl"
                   }`}
                 >

@@ -10,7 +10,7 @@ export function RegionSpotlight() {
     <section className="w-full bg-white">
       <div className="container mx-auto px-4 sm:px-6 py-6">
         {/* title */}
-        <h2 className="text-lg font-bold uppercase tracking-tight mb-4">
+        <h2 className="text-2xl font-unbounded-extrabold uppercase tracking-tight mb-4">
           REGION <span className="text-red-600">SPOTLIGHT</span>
         </h2>
 
