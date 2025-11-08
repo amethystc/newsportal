@@ -1,0 +1,149 @@
+# Robots.txt for Conflict News Portal
+# Generated for optimal SEO and crawling efficiency
+
+User-agent: *
+Allow: /
+
+# Priority pages - allow all important content
+Allow: /$
+Allow: /article/
+Allow: /api/news
+Allow: /_next/static/
+Allow: /images/
+
+# Block admin and internal pages
+Disallow: /api/articles/
+Disallow: /admin/
+Disallow: /_next/api/
+Disallow: /api/articles/[slug]/
+Disallow: /*?*
+Disallow: /*.json$
+Disallow: /404
+Disallow: /_error
+
+# Block development and testing paths
+Disallow: /test/
+Disallow: /dev/
+Disallow: /staging/
+Disallow: /preview/
+
+# Block search and filter parameters (common in news sites)
+Disallow: /*?search=*
+Disallow: /*?filter=*
+Disallow: /*?category=*
+Disallow: /*?tag=*
+Disallow: /*?page=*
+Disallow: /*?sort=*
+Disallow: /*?date=*
+
+# Block pagination beyond reasonable limits
+Disallow: /*?page=10*
+Disallow: /*?p=10*
+
+# Block tracking and analytics parameters
+Disallow: /*?utm_*
+Disallow: /*?fbclid*
+Disallow: /*?gclid*
+Disallow: /*?msclkid*
+
+# Special rules for major search engines
+
+# Google - Enhanced crawling for news
+User-agent: Googlebot
+Allow: /
+Allow: /article/
+Allow: /api/news
+Crawl-delay: 1
+
+# Google News - Priority for news content
+User-agent: Googlebot-News
+Allow: /article/
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Crawl-delay: 0
+
+# Google Images - Allow image crawling
+User-agent: Googlebot-Image
+Allow: /images/
+Allow: /_next/static/
+Allow: /api/news
+
+# Bing - Microsoft search engine
+User-agent: Bingbot
+Allow: /
+Allow: /article/
+Crawl-delay: 2
+
+# Yahoo - Powered by Bing
+User-agent: Slurp
+Allow: /
+Allow: /article/
+Crawl-delay: 2
+
+# DuckDuckGo - Privacy-focused search
+User-agent: DuckDuckBot
+Allow: /
+Allow: /article/
+Crawl-delay: 1
+
+# Social media crawlers - Important for news sharing
+User-agent: facebookexternalhit
+Allow: /article/
+Allow: /
+
+User-agent: Twitterbot
+Allow: /article/
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /article/
+Allow: /
+
+# News aggregators
+User-agent: Applebot
+Allow: /article/
+Allow: /
+
+User-agent: Baiduspider
+Allow: /article/
+Allow: /
+Crawl-delay: 3
+
+# Block unwanted bots
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: BLEXBot
+Disallow: /
+
+User-agent: BacklinkCrawler
+Disallow: /
+
+# Sitemap location
+Sitemap: https://conflictnews.com/sitemap.xml
+
+# Additional sitemaps for different content types
+Sitemap: https://conflictnews.com/sitemap-articles.xml
+Sitemap: https://conflictnews.com/sitemap-news.xml
+Sitemap: https://conflictnews.com/sitemap-images.xml
+
+# Caching directive for CDNs
+# Allow caching of static assets
+User-agent: *
+Allow: /_next/static/
+Allow: /images/
+Allow: /favicon.ico
+Allow: /robots.txt
+Allow: /sitemap.xml
+
+# Host directive (for Yandex)
+Host: conflictnews.com
+
+# End of robots.txt

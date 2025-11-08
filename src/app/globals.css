@@ -120,6 +120,20 @@
     body {
         @apply bg-background text-foreground font-sans;
         font-family: var(--font-be-vietnam-pro), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        font-display: swap; /* Improve font loading performance */
+    }
+    
+    /* Optimize images for news portal */
+    img {
+        @apply max-w-full h-auto;
+        content-visibility: auto;
+        contain-intrinsic-size: 800px 600px;
+    }
+    
+    /* Optimize article content */
+    article {
+        content-visibility: auto;
+        contain-intrinsic-size: 1000px 2000px;
     }
 }
 
