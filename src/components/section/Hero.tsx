@@ -9,11 +9,14 @@ interface HeroProps {
 }
 
 export default function Hero({ articles }: HeroProps) {
+  const heroArticles = articles.slice(0, 3);
+  const cardArticles = articles.slice(3, 7);
+
   return (
     <section className="max-w-full p-2 sm:p-0 relative z-0">
       {/* mobile: horizontal scroll */}
       <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory md:hidden">
-        {articles.slice(0, 3).map((post, idx) => (
+        {heroArticles.map((post, idx) => (
           <Link
             key={post.slug.current}
             href={`/article/${post.slug.current}`}
@@ -68,7 +71,7 @@ export default function Hero({ articles }: HeroProps) {
 
       {/* desktop: 3 kolom */}
       <div className="hidden md:grid md:grid-cols-3">
-        {articles.slice(0, 3).map((post, idx) => {
+        {heroArticles.map((post, idx) => {
           const publishAt = moment(post.publishedAt).format("YYYY-MM-DD HH:mm");
           return (
             <Link
@@ -107,7 +110,7 @@ export default function Hero({ articles }: HeroProps) {
                 style={{ zIndex: 2 }}
               >
                 <span
-                  className={`inline-block bg-red-500 p-2 text-[10px] font-bold uppercase rounded w-20 text-white`}
+                  className={`inline-block bg-red-500 p-2 text-[10px] font-bold uppercase rounded w-32 text-white`}
                 >
                   {post.tags[0]?.title || "NEWS"}
                 </span>
@@ -133,7 +136,7 @@ export default function Hero({ articles }: HeroProps) {
       <div className="w-full my-10">
         {/* mobile: horizontal scroll */}
         <div className="flex md:hidden items-center gap-4 overflow-x-auto snap-x snap-mandatory px-4">
-          {articles.slice(0, 4).map((post, idx) => (
+          {cardArticles.map((post, idx) => (
             <Link
               key={post.slug.current}
               href={`/article/${post.slug.current}`}
@@ -187,7 +190,7 @@ export default function Hero({ articles }: HeroProps) {
         <div className="hidden md:block">
           <div className="max-w-7xl mx-auto px-4">
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 justify-items-center">
-              {articles.slice(0, 4).map((post, idx) => {
+              {cardArticles.map((post, idx) => {
                 const publishAt = moment(post.publishedAt).format(
                   "YYYY-MM-DD HH:mm",
                 );

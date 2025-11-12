@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import MobileNavigation from "./MobileNavigation";
 
 interface MobileNavigationProviderProps {
@@ -9,25 +9,27 @@ interface MobileNavigationProviderProps {
 
 export default function MobileNavigationProvider({ children }: MobileNavigationProviderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   const openMobileMenu = () => setIsMobileMenuOpen(true);
   const closeMobileMenu = () => setIsMobileMenuOpen(false);
 
+  useEffect(() => {
+    setIsMounted(true);
+    (window as any).openMobileMenu = () => {
+      window.dispatchEvent(new CustomEvent('openMobileMenu'));
+    };
+  }, []);
+
   return (
     <>
       {children}
-      <MobileNavigation 
-        isOpen={isMobileMenuOpen} 
-        onClose={closeMobileMenu} 
-      />
-      {/* Pass open function to Header through context or props */}
-      <script dangerouslySetInnerHTML={{
-        __html: `
-          window.openMobileMenu = () => {
-            window.dispatchEvent(new CustomEvent('openMobileMenu'));
-          };
-        `
-      }} />
+      {isMounted && (
+        <MobileNavigation 
+          isOpen={isMobileMenuOpen} 
+          onClose={closeMobileMenu} 
+        />
+      )}
     </>
   );
 }

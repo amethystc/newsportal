@@ -15,7 +15,7 @@ const Header = () => {
   return (
     <header className="w-full min-h-[15vh] bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-1000">
       {/*SEARCH*/}
-      <div className="hidden md:flex flex-row justify-end items-center gap-2 w-full p-2">
+      <div className="hidden md:flex flex-row justify-end items-center gap-2 w-[90%] p-2 ">
         <form className="flex flex-row gap-2 items-center border border-gray-800 p-1 rounded-md">
           <Search size="20" className="text-gray-600" />
           <input
@@ -33,18 +33,29 @@ const Header = () => {
       </div>
       {/*NAVIGATION*/}
       {/* Logo */}
-      <Link href="/" className="text-xl font-bold ">
+      <Link href="/" className="hidden text-xl font-bold z-100 md:block">
         <Image
           src="/conflict-wire-logo.png"
           alt="Logo"
-          width={60}
-          height={60}
-          className="fixed top-2 sm:left-[0em] xl:left-[7em] md:w-[115px] md:h-[115px]"
+          width={180}
+          height={180}
+          className="fixed top-2 sm:left-[0em] xl:left-[7em]  lg:w-[200px] lg:h-[200px] md:absolute "
           priority
           unoptimized
         />
       </Link>
-      <nav className=" mx-auto px-4 py-4">
+      <Link href="/" className="text-xl font-bold  z-100 md:hidden">
+        <Image
+          src="/conflict-wire-logo.png"
+          alt="Logo"
+          width={80}
+          height={80}
+          className="md:hidden fixed top-2 sm:left-[0em] xl:left-[7em] md:w-[215px] md:h-[215px] "
+          priority
+          unoptimized
+        />
+      </Link>
+      <nav className="mx-auto px-4 py-4">
         <div className="flex">
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-start space-x-6 w-full">
@@ -53,37 +64,37 @@ const Header = () => {
                 <NavigationMenuItem>
                   <Link
                     href="/"
-                    className="border-r-2 border-black text-red-600 group inline-flex h-10 w-max items-center justify-center rounded-none bg-background px-4 py-2 text-sm font-bold transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
+                    className="border-r-2 border-black text-red-600 group inline-flex h-10 w-max items-center justify-center rounded-none bg-transparent px-4 py-2 text-sm font-bold transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
                   >
                     MYANMAR
                   </Link>
                   <Link
                     href="/"
-                    className="border-r-2 border-black group inline-flex h-10 w-max items-center justify-center rounded-none bg-background px-4 py-2 text-sm font-bold transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
+                    className="border-r-2 border-black group inline-flex h-10 w-max items-center justify-center rounded-none bg-transparent px-4 py-2 text-sm font-bold transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
                   >
                     CONFLICT
                   </Link>
                   <Link
                     href="/"
-                    className="border-r-2 border-black group inline-flex h-10 w-max items-center justify-center rounded-none bg-background px-4 py-2 text-sm font-bold transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
+                    className="border-r-2 border-black group inline-flex h-10 w-max items-center justify-center rounded-none bg-transparent px-4 py-2 text-sm font-bold transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
                   >
                     HIUMANTARIAN
                   </Link>
                   <Link
                     href="/"
-                    className="border-r-2 border-black group inline-flex h-10 w-max items-center justify-center rounded-none bg-background px-4 py-2 text-sm font-bold transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
+                    className="border-r-2 border-black group inline-flex h-10 w-max items-center justify-center rounded-none bg-transparent px-4 py-2 text-sm font-bold transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
                   >
                     TRADE
                   </Link>
                   <Link
                     href="/"
-                    className="border-r-2 border-black group inline-flex h-10 w-max items-center justify-center rounded-none bg-background px-4 py-2 text-sm font-bold transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
+                    className="border-r-2 border-black group inline-flex h-10 w-max items-center justify-center rounded-none bg-transparent px-4 py-2 text-sm font-bold transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
                   >
                     GEOPOLITICS
                   </Link>
                   <Link
                     href="/"
-                    className="border-r-2 border-black group inline-flex h-10 w-max items-center justify-center rounded-none bg-background px-4 py-2 text-sm font-bold transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
+                    className="border-r-2 border-black group inline-flex h-10 w-max items-center justify-center rounded-none bg-transparent px-4 py-2 text-sm font-bold transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
                   >
                     SPACES
                   </Link>
@@ -112,7 +123,7 @@ const Header = () => {
       </nav>
       {/*FOOTER Headers*/}
       <div className="bg-red-500 w-full min-h-[20px]"></div>
-      <div className="bg-black w-full min-h-[20px] flex">
+      <div className="bg-black w-full p-2 flex">
         <div className="w-[90%] md:w-1/2 mx-auto">
           <Marquee
             gradient={false}

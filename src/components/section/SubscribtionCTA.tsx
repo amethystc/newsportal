@@ -1,8 +1,6 @@
 // src/components/SubscriptionCTA.tsx
 "use client";
 
-import Image from "next/image";
-
 export function SubscriptionCTA() {
   return (
     <section className="w-full py-10">

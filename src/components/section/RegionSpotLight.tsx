@@ -1,10 +1,19 @@
 // src/components/RegionSpotlight.tsx
-export function RegionSpotlight() {
-  // Skeleton data for left cards
-  const leftCards = Array(6).fill(null);
+import Image from "next/image";
+import Link from "next/link";
+import { Clock } from "lucide-react";
+import moment from "moment";
+import { Article } from "@/types";
 
-  // Skeleton data for right list
-  const rightList = Array(4).fill(null);
+interface RegionSpotlightProps {
+  articles: Article[];
+}
+
+export function RegionSpotlight({ articles }: RegionSpotlightProps) {
+  // Split articles: 6 for left grid, 1 for top right, 4 for right list
+  const leftCards = articles.slice(0, 6);
+  const rightTop = articles[6];
+  const rightList = articles.slice(7, 11);
 
   return (
     <section className="w-full bg-white">
@@ -19,53 +28,102 @@ export function RegionSpotlight() {
           {/* LEFT column (2/3) */}
           <div className="md:col-span-2 bg-[#f5f5f5] p-4 rounded-sm">
             <div className="grid gap-4 sm:grid-cols-2">
-              {leftCards.map((_, index) => (
-                <article
-                  key={index}
-                  className="bg-white border border-gray-200 rounded-sm overflow-hidden"
+              {leftCards.map((article, index) => (
+                <Link
+                  key={article.slug.current}
+                  href={`/article/${article.slug.current}`}
+                  className="bg-white border border-gray-200 rounded-sm overflow-hidden hover:shadow-md transition-shadow"
                 >
-                  {/* image skeleton */}
-                  <div className="relative h-28 bg-gray-300 animate-pulse">
-                    <span className="absolute top-2 left-2 px-2 py-2 text-[10px] font-semibold uppercase text-white bg-red-600 animate-pulse w-16 h-4 rounded"></span>
+                  {/* image */}
+                  <div className="relative h-48">
+                    {article.mainImage?.asset ? (
+                      <Image
+                        src={
+                          "url" in article.mainImage.asset
+                            ? article.mainImage.asset.url
+                            : ""
+                        }
+                        alt={article.mainImage.alt || article.title}
+                        fill
+                        className="object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gray-300" />
+                    )}
+                    <span className="absolute top-2 left-2 px-2 py-1 text-[10px] font-semibold uppercase text-white bg-red-600 rounded">
+                      {article.region?.title || "NEWS"}
+                    </span>
                   </div>
-                  {/* content skeleton */}
+                  {/* content */}
                   <div className="p-3">
-                    <div className="h-4 bg-gray-300 animate-pulse rounded mb-2" />
-                    <div className="h-3 bg-gray-300 animate-pulse rounded w-3/4" />
+                    <h3 className="font-semibold text-sm leading-tight mb-1 line-clamp-2">
+                      {article.title}
+                    </h3>
+                    <div className="flex items-center gap-2 text-xs text-gray-600">
+                      <Clock size={12} />
+                      <span>{moment(article.publishedAt).fromNow()}</span>
+                    </div>
                   </div>
-                </article>
+                </Link>
               ))}
             </div>
           </div>
 
           {/* RIGHT column */}
           <div className="flex flex-col gap-4">
-            {/* top big item skeleton */}
-            <article className="border border-gray-200 rounded-sm overflow-hidden bg-white">
-              {/* image skeleton */}
-              <div className="relative h-28 bg-gray-300 animate-pulse">
-                <span className="absolute top-2 left-2 bg-gray-400 text-white text-[10px] font-semibold uppercase px-2 py-1 animate-pulse w-12 h-4 rounded">
-                  ...
-                </span>
-              </div>
-              <div className="p-3">
-                <div className="h-4 bg-gray-300 animate-pulse rounded mb-2" />
-                <div className="h-3 bg-gray-300 animate-pulse rounded w-3/4 mb-2" />
-                <div className="h-3 bg-gray-300 animate-pulse rounded w-full" />
-              </div>
-            </article>
+            {/* top big item */}
+            {rightTop && (
+              <Link
+                href={`/article/${rightTop.slug.current}`}
+                className="border border-gray-200 rounded-sm overflow-hidden bg-white hover:shadow-md transition-shadow"
+              >
+                {/* image */}
+                <div className="relative h-48">
+                  {rightTop.mainImage?.asset ? (
+                    <Image
+                      src={
+                        "url" in rightTop.mainImage.asset
+                          ? rightTop.mainImage.asset.url
+                          : ""
+                      }
+                      alt={rightTop.mainImage.alt || rightTop.title}
+                      fill
+                      className="object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gray-300" />
+                  )}
+                  <span className="absolute top-2 left-2 bg-gray-400 text-white text-[10px] font-semibold uppercase px-2 py-1 rounded">
+                    {rightTop.region?.title || "NEWS"}
+                  </span>
+                </div>
+                <div className="p-3">
+                  <h3 className="font-semibold text-sm leading-tight mb-2 line-clamp-2">
+                    {rightTop.title}
+                  </h3>
+                  <p className="text-xs text-gray-600 line-clamp-2">
+                    {rightTop.excerpt}
+                  </p>
+                </div>
+              </Link>
+            )}
 
             {/* list items below */}
             <div className="flex flex-col gap-3">
-              {rightList.map((_, index) => (
-                <article
-                  key={index}
-                  className="border-b border-gray-200 pb-3 last:border-0"
+              {rightList.map((article, index) => (
+                <Link
+                  key={article.slug.current}
+                  href={`/article/${article.slug.current}`}
+                  className="border-b border-gray-200 pb-3 last:border-0 hover:bg-gray-50 transition-colors"
                 >
-                  <div className="h-4 bg-gray-300 animate-pulse rounded mb-1" />
-                  <div className="h-3 bg-gray-300 animate-pulse rounded w-3/4 mb-1" />
-                  <div className="h-3 bg-gray-300 animate-pulse rounded w-full" />
-                </article>
+                  <h4 className="font-semibold text-sm leading-tight mb-1 line-clamp-2">
+                    {article.title}
+                  </h4>
+                  <div className="flex items-center gap-2 text-xs text-gray-600">
+                    <Clock size={12} />
+                    <span>{moment(article.publishedAt).fromNow()}</span>
+                  </div>
+                </Link>
               ))}
             </div>
           </div>

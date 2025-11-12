@@ -33,7 +33,7 @@ export const heroQuery = `
       title,
       slug
     }
-  } | order(publishedAt desc) [0...6]
+  } | order(publishedAt desc) [0...9]
 `;
 
 export const EditoChoiceQuery = `
@@ -72,6 +72,234 @@ export const EditoChoiceQuery = `
       slug
     }
   } | order(publishedAt desc)
+`;
+
+export const spacesQuery = `
+  *[_type == "article" && $tag in tags[]->title]{
+    title,
+    slug,
+    excerpt,
+    mainImage {
+      asset-> {
+        url,
+        altText,
+        metadata {
+          dimensions,
+          lqip
+        }
+      },
+      alt
+    },
+    author-> {
+      name,
+      slug,
+      image {
+        asset-> {
+          url,
+          altText
+        }
+      }
+    },
+    publishedAt,
+    region-> {
+      title,
+      slug
+    },
+    tags[]-> {
+      title,
+      slug
+    }
+  } | order(publishedAt desc) [0...4]
+`;
+
+export const geopoliticsQuery = `
+  *[_type == "article" && $tag in tags[]->title]{
+    title,
+    slug,
+    excerpt,
+    mainImage {
+      asset-> {
+        url,
+        altText,
+        metadata {
+          dimensions,
+          lqip
+        }
+      },
+      alt
+    },
+    author-> {
+      name,
+      slug,
+      image {
+        asset-> {
+          url,
+          altText
+        }
+      }
+    },
+    publishedAt,
+    region-> {
+      title,
+      slug
+    },
+    tags[]-> {
+      title,
+      slug
+    }
+  } | order(publishedAt desc) [0...4]
+`;
+
+export const tradeQuery = `
+  *[_type == "article" && $tag in tags[]->title]{
+    title,
+    slug,
+    excerpt,
+    mainImage {
+      asset-> {
+        url,
+        altText,
+        metadata {
+          dimensions,
+          lqip
+        }
+      },
+      alt
+    },
+    author-> {
+      name,
+      slug,
+      image {
+        asset-> {
+          url,
+          altText
+        }
+      }
+    },
+    publishedAt,
+    region-> {
+      title,
+      slug
+    },
+    tags[]-> {
+      title,
+      slug
+    }
+  } | order(publishedAt desc) [0...4]
+`;
+
+export const humanitarianQuery = `
+  *[_type == "article" && $tag in tags[]->title]{
+    title,
+    slug,
+    excerpt,
+    mainImage {
+      asset-> {
+        url,
+        altText,
+        metadata {
+          dimensions,
+          lqip
+        }
+      },
+      alt
+    },
+    author-> {
+      name,
+      slug,
+      image {
+        asset-> {
+          url,
+          altText
+        }
+      }
+    },
+    publishedAt,
+    region-> {
+      title,
+      slug
+    },
+    tags[]-> {
+      title,
+      slug
+    }
+  } | order(publishedAt desc) [0...4]
+`;
+
+export const conflictQuery = `
+  *[_type == "article" && $tag in tags[]->title]{
+    title,
+    slug,
+    excerpt,
+    mainImage {
+      asset-> {
+        url,
+        altText,
+        metadata {
+          dimensions,
+          lqip
+        }
+      },
+      alt
+    },
+    author-> {
+      name,
+      slug,
+      image {
+        asset-> {
+          url,
+          altText
+        }
+      }
+    },
+    publishedAt,
+    region-> {
+      title,
+      slug
+    },
+    tags[]-> {
+      title,
+      slug
+    }
+  } | order(publishedAt desc) [0...4]
+`;
+
+export const regionSpotlightQuery = `
+  *[_type == "article"]{
+    title,
+    slug,
+    excerpt,
+    mainImage {
+      asset-> {
+        url,
+        altText,
+        metadata {
+          dimensions,
+          lqip
+        }
+      },
+      alt
+    },
+    author-> {
+      name,
+      slug,
+      image {
+        asset-> {
+          url,
+          altText
+        }
+      }
+    },
+    publishedAt,
+    region-> {
+      title,
+      slug
+    },
+    tags[]-> {
+      title,
+      slug
+    }
+  } | order(publishedAt desc) [0...11]
 `;
 
 export const articleQuery = `
@@ -118,7 +346,7 @@ export const articleQuery = `
     featured,
     "estimatedReadTime": round(length(pt::text(body)) / 5 / 180),
     "relatedArticles": *[_type == "article" && _id != ^._id && (
-      region._ref == ^.region._ref || 
+      region._ref == ^.region._ref ||
       count(tags[_ref in ^.tags[_ref]]) > 0
     )] {
       title,

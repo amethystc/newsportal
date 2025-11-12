@@ -9,22 +9,24 @@ interface MobileNavigationWrapperProps {
 
 export default function MobileNavigationWrapper({ children }: MobileNavigationWrapperProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   // Make the function available globally for Header component
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      (window as any).openMobileMenu = () => setIsMobileMenuOpen(true);
-      (window as any).closeMobileMenu = () => setIsMobileMenuOpen(false);
-    }
-  }, [isMobileMenuOpen]);
+    setIsMounted(true);
+    (window as any).openMobileMenu = () => setIsMobileMenuOpen(true);
+    (window as any).closeMobileMenu = () => setIsMobileMenuOpen(false);
+  }, []);
 
   return (
     <>
       {children}
-      <MobileNavigation 
-        isOpen={isMobileMenuOpen} 
-        onClose={() => setIsMobileMenuOpen(false)} 
-      />
+      {isMounted && (
+        <MobileNavigation 
+          isOpen={isMobileMenuOpen} 
+          onClose={() => setIsMobileMenuOpen(false)} 
+        />
+      )}
     </>
   );
 }

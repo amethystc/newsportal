@@ -90,6 +90,12 @@ export interface NewsResponse {
   data: {
     hero: Article[];
     editoChoice: Article;
+    spaces: Article[];
+    geopolitics: Article[];
+    trade: Article[];
+    humanitarian: Article[];
+    conflict: Article[];
+    regionSpotlight: Article[];
   };
 }
 
@@ -103,4 +109,10 @@ export interface ErrorResponse {
 export interface HomepageData {
   hero: Article[];
   editoChoice: Article[];
+  spaces: Article[];
+  geopolitics: Article[];
+  trade: Article[];
+  humanitarian: Article[];
+  conflict: Article[];
+  regionSpotlight: Article[];
 }

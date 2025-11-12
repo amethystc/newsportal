@@ -58,7 +58,7 @@ async function getHomepageData(): Promise<HomepageData> {
     }
 
     const result = await response.json();
-
+    // console.log(result);
     if (!result.success) {
       throw new Error(result.message || "API request failed");
     }
@@ -70,6 +70,12 @@ async function getHomepageData(): Promise<HomepageData> {
     return {
       hero: [],
       editoChoice: [],
+      spaces: [],
+      geopolitics: [],
+      trade: [],
+      humanitarian: [],
+      conflict: [],
+      regionSpotlight: [],
     };
   }
 }
@@ -110,7 +116,6 @@ function generateStructuredData(data: HomepageData) {
 export default async function Home() {
   const data = await getHomepageData();
   const structuredData = generateStructuredData(data);
-
   return (
     <>
       {/* Structured Data */}
@@ -125,16 +130,16 @@ export default async function Home() {
       <main>
         <Header />
         <Hero articles={data.hero} />
-        <EditorChoise background="bg-gray-200" article={data.editoChoice} />
+        <EditorChoise background="bg-gray-200" article={data.conflict} />
         <Exclusive />
-        <EditorsChoiceV2 articles={data.editoChoice} />
-        <EditorsChoiceV2 articles={data.editoChoice} />
+        <EditorsChoiceV2 articles={data.geopolitics} />
+        <EditorsChoiceV2 articles={data.trade} />
         <SubscriptionCTA />
-        <RegionSpotlight />
-        <EditorChoise background="bg-gray-200" article={data.editoChoice} />
+        <RegionSpotlight articles={data.regionSpotlight} />
+        <EditorChoise background="bg-gray-200" article={data.spaces} />
         <Footer />
       </main>
-      
+
       {/* Back to Top Button */}
       <BackToTop />
     </>

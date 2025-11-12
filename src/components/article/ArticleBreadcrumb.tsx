@@ -7,7 +7,7 @@ interface ArticleBreadcrumbProps {
 
 export function ArticleBreadcrumb({ article }: ArticleBreadcrumbProps) {
   return (
-    <div className="container mx-auto px-4 sm:px-6 py-4">
+    <div className="container mx-auto px-4 sm:px-6 py-4 mt-10">
       <nav className="flex items-center gap-2 text-sm text-gray-600">
         <Link href="/" className="hover:text-red-600 transition-colors">
           Home

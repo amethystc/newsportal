@@ -39,42 +39,45 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
   return (
     <>
       {/* Mobile Sidebar Overlay */}
-      <div className="fixed inset-0 z-[9999] md:hidden" style={{ 
-        zIndex: 9999, 
-        isolation: 'isolate', 
-        transform: 'translateZ(0)',
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        pointerEvents: 'auto'
-      }}>
+      <div
+        className="fixed inset-0 z-[9999] md:hidden"
+        style={{
+          zIndex: 9999,
+          isolation: "isolate",
+          transform: "translateZ(0)",
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          pointerEvents: "auto",
+        }}
+      >
         {/* Disable body scroll */}
-        <div 
-          className="absolute inset-0 bg-black/50" 
-          style={{ 
+        <div
+          className="absolute inset-0 bg-black/50"
+          style={{
             zIndex: 1,
-            position: 'absolute',
+            position: "absolute",
             top: 0,
             left: 0,
             right: 0,
-            bottom: 0
-          }} 
-          onClick={onClose} 
+            bottom: 0,
+          }}
+          onClick={onClose}
         />
 
         {/* Sidebar */}
         <div
           className="absolute right-0 top-0 h-full w-80 bg-white shadow-xl transform transition-transform duration-300 ease-in-out"
-          style={{ 
-            zIndex: 2, 
-            transform: 'translateZ(0)',
-            position: 'absolute',
+          style={{
+            zIndex: 2,
+            transform: "translateZ(0)",
+            position: "absolute",
             top: 0,
             right: 0,
             bottom: 0,
-            width: '20rem'
+            width: "20rem",
           }}
           onClick={(e) => e.stopPropagation()}
         >
