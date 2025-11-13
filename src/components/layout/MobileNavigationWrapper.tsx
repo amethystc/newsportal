@@ -11,11 +11,26 @@ export default function MobileNavigationWrapper({ children }: MobileNavigationWr
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
-  // Make the function available globally for Header component
+  // Listen for custom events from Header component
   useEffect(() => {
     setIsMounted(true);
-    (window as any).openMobileMenu = () => setIsMobileMenuOpen(true);
-    (window as any).closeMobileMenu = () => setIsMobileMenuOpen(false);
+    
+    const handleOpenMenu = () => {
+      console.log("Open menu event received");
+      setIsMobileMenuOpen(true);
+    };
+    const handleCloseMenu = () => {
+      console.log("Close menu event received");
+      setIsMobileMenuOpen(false);
+    };
+    
+    window.addEventListener('openMobileMenu', handleOpenMenu);
+    window.addEventListener('closeMobileMenu', handleCloseMenu);
+    
+    return () => {
+      window.removeEventListener('openMobileMenu', handleOpenMenu);
+      window.removeEventListener('closeMobileMenu', handleCloseMenu);
+    };
   }, []);
 
   return (

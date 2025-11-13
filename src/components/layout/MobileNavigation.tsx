@@ -34,13 +34,14 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
     };
   }, [isOpen]);
 
+  console.log("MobileNavigation render, isOpen:", isOpen);
   if (!isOpen) return null;
 
   return (
     <>
       {/* Mobile Sidebar Overlay */}
       <div
-        className="fixed inset-0 z-[9999] md:hidden"
+        className="fixed inset-0 z-[9999]"
         style={{
           zIndex: 9999,
           isolation: "isolate",

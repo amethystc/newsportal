@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { Search, Menu } from "lucide-react";
-import { useState, useEffect } from "react";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -13,14 +12,6 @@ import Image from "next/image";
 import Marquee from "react-fast-marquee";
 
 const Header = () => {
-  const [windowWidth, setWindowWidth] = useState(0);
-
-  useEffect(() => {
-    const handleResize = () => setWindowWidth(window.innerWidth);
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
   return (
     <header className="w-full min-h-[15vh] bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-1000">
       {/*SEARCH*/}
@@ -64,14 +55,11 @@ const Header = () => {
           unoptimized
         />
       </Link>
-      <nav
-        className="mx-auto px-4 py-4 w-full"
-        style={{ width: windowWidth > 1050 ? "65%" : "100%" }}
-      >
+      <nav className="mx-auto px-4 py-4">
         <div className="flex">
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-start space-x-6 w-full" style={{ display: windowWidth > 1050 ? "flex" : "none" }}>
-            <NavigationMenu style={{ marginRight: "auto" }}>
+          <div className="hidden md:flex items-start space-x-6 w-full">
+            <NavigationMenu className="ml-auto sm:ml-auto md:ml-auto lg:mx-auto">
               <NavigationMenuList>
                 <NavigationMenuItem>
                   <Link
@@ -119,16 +107,13 @@ const Header = () => {
           <Button
             variant="default"
             size="icon-lg"
-            className="md:hidden ml-auto rounded-full flex items-center justify-center"
-            style={{ 
-              display: windowWidth <= 1050 ? "flex" : "none",
-              alignItems: "center",
-              justifyContent: "center"
-            }}
+            className="md:hidden ml-auto rounded-full"
             onClick={() => {
-              console.log("Burger button clicked");
-              if (typeof window !== "undefined") {
-                window.dispatchEvent(new CustomEvent("openMobileMenu"));
+              if (
+                typeof window !== "undefined" &&
+                (window as any).openMobileMenu
+              ) {
+                (window as any).openMobileMenu();
               }
             }}
           >
