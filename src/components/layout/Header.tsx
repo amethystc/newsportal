@@ -70,7 +70,10 @@ const Header = () => {
       >
         <div className="flex">
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-start space-x-6 w-full" style={{ display: windowWidth > 1050 ? "flex" : "none" }}>
+          <div
+            className="hidden md:flex items-start space-x-6 w-full"
+            style={{ display: windowWidth > 1050 ? "flex" : "none" }}
+          >
             <NavigationMenu style={{ marginRight: "auto" }}>
               <NavigationMenuList>
                 <NavigationMenuItem>
@@ -120,10 +123,10 @@ const Header = () => {
             variant="default"
             size="icon-lg"
             className="md:hidden ml-auto rounded-full flex items-center justify-center"
-            style={{ 
+            style={{
               display: windowWidth <= 1050 ? "flex" : "none",
               alignItems: "center",
-              justifyContent: "center"
+              justifyContent: "center",
             }}
             onClick={() => {
               console.log("Burger button clicked");
