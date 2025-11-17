@@ -17,7 +17,10 @@ import { RelatedArticles } from "@/components/article/RelatedArticles";
 // Direct article fetching function
 async function getArticleBySlug(slug: string) {
   try {
-    const article = await client.fetch(articleQuery, { slug });
+    const fetchOptions = {
+      next: { revalidate: 0 } // No caching - always fetch fresh data
+    };
+    const article = await client.fetch(articleQuery, { slug }, fetchOptions);
     return article;
   } catch (error) {
     console.error("Error fetching article:", error);

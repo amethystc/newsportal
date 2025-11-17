@@ -61,14 +61,19 @@ async function getHomepageData(): Promise<HomepageData> {
   try {
     console.log("Fetching homepage data directly from Sanity...");
     
-    const hero = await client.fetch(heroQuery);
-    const editoChoice = await client.fetch(EditoChoiceQuery);
-    const spaces = await client.fetch(spacesQuery, { tag: "Space" } as any);
-    const geopolitics = await client.fetch(geopoliticsQuery, { tag: "Geopolitics" } as any);
-    const trade = await client.fetch(tradeQuery, { tag: "Trade" } as any);
-    const humanitarian = await client.fetch(humanitarianQuery, { tag: "Humanitarian" } as any);
-    const conflict = await client.fetch(conflictQuery, { tag: "Conflict" } as any);
-    const regionSpotlight = await client.fetch(regionSpotlightQuery);
+    // Disable caching for real-time updates
+    const fetchOptions = {
+      next: { revalidate: 0 } // No caching - always fetch fresh data
+    };
+    
+    const hero = await client.fetch(heroQuery, {}, fetchOptions);
+    const editoChoice = await client.fetch(EditoChoiceQuery, {}, fetchOptions);
+    const spaces = await client.fetch(spacesQuery, { tag: "Space" } as any, fetchOptions);
+    const geopolitics = await client.fetch(geopoliticsQuery, { tag: "Geopolitics" } as any, fetchOptions);
+    const trade = await client.fetch(tradeQuery, { tag: "Trade" } as any, fetchOptions);
+    const humanitarian = await client.fetch(humanitarianQuery, { tag: "Humanitarian" } as any, fetchOptions);
+    const conflict = await client.fetch(conflictQuery, { tag: "Conflict" } as any, fetchOptions);
+    const regionSpotlight = await client.fetch(regionSpotlightQuery, {}, fetchOptions);
 
     return {
       hero,

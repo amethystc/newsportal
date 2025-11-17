@@ -28,13 +28,20 @@ const Header = () => {
   useEffect(() => {
     const fetchBreakingNews = async () => {
       try {
-        const news = await client.fetch(breakingNewsQuery);
+        const fetchOptions = {
+          next: { revalidate: 0 } // No caching - always fetch fresh data
+        };
+        const news = await client.fetch(breakingNewsQuery, {}, fetchOptions);
         setBreakingNews(news);
       } catch (error) {
         console.error("Error fetching breaking news:", error);
       }
     };
     fetchBreakingNews();
+    
+    // Refresh breaking news every 30 seconds
+    const interval = setInterval(fetchBreakingNews, 30000);
+    return () => clearInterval(interval);
   }, []);
   return (
     <header className="w-full min-h-[15vh] bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-1000">
@@ -169,9 +176,7 @@ const Header = () => {
             </p>
             {breakingNews.map((news, index) => (
               <div key={index} className="flex items-center gap-2">
-                <p className="text-white text-sm mr-2">
-                  {news.title}
-                </p>
+                <p className="text-white text-sm mr-2">{news.title}</p>
                 {news.region && (
                   <button className="hidden md:block p-1 bg-green-700 text-white font-bold text-sm">
                     {news.region.title.toUpperCase()}
