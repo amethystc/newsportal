@@ -42,15 +42,6 @@ const nextConfig: NextConfig = {
   // Headers for caching
   headers: async () => [
     {
-      source: "/api/(.*)",
-      headers: [
-        {
-          key: "Cache-Control",
-          value: "public, max-age=300, s-maxage=300", // 5 minutes for API
-        },
-      ],
-    },
-    {
       source: "/_next/static/(.*)",
       headers: [
         {
