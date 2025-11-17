@@ -11,15 +11,30 @@ import {
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Marquee from "react-fast-marquee";
+import { client } from "@/sanity/client";
+import { breakingNewsQuery } from "@/sanity/queries";
 
 const Header = () => {
   const [windowWidth, setWindowWidth] = useState(0);
+  const [breakingNews, setBreakingNews] = useState<any[]>([]);
 
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    const fetchBreakingNews = async () => {
+      try {
+        const news = await client.fetch(breakingNewsQuery);
+        setBreakingNews(news);
+      } catch (error) {
+        console.error("Error fetching breaking news:", error);
+      }
+    };
+    fetchBreakingNews();
   }, []);
   return (
     <header className="w-full min-h-[15vh] bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-1000">
@@ -152,12 +167,18 @@ const Header = () => {
             <p className="text-white font-bold text-[12px] whitespace-nowrap mr-2">
               LIVE NEWS UPDATE!
             </p>
-            <p className="text-white text-sm mr-2">
-              Port Blockade Chokes Grain Exports
-            </p>
-            <button className="hidden md:block p-1 bg-green-700 text-white font-bold text-sm">
-              MYANMAR
-            </button>
+            {breakingNews.map((news, index) => (
+              <div key={index} className="flex items-center gap-2">
+                <p className="text-white text-sm mr-2">
+                  {news.title}
+                </p>
+                {news.region && (
+                  <button className="hidden md:block p-1 bg-green-700 text-white font-bold text-sm">
+                    {news.region.title.toUpperCase()}
+                  </button>
+                )}
+              </div>
+            ))}
           </Marquee>
         </div>
       </div>

@@ -51,7 +51,6 @@ async function getHomepageData(): Promise<HomepageData> {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
     const response = await fetch(`${baseUrl}/api/news`, {
       next: { revalidate: 30 },
-      cache: "no-store",
     });
 
     if (!response.ok) {

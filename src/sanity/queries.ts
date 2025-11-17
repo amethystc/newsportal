@@ -302,6 +302,16 @@ export const regionSpotlightQuery = `
   } | order(publishedAt desc) [0...11]
 `;
 
+export const breakingNewsQuery = `
+  *[_type == "article"] {
+    title,
+    slug,
+    region-> {
+      title
+    }
+  } | order(publishedAt desc) [0...5]
+`;
+
 export const articleQuery = `
   *[_type == "article" && slug.current == $slug][0] {
     title,
