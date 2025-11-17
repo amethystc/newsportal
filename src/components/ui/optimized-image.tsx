@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 
 interface OptimizedImageProps {
@@ -27,6 +27,8 @@ export default function OptimizedImage({
 }: OptimizedImageProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [retryCount, setRetryCount] = useState(0);
+  const [imageSrc, setImageSrc] = useState(src);
 
   // Generate low-quality placeholder for Sanity images
   const generateBlurDataURL = (url: string) => {
@@ -41,8 +43,18 @@ export default function OptimizedImage({
   };
 
   const handleError = () => {
-    setError(true);
-    setIsLoading(false);
+    if (retryCount < 2) {
+      // Retry with different parameters
+      const retrySrc = src.includes('?') 
+        ? `${src}&retry=${retryCount + 1}&t=${Date.now()}`
+        : `${src}?retry=${retryCount + 1}&t=${Date.now()}`;
+      
+      setImageSrc(retrySrc);
+      setRetryCount(retryCount + 1);
+    } else {
+      setError(true);
+      setIsLoading(false);
+    }
   };
 
   const handleLoad = () => {
@@ -66,14 +78,14 @@ export default function OptimizedImage({
   return (
     <div className={cn('relative overflow-hidden', className)}>
       <Image
-        src={src}
+        src={imageSrc}
         alt={alt}
         width={width}
         height={height}
         priority={priority}
         sizes={sizes}
         placeholder={placeholder}
-        blurDataURL={generateBlurDataURL(src)}
+        blurDataURL={generateBlurDataURL(imageSrc)}
         className={cn(
           'transition-opacity duration-300',
           isLoading ? 'opacity-0' : 'opacity-100'
