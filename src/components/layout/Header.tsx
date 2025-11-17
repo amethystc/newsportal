@@ -66,7 +66,7 @@ const Header = () => {
       </Link>
       <nav
         className="mx-auto px-4 py-4 w-full"
-        style={{ width: windowWidth > 1050 ? "65%" : "100%" }}
+        style={{ width: windowWidth > 1050 ? "55%" : "100%" }}
       >
         <div className="flex">
           {/* Desktop Navigation */}
