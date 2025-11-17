@@ -8,7 +8,7 @@ const beVietnamPro = Be_Vietnam_Pro({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700", "800"], // Reduced weights for performance
   display: "swap",
-  preload: true, // Preload critical font
+  preload: false, // Disable preload to fix deployment issues
   fallback: ['system-ui', 'sans-serif'], // Better fallbacks
 });
 
@@ -80,14 +80,6 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <head>
-        {/* Preload critical font */}
-        <link 
-          rel="preload" 
-          href="/_next/static/media/be-vietnam-pro-latin-400-normal.woff2" 
-          as="font" 
-          type="font/woff2" 
-          crossOrigin="anonymous"
-        />
         {/* DNS prefetch for external resources */}
         <link rel="dns-prefetch" href="//cdn.sanity.io" />
         {/* Preconnect to critical domains */}
