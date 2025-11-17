@@ -4,7 +4,8 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import Header from "@/components/layout/Header";
 import { Footer } from "@/components/section/Footer";
-import { getArticleBySlug } from "@/lib/api";
+import { client } from "@/sanity/client";
+import { articleQuery } from "@/sanity/queries";
 import { Tag } from "@/types";
 import { PortableText } from "@/components/ui/portable-text";
 import { ArticleBreadcrumb } from "@/components/article/ArticleBreadcrumb";
@@ -12,6 +13,17 @@ import { ArticleHeader } from "@/components/article/ArticleHeader";
 import { ArticleMainImage } from "@/components/article/ArticleMainImage";
 import { ArticleTags } from "@/components/article/ArticleTags";
 import { RelatedArticles } from "@/components/article/RelatedArticles";
+
+// Direct article fetching function
+async function getArticleBySlug(slug: string) {
+  try {
+    const article = await client.fetch(articleQuery, { slug });
+    return article;
+  } catch (error) {
+    console.error("Error fetching article:", error);
+    return null;
+  }
+}
 
 // Generate metadata untuk SEO
 export async function generateMetadata({
