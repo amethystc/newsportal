@@ -48,6 +48,7 @@ export const metadata: Metadata = {
 // Data fetching function
 async function getHomepageData(): Promise<HomepageData> {
   try {
+    console.log("Fetching homepage data...");
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
     const response = await fetch(`${baseUrl}/api/news`, {
       next: { revalidate: 30 },
@@ -58,7 +59,6 @@ async function getHomepageData(): Promise<HomepageData> {
     }
 
     const result = await response.json();
-    // console.log(result);
     if (!result.success) {
       throw new Error(result.message || "API request failed");
     }
