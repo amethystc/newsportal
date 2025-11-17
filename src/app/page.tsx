@@ -9,6 +9,17 @@ import { RegionSpotlight } from "@/components/section/RegionSpotLight";
 import { SubscriptionCTA } from "@/components/section/SubscribtionCTA";
 import { BackToTop } from "@/components/ui/BackToTop";
 import { HomepageData } from "@/types";
+import { client } from "@/sanity/client";
+import {
+  heroQuery,
+  EditoChoiceQuery,
+  spacesQuery,
+  geopoliticsQuery,
+  tradeQuery,
+  humanitarianQuery,
+  conflictQuery,
+  regionSpotlightQuery,
+} from "@/sanity/queries";
 
 // SEO Metadata
 export const metadata: Metadata = {
@@ -45,25 +56,30 @@ export const metadata: Metadata = {
   },
 };
 
-// Data fetching function
+// Direct data fetching function
 async function getHomepageData(): Promise<HomepageData> {
   try {
-    console.log("Fetching homepage data...");
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-    const response = await fetch(`${baseUrl}/api/news`, {
-      next: { revalidate: 30 },
-    });
+    console.log("Fetching homepage data directly from Sanity...");
+    
+    const hero = await client.fetch(heroQuery);
+    const editoChoice = await client.fetch(EditoChoiceQuery);
+    const spaces = await client.fetch(spacesQuery, { tag: "Space" } as any);
+    const geopolitics = await client.fetch(geopoliticsQuery, { tag: "Geopolitics" } as any);
+    const trade = await client.fetch(tradeQuery, { tag: "Trade" } as any);
+    const humanitarian = await client.fetch(humanitarianQuery, { tag: "Humanitarian" } as any);
+    const conflict = await client.fetch(conflictQuery, { tag: "Conflict" } as any);
+    const regionSpotlight = await client.fetch(regionSpotlightQuery);
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    const result = await response.json();
-    if (!result.success) {
-      throw new Error(result.message || "API request failed");
-    }
-
-    return result.data;
+    return {
+      hero,
+      editoChoice,
+      spaces,
+      geopolitics,
+      trade,
+      humanitarian,
+      conflict,
+      regionSpotlight,
+    };
   } catch (error) {
     console.error("Error fetching homepage data:", error);
     // Return empty data as fallback

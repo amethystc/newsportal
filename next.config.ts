@@ -38,19 +38,6 @@ const nextConfig: NextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
   },
-
-  // Headers for caching
-  headers: async () => [
-    {
-      source: "/_next/static/(.*)",
-      headers: [
-        {
-          key: "Cache-Control",
-          value: "public, max-age=31536000, immutable", // 1 year for static assets
-        },
-      ],
-    },
-  ],
 };
 
 export default nextConfig;
