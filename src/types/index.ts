@@ -89,7 +89,7 @@ export interface NewsResponse {
   success: boolean;
   data: {
     hero: Article[];
-    editoChoice: Article;
+    editoChoice: Article[];
     spaces: Article[];
     geopolitics: Article[];
     trade: Article[];

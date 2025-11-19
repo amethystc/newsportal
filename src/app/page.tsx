@@ -8,18 +8,7 @@ import Hero from "@/components/section/Hero";
 import { RegionSpotlight } from "@/components/section/RegionSpotLight";
 import { SubscriptionCTA } from "@/components/section/SubscribtionCTA";
 import { BackToTop } from "@/components/ui/BackToTop";
-import { HomepageData } from "@/types";
-import { client } from "@/sanity/client";
-import {
-  heroQuery,
-  EditoChoiceQuery,
-  spacesQuery,
-  geopoliticsQuery,
-  tradeQuery,
-  humanitarianQuery,
-  conflictQuery,
-  regionSpotlightQuery,
-} from "@/sanity/queries";
+import { HomepageData, NewsResponse } from "@/types";
 
 // SEO Metadata
 export const metadata: Metadata = {
@@ -56,35 +45,29 @@ export const metadata: Metadata = {
   },
 };
 
-// Direct data fetching function
+// Data fetching function through API
 async function getHomepageData(): Promise<HomepageData> {
   try {
-    console.log("Fetching homepage data directly from Sanity...");
-    
-    // Disable caching for real-time updates
-    const fetchOptions = {
-      next: { revalidate: 0 } // No caching - always fetch fresh data
-    };
-    
-    const hero = await client.fetch(heroQuery, {}, fetchOptions);
-    const editoChoice = await client.fetch(EditoChoiceQuery, {}, fetchOptions);
-    const spaces = await client.fetch(spacesQuery, { tag: "Space" } as any, fetchOptions);
-    const geopolitics = await client.fetch(geopoliticsQuery, { tag: "Geopolitics" } as any, fetchOptions);
-    const trade = await client.fetch(tradeQuery, { tag: "Trade" } as any, fetchOptions);
-    const humanitarian = await client.fetch(humanitarianQuery, { tag: "Humanitarian" } as any, fetchOptions);
-    const conflict = await client.fetch(conflictQuery, { tag: "Conflict" } as any, fetchOptions);
-    const regionSpotlight = await client.fetch(regionSpotlightQuery, {}, fetchOptions);
+    console.log("Fetching homepage data from API...");
 
-    return {
-      hero,
-      editoChoice,
-      spaces,
-      geopolitics,
-      trade,
-      humanitarian,
-      conflict,
-      regionSpotlight,
-    };
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/news`,
+      {
+        next: { revalidate: 0 }, // No caching - always fetch fresh data
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result: NewsResponse = await response.json();
+
+    if (!result.success) {
+      throw new Error(result.message || "API request failed");
+    }
+
+    return result.data;
   } catch (error) {
     console.error("Error fetching homepage data:", error);
     // Return empty data as fallback

@@ -29,7 +29,7 @@ const Header = () => {
     const fetchBreakingNews = async () => {
       try {
         const fetchOptions = {
-          next: { revalidate: 0 } // No caching - always fetch fresh data
+          next: { revalidate: 0 }, // No caching - always fetch fresh data
         };
         const news = await client.fetch(breakingNewsQuery, {}, fetchOptions);
         setBreakingNews(news);
@@ -38,7 +38,7 @@ const Header = () => {
       }
     };
     fetchBreakingNews();
-    
+
     // Refresh breaking news every 30 seconds
     const interval = setInterval(fetchBreakingNews, 30000);
     return () => clearInterval(interval);
@@ -46,7 +46,7 @@ const Header = () => {
   return (
     <header className="w-full min-h-[15vh] bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-1000">
       {/*SEARCH*/}
-      <div className="hidden md:flex flex-row justify-end items-center gap-2 w-[90%] p-2 ">
+      {/*<div className="hidden md:flex flex-row justify-end items-center gap-2 w-[90%] p-2 ">
         <form className="flex flex-row gap-2 items-center border border-gray-800 p-1 rounded-md">
           <Search size="20" className="text-gray-600" />
           <input
@@ -61,16 +61,16 @@ const Header = () => {
         >
           JOIN NOW
         </Button>
-      </div>
+      </div>*/}
       {/*NAVIGATION*/}
       {/* Logo */}
-      <Link href="/" className="hidden text-xl font-bold z-100 md:block">
+      <Link href="/" className="hidden text-xl font-bold z-100 md:block ">
         <Image
           src="/conflict-wire-logo.png"
           alt="Logo"
           width={180}
           height={180}
-          className="fixed top-2 sm:left-[0em] xl:left-[7em]  lg:w-[200px] lg:h-[200px] md:absolute "
+          className="fixed top-0 sm:left-[0em] xl:left-[7em]  lg:w-[160px] lg:h-[160px] md:absolute "
           priority
           unoptimized
         />
@@ -87,10 +87,10 @@ const Header = () => {
         />
       </Link>
       <nav
-        className="mx-auto px-4 py-4 w-full"
-        style={{ width: windowWidth > 1050 ? "55%" : "100%" }}
+        className="ml-auto px-6 py-6 w-full"
+        style={{ width: windowWidth > 1050 ? "78%" : "100%" }}
       >
-        <div className="flex">
+        <div className="flex w-full items-center">
           {/* Desktop Navigation */}
           <div
             className="hidden md:flex items-start space-x-6 w-full"
@@ -139,7 +139,22 @@ const Header = () => {
               </NavigationMenuList>
             </NavigationMenu>
           </div>
-
+          <div className="hidden md:flex flex-row justify-end items-center gap-2 w-[90%] p-2 ">
+            <form className="flex flex-row gap-2 items-center border border-gray-800 p-1 rounded-md">
+              <Search size="20" className="text-gray-600" />
+              <input
+                type="text"
+                placeholder="Search"
+                className="w-[200px] border-none outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+              />
+            </form>
+            <Button
+              variant="outline"
+              className="border-2 border-red-500 bg-red-400/10 font-semibold xl:text-lg text-red-500 hover:text-red-600 hover:bg-red-400/20"
+            >
+              JOIN NOW
+            </Button>
+          </div>
           {/* Mobile Menu Button */}
           <Button
             variant="default"
