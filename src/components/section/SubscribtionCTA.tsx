@@ -86,7 +86,7 @@ export function SubscriptionCTA() {
                 disabled={isSubmitting}
                 className={`bg-white text-red-600 font-semibold px-6 py-3 rounded-full shadow hover:bg-red-50 transition ${isSubmitting ? "opacity-70 cursor-not-allowed" : ""}`}
               >
-                {isSubmitting ? "SUBMITTING..." : "JOIN WHITELIST MEMBER"}
+                {isSubmitting ? "SUBMITTING..." : "JOIN WAITINGLIST MEMBER"}
               </button>
             </form>
           )}
