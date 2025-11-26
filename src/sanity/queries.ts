@@ -371,3 +371,13 @@ export const articleQuery = `
     } | order(publishedAt desc) [0...3]
   }
 `;
+
+export const addWaitlistQuery = `
+  create {
+    _type: "waitlist",
+    email: $email,
+    fullName: $fullName,
+    notes: "",
+    signedUpAt: dateTime()
+  }
+`;

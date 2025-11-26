@@ -18,9 +18,21 @@ export function SubscriptionCTA() {
     setIsSubmitting(true);
 
     try {
-      // Here you would typically send the email to your backend
-      // For now, we'll simulate a successful submission
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      // Call the waitlist API
+      const response = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        // Handle API errors
+        throw new Error(data.message || "Failed to add to waitlist");
+      }
 
       // Reset the form and show success message
       setIsSubmitted(true);
@@ -32,7 +44,11 @@ export function SubscriptionCTA() {
       }, 3000);
     } catch (error) {
       console.error("Error submitting email:", error);
-      alert("There was an error submitting your email. Please try again.");
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "There was an error submitting your email. Please try again.";
+      alert(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
@@ -86,7 +102,7 @@ export function SubscriptionCTA() {
                 disabled={isSubmitting}
                 className={`bg-white text-red-600 font-semibold px-6 py-3 rounded-full shadow hover:bg-red-50 transition ${isSubmitting ? "opacity-70 cursor-not-allowed" : ""}`}
               >
-                {isSubmitting ? "SUBMITTING..." : "JOIN WAITING LIST MEMBER"}
+                {isSubmitting ? "SUBMITTING..." : "JOIN WAIT LIST MEMBER"}
               </button>
             </form>
           )}
