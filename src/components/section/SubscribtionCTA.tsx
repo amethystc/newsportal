@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { useState } from "react";
 
 export function SubscriptionCTA() {
@@ -56,16 +57,16 @@ export function SubscriptionCTA() {
 
   return (
     <section className="w-full ">
-      <div className="relative w-full mx-auto h-72 md:h-84 overflow-hidden">
+      <div className="relative w-full mx-auto h-72 md:h-[600px] overflow-hidden">
         {/* background image */}
-        {/*<Image
-          src="/images/subscription-bg.jpg" // ganti ke image kamu
+        <Image
+          src="/cta.jpg" // ganti ke image kamu
           alt="Exclusive membership"
           fill
           className="object-cover"
           priority={false}
-        />*/}
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-400 to-slate-600 " />
+        />
+        {/*<div className="absolute inset-0 bg-gradient-to-r from-slate-400 to-slate-600 " />*/}
 
         {/* overlay tipis biar teks kebaca */}
         <div className="absolute inset-0 bg-black/20" />
