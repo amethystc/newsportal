@@ -6,10 +6,14 @@ import moment from "moment";
 import { Article } from "@/types";
 
 interface EditorsChoiceV2Props {
+  title?: string;
   articles?: Article[];
 }
 
-export function EditorsChoiceV2({ articles = [] }: EditorsChoiceV2Props) {
+export function EditorsChoiceV2({
+  articles = [],
+  title,
+}: EditorsChoiceV2Props) {
   return (
     <section className="w-full bg-white my-16">
       {/* header */}
@@ -19,7 +23,8 @@ export function EditorsChoiceV2({ articles = [] }: EditorsChoiceV2Props) {
           <div className="h-[1px] w-full bg-black" />
           <div className="absolute -top-10 left-0 bg-white px-3 py-1 rounded-t-md border-x border-t border-black">
             <span className="text-2xl font-unbounded-extrabold tracking-tight">
-              EDITORS <span className="text-red-600">CHOICE</span>
+              {/*EDITORS <span className="text-red-600">CHOICE</span>*/}
+              {title}
             </span>
           </div>
         </div>

@@ -5,11 +5,13 @@ import moment from "moment";
 import { Article } from "@/types";
 
 interface EditorChoiseProps {
+  title: string;
   background: string;
   article: Article[];
 }
 
 export default function EditorChoise({
+  title,
   background,
   article,
 }: EditorChoiseProps) {
@@ -19,9 +21,7 @@ export default function EditorChoise({
   return (
     <section className="container mx-auto my-2">
       <div className={`${background} p-2 flex flex-col p-4`}>
-        <h3 className="text-2xl uppercase font-unbounded-extrabold">
-          Editors <span className="text-red-500">Choice</span>
-        </h3>
+        <h3 className="text-2xl uppercase font-unbounded-extrabold">{title}</h3>
         <div className="w-full flex flex-col md:flex-row md:justify-around md:items-start gap-4 mt-4">
           {articles.length > 0 &&
             articles.map((post, index) => (

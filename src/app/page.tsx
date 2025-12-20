@@ -134,13 +134,21 @@ export default async function Home() {
       <main>
         <Header />
         <Hero articles={data.hero} />
-        <EditorChoise background="bg-gray-200" article={data.conflict} />
+        <EditorChoise
+          title="Conflict"
+          background="bg-gray-200"
+          article={data.conflict}
+        />
         <Exclusive />
-        <EditorsChoiceV2 articles={data.geopolitics} />
-        <EditorsChoiceV2 articles={data.trade} />
+        <EditorsChoiceV2 title="Humanitarian" articles={data.geopolitics} />
+        <EditorsChoiceV2 title="TRADE" articles={data.trade} />
         <SubscriptionCTA />
         <RegionSpotlight articles={data.regionSpotlight} />
-        <EditorChoise background="bg-gray-200" article={data.spaces} />
+        <EditorChoise
+          title="GEOPOLITICS"
+          background="bg-gray-200"
+          article={data.spaces}
+        />
         <Footer />
       </main>
 
