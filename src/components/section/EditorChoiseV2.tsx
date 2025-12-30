@@ -24,7 +24,7 @@ export function EditorsChoiceV2({
           <div className="absolute -top-10 left-0 bg-white px-3 py-1 rounded-t-md border-x border-t border-black">
             <span className="text-2xl font-unbounded-extrabold tracking-tight">
               {/*EDITORS <span className="text-red-600">CHOICE</span>*/}
-              {title}
+              {title?.toUpperCase()}
             </span>
           </div>
         </div>

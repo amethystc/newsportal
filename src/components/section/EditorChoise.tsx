@@ -21,7 +21,9 @@ export default function EditorChoise({
   return (
     <section className="container mx-auto my-2">
       <div className={`${background} p-2 flex flex-col p-4`}>
-        <h3 className="text-2xl uppercase font-unbounded-extrabold">{title}</h3>
+        <h3 className="text-2xl uppercase font-unbounded-extrabold">
+          {title.toUpperCase()}
+        </h3>
         <div className="w-full flex flex-col md:flex-row md:justify-around md:items-start gap-4 mt-4">
           {articles.length > 0 &&
             articles.map((post, index) => (

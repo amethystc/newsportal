@@ -45,6 +45,25 @@ const Header = () => {
   }, []);
   return (
     <header className="w-full min-h-[15vh] bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-1000">
+      {/*SEARCH*/}
+      {/*<div className="hidden md:flex flex-row justify-end items-center gap-2 w-[90%] p-2 ">
+        <form className="flex flex-row gap-2 items-center border border-gray-800 p-1 rounded-md">
+          <Search size="20" className="text-gray-600" />
+          <input
+            type="text"
+            placeholder="Search"
+            className="w-[200px] border-none outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+          />
+        </form>
+        <Button
+          variant="outline"
+          className="border-2 border-red-500 bg-red-400/10 font-semibold xl:text-lg text-red-500 hover:text-red-600 hover:bg-red-400/20"
+        >
+          JOIN NOW
+        </Button>
+      </div>*/}
+      {/*NAVIGATION*/}
+      {/* Logo */}
       <Link href="/" className="hidden text-xl font-bold z-100 md:block ">
         <Image
           src="/conflict-wire-logo.png"
@@ -69,50 +88,50 @@ const Header = () => {
       </Link>
       <nav
         className="ml-auto px-6 py-6 w-full"
-        style={{ width: windowWidth > 1650 ? "78%" : "100%" }}
+        style={{ width: windowWidth > 1050 ? "78%" : "100%" }}
       >
         <div className="flex w-full items-center">
           {/* Desktop Navigation */}
           <div
-            className="hidden md:flex items-start space-x-4 lg:space-x-6 w-full"
-            style={{ display: windowWidth > 1650 ? "flex" : "none" }}
+            className="hidden md:flex items-start space-x-6 w-full"
+            style={{ display: windowWidth > 1050 ? "flex" : "none" }}
           >
             <NavigationMenu style={{ marginRight: "auto" }}>
-              <NavigationMenuList className="flex-nowrap">
-                <NavigationMenuItem className="flex whitespace-nowrap">
+              <NavigationMenuList>
+                <NavigationMenuItem>
                   <Link
                     href="/"
-                    className="border-r-2 border-black text-red-600 group inline-flex h-10 w-max items-center justify-center rounded-none bg-transparent px-3 lg:px-4 py-2 text-xs lg:text-sm font-bold transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
+                    className="border-r-2 border-black text-red-600 group inline-flex h-10 w-max items-center justify-center rounded-none bg-transparent px-4 py-2 text-sm font-bold transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
                   >
                     MYANMAR
                   </Link>
                   <Link
                     href="/"
-                    className="border-r-2 border-black group inline-flex h-10 w-max items-center justify-center rounded-none bg-transparent px-3 lg:px-4 py-2 text-xs lg:text-sm font-bold transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
+                    className="border-r-2 border-black group inline-flex h-10 w-max items-center justify-center rounded-none bg-transparent px-4 py-2 text-sm font-bold transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
                   >
                     CONFLICT
                   </Link>
                   <Link
                     href="/"
-                    className="border-r-2 border-black group inline-flex h-10 w-max items-center justify-center rounded-none bg-transparent px-3 lg:px-4 py-2 text-xs lg:text-sm font-bold transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
+                    className="border-r-2 border-black group inline-flex h-10 w-max items-center justify-center rounded-none bg-transparent px-4 py-2 text-sm font-bold transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
                   >
                     HUMANITARIAN
                   </Link>
                   <Link
                     href="/"
-                    className="border-r-2 border-black group inline-flex h-10 w-max items-center justify-center rounded-none bg-transparent px-3 lg:px-4 py-2 text-xs lg:text-sm font-bold transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
+                    className="border-r-2 border-black group inline-flex h-10 w-max items-center justify-center rounded-none bg-transparent px-4 py-2 text-sm font-bold transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
                   >
                     TRADE
                   </Link>
                   <Link
                     href="/"
-                    className="border-r-2 border-black group inline-flex h-10 w-max items-center justify-center rounded-none bg-transparent px-3 lg:px-4 py-2 text-xs lg:text-sm font-bold transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
+                    className="border-r-2 border-black group inline-flex h-10 w-max items-center justify-center rounded-none bg-transparent px-4 py-2 text-sm font-bold transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
                   >
                     GEOPOLITICS
                   </Link>
                   <Link
                     href="/"
-                    className="border-r-2 border-black group inline-flex h-10 w-max items-center justify-center rounded-none bg-transparent px-3 lg:px-4 py-2 text-xs lg:text-sm font-bold transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
+                    className="border-r-2 border-black group inline-flex h-10 w-max items-center justify-center rounded-none bg-transparent px-4 py-2 text-sm font-bold transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
                   >
                     SPACES
                   </Link>
@@ -142,7 +161,7 @@ const Header = () => {
             size="icon-lg"
             className="md:hidden ml-auto rounded-full flex items-center justify-center"
             style={{
-              display: windowWidth <= 1650 ? "flex" : "none",
+              display: windowWidth <= 1050 ? "flex" : "none",
               alignItems: "center",
               justifyContent: "center",
             }}
