@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Search, Menu } from "lucide-react";
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -15,8 +16,17 @@ import { client } from "@/sanity/client";
 import { breakingNewsQuery } from "@/sanity/queries";
 
 const Header = () => {
+  const pathname = usePathname();
   const [windowWidth, setWindowWidth] = useState(0);
   const [breakingNews, setBreakingNews] = useState<any[]>([]);
+
+  // Helper function to determine active link styling
+  const getNavLinkClass = (href: string) => {
+    const isActive = pathname === href;
+    return isActive
+      ? "text-red-600"
+      : "text-gray-800 hover:bg-gray-300";
+  };
 
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
@@ -81,38 +91,38 @@ const Header = () => {
               <NavigationMenuList className="flex-nowrap">
                 <NavigationMenuItem className="flex whitespace-nowrap">
                   <Link
-                    href="/"
-                    className="border-r-2 border-black text-red-600 group inline-flex h-10 w-max items-center justify-center rounded-none bg-transparent px-3 lg:px-4 py-2 text-xs lg:text-sm font-bold transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
+                    href={pathname === "/myanmar" ? "/" : "/myanmar"}
+                    className={`border-r-2 border-black inline-flex h-10 w-max items-center justify-center rounded-none px-3 lg:px-4 py-2 text-xs lg:text-sm font-bold ${getNavLinkClass(pathname === "/myanmar" ? "/" : "/myanmar")}`}
                   >
-                    MYANMAR
+                    {pathname === "/myanmar" ? "HOME" : "MYANMAR"}
                   </Link>
                   <Link
-                    href="/"
-                    className="border-r-2 border-black group inline-flex h-10 w-max items-center justify-center rounded-none bg-transparent px-3 lg:px-4 py-2 text-xs lg:text-sm font-bold transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
+                    href="/conflict"
+                    className={`border-r-2 border-black inline-flex h-10 w-max items-center justify-center rounded-none px-3 lg:px-4 py-2 text-xs lg:text-sm font-bold ${getNavLinkClass("/conflict")}`}
                   >
                     CONFLICT
                   </Link>
                   <Link
-                    href="/"
-                    className="border-r-2 border-black group inline-flex h-10 w-max items-center justify-center rounded-none bg-transparent px-3 lg:px-4 py-2 text-xs lg:text-sm font-bold transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
+                    href="/humanitarian"
+                    className={`border-r-2 border-black inline-flex h-10 w-max items-center justify-center rounded-none px-3 lg:px-4 py-2 text-xs lg:text-sm font-bold ${getNavLinkClass("/humanitarian")}`}
                   >
                     HUMANITARIAN
                   </Link>
                   <Link
-                    href="/"
-                    className="border-r-2 border-black group inline-flex h-10 w-max items-center justify-center rounded-none bg-transparent px-3 lg:px-4 py-2 text-xs lg:text-sm font-bold transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
+                    href="/trade"
+                    className={`border-r-2 border-black inline-flex h-10 w-max items-center justify-center rounded-none px-3 lg:px-4 py-2 text-xs lg:text-sm font-bold ${getNavLinkClass("/trade")}`}
                   >
                     TRADE
                   </Link>
                   <Link
-                    href="/"
-                    className="border-r-2 border-black group inline-flex h-10 w-max items-center justify-center rounded-none bg-transparent px-3 lg:px-4 py-2 text-xs lg:text-sm font-bold transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
+                    href="/geopolitics"
+                    className={`border-r-2 border-black inline-flex h-10 w-max items-center justify-center rounded-none px-3 lg:px-4 py-2 text-xs lg:text-sm font-bold ${getNavLinkClass("/geopolitics")}`}
                   >
                     GEOPOLITICS
                   </Link>
                   <Link
-                    href="/"
-                    className="border-r-2 border-black group inline-flex h-10 w-max items-center justify-center rounded-none bg-transparent px-3 lg:px-4 py-2 text-xs lg:text-sm font-bold transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
+                    href="/spaces"
+                    className={`border-r-2 border-black inline-flex h-10 w-max items-center justify-center rounded-none px-3 lg:px-4 py-2 text-xs lg:text-sm font-bold ${getNavLinkClass("/spaces")}`}
                   >
                     SPACES
                   </Link>
@@ -171,8 +181,13 @@ const Header = () => {
               LIVE NEWS UPDATE!
             </p>
             {breakingNews.map((news, index) => (
-              <div key={index} className="flex items-center gap-2">
-                <p className="text-white text-sm mr-2">{news.title}</p>
+              <div key={index} className="flex items-center gap-4">
+                <Link
+                  href={`/article/${news.slug.current}`}
+                  className="text-white text-sm mr-2 hover:text-red-400 hover:underline transition-colors ml-1"
+                >
+                  {news.title}
+                </Link>
                 {news.region && (
                   <button className="hidden md:block p-1 bg-green-700 text-white font-bold text-sm">
                     {news.region.title.toUpperCase()}

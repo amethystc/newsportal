@@ -54,7 +54,7 @@ async function getHomepageData(): Promise<HomepageData> {
       `${process.env.NEXT_PUBLIC_BASE_URL}/api/news`,
       {
         next: { revalidate: 0 }, // No caching - always fetch fresh data
-      },
+      }
     );
 
     if (!response.ok) {
@@ -140,14 +140,14 @@ export default async function Home() {
           article={data.conflict}
         />
         <Exclusive />
-        <EditorsChoiceV2 title="Humanitarian" articles={data.geopolitics} />
+        <EditorsChoiceV2 title="HUMANITARIAN" articles={data.humanitarian} />
         <EditorsChoiceV2 title="TRADE" articles={data.trade} />
         <SubscriptionCTA />
         <RegionSpotlight articles={data.regionSpotlight} />
         <EditorChoise
           title="GEOPOLITICS"
           background="bg-gray-200"
-          article={data.spaces}
+          article={data.geopolitics}
         />
         <Footer />
       </main>

@@ -312,6 +312,44 @@ export const breakingNewsQuery = `
   } | order(publishedAt desc) [0...5]
 `;
 
+export const myanmarQuery = `
+  *[_type == "article" && $region in region->title]{
+    title,
+    slug,
+    excerpt,
+    mainImage {
+      asset-> {
+        url,
+        altText,
+        metadata {
+          dimensions,
+          lqip
+        }
+      },
+      alt
+    },
+    author-> {
+      name,
+      slug,
+      image {
+        asset-> {
+          url,
+          altText
+        }
+      }
+    },
+    publishedAt,
+    region-> {
+      title,
+      slug
+    },
+    tags[]-> {
+      title,
+      slug
+    }
+  } | order(publishedAt desc)
+`;
+
 export const articleQuery = `
   *[_type == "article" && slug.current == $slug][0] {
     title,
