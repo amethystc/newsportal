@@ -2,8 +2,10 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Search, X } from "lucide-react";
+import { Search, X, ChevronDown, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { client } from "@/sanity/client";
+import { allContinentsWithCountriesQuery } from "@/sanity/queries.region";
 
 interface MobileNavigationProps {
   isOpen: boolean;
@@ -12,6 +14,9 @@ interface MobileNavigationProps {
 
 const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [continents, setContinents] = useState<any[]>([]);
+  const [expandedContinent, setExpandedContinent] = useState<string | null>(null);
+  const [isWorldExpanded, setIsWorldExpanded] = useState(false);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,6 +38,24 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
       document.body.style.overflow = "unset";
     };
   }, [isOpen]);
+
+  useEffect(() => {
+    const fetchRegions = async () => {
+      try {
+        const data = await client.fetch(allContinentsWithCountriesQuery);
+        setContinents(data);
+      } catch (error) {
+        console.error("Error fetching regions:", error);
+      }
+    };
+    if (isOpen) {
+      fetchRegions();
+    }
+  }, [isOpen]);
+
+  const toggleContinent = (id: string) => {
+    setExpandedContinent(expandedContinent === id ? null : id);
+  };
 
   console.log("MobileNavigation render, isOpen:", isOpen);
   if (!isOpen) return null;
@@ -122,7 +145,7 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
                 {/* MYANMAR */}
                 <div className="border-b border-gray-200 pb-2">
                   <Link
-                    href="/"
+                    href="/myanmar"
                     className="block w-full text-left font-bold text-red-600 py-3 px-4 hover:bg-gray-50 rounded transition-colors"
                     onClick={onClose}
                   >
@@ -133,7 +156,7 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
                 {/* CONFLICT */}
                 <div className="border-b border-gray-200 pb-2">
                   <Link
-                    href="/"
+                    href="/conflict"
                     className="block w-full text-left font-bold py-3 px-4 hover:bg-gray-50 rounded transition-colors"
                     onClick={onClose}
                   >
@@ -141,21 +164,21 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
                   </Link>
                 </div>
 
-                {/* HIUMANTARIAN */}
+                {/* HUMANITARIAN */}
                 <div className="border-b border-gray-200 pb-2">
                   <Link
-                    href="/"
+                    href="/humanitarian"
                     className="block w-full text-left font-bold py-3 px-4 hover:bg-gray-50 rounded transition-colors"
                     onClick={onClose}
                   >
-                    HIUMANTARIAN
+                    HUMANITARIAN
                   </Link>
                 </div>
 
                 {/* TRADE */}
                 <div className="border-b border-gray-200 pb-2">
                   <Link
-                    href="/"
+                    href="/trade"
                     className="block w-full text-left font-bold py-3 px-4 hover:bg-gray-50 rounded transition-colors"
                     onClick={onClose}
                   >
@@ -166,7 +189,7 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
                 {/* GEOPOLITICS */}
                 <div className="border-b border-gray-200 pb-2">
                   <Link
-                    href="/"
+                    href="/geopolitics"
                     className="block w-full text-left font-bold py-3 px-4 hover:bg-gray-50 rounded transition-colors"
                     onClick={onClose}
                   >
@@ -175,14 +198,62 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
                 </div>
 
                 {/* SPACES */}
-                <div className="pb-4">
+                <div className="border-b border-gray-200 pb-2">
                   <Link
-                    href="/"
+                    href="/spaces"
                     className="block w-full text-left font-bold py-3 px-4 hover:bg-gray-50 rounded transition-colors"
                     onClick={onClose}
                   >
                     SPACES
                   </Link>
+                </div>
+
+                {/* WORLD / REGIONS - Dynamic */}
+                <div className="border-b border-gray-200 pb-2">
+                  <button
+                    className="flex items-center justify-between w-full text-left font-bold py-3 px-4 hover:bg-gray-50 rounded transition-colors"
+                    onClick={() => setIsWorldExpanded(!isWorldExpanded)}
+                  >
+                    <span>WORLD</span>
+                    {isWorldExpanded ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
+                  </button>
+
+                  {isWorldExpanded && (
+                    <div className="ml-4 mt-2 space-y-1">
+                      {continents.map((continent) => (
+                        <div key={continent._id} className="border-l-2 border-gray-100 pl-2">
+                          <button
+                            className="flex items-center justify-between w-full text-left font-semibold py-2 px-2 text-sm text-gray-700 hover:bg-gray-50 rounded"
+                            onClick={() => toggleContinent(continent._id)}
+                          >
+                            <span className="uppercase tracking-wider">{continent.title}</span>
+                            {expandedContinent === continent._id ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+                          </button>
+
+                          {expandedContinent === continent._id && (
+                            <div className="ml-4 flex flex-col space-y-1 py-1">
+                              {continent.countries?.map((country: any) => (
+                                <Link
+                                  key={country._id}
+                                  href={`/regions/${continent.slug.current}/${country.slug.current}`}
+                                  className="text-sm text-gray-600 py-1.5 px-2 hover:bg-gray-100 rounded transition-colors"
+                                  onClick={onClose}
+                                >
+                                  {country.title}
+                                </Link>
+                              ))}
+                              {(!continent.countries || continent.countries.length === 0) && (
+                                <span className="text-xs text-gray-400 italic px-2">No countries</span>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                      {continents.length === 0 && (
+                        <div className="text-sm text-gray-500 italic p-2">Loading regions...</div>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -195,6 +266,38 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
                 >
                   JOIN NOW
                 </Button>
+              </div>
+
+              {/* Utility Links (New for Mobile) */}
+              <div className="mt-8 pt-6 border-t grid grid-cols-2 gap-4">
+                <Link
+                  href="/magazine"
+                  className="text-xs font-bold text-gray-500 hover:text-black transition-colors uppercase tracking-wider px-4"
+                  onClick={onClose}
+                >
+                  Magazine
+                </Link>
+                <Link
+                  href="/articles"
+                  className="text-xs font-bold text-gray-500 hover:text-black transition-colors uppercase tracking-wider px-4"
+                  onClick={onClose}
+                >
+                  Articles
+                </Link>
+                <Link
+                  href="/about"
+                  className="text-xs font-bold text-gray-500 hover:text-black transition-colors uppercase tracking-wider px-4"
+                  onClick={onClose}
+                >
+                  About
+                </Link>
+                <Link
+                  href="/contact"
+                  className="text-xs font-bold text-gray-500 hover:text-black transition-colors uppercase tracking-wider px-4"
+                  onClick={onClose}
+                >
+                  Contact
+                </Link>
               </div>
             </nav>
           </div>

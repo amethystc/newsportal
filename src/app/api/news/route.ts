@@ -16,19 +16,12 @@ export async function GET(): Promise<Response> {
     const hero = await client.fetch(heroQuery);
     const editoChoice = await client.fetch(EditoChoiceQuery);
 
-    // Fetch 4 latest articles for each tag
-    const spaces = await client.fetch(spacesQuery, { tag: "Space" } as any);
-    // console.log(spaces);
-    const geopolitics = await client.fetch(geopoliticsQuery, {
-      tag: "Geopolitics",
-    } as any);
-    const trade = await client.fetch(tradeQuery, { tag: "Trade" } as any);
-    const humanitarian = await client.fetch(humanitarianQuery, {
-      tag: "Humanitarian",
-    } as any);
-    const conflict = await client.fetch(conflictQuery, {
-      tag: "Conflict",
-    } as any);
+    // Fetch 4 latest articles for each category
+    const spaces = await client.fetch(spacesQuery);
+    const geopolitics = await client.fetch(geopoliticsQuery);
+    const trade = await client.fetch(tradeQuery);
+    const humanitarian = await client.fetch(humanitarianQuery);
+    const conflict = await client.fetch(conflictQuery);
     const regionSpotlight = await client.fetch(regionSpotlightQuery);
 
     const response: NewsResponse = {

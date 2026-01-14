@@ -50,8 +50,9 @@ async function getHomepageData(): Promise<HomepageData> {
   try {
     console.log("Fetching homepage data from API...");
 
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/news`,
+      `${baseUrl}/api/news`,
       {
         next: { revalidate: 0 }, // No caching - always fetch fresh data
       }

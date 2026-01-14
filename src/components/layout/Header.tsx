@@ -1,24 +1,21 @@
 "use client";
 
-import Link from "next/link";
-import { Search, Menu } from "lucide-react";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuList,
-} from "@/components/ui/navigation-menu";
-import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import Image from "next/image";
 import Marquee from "react-fast-marquee";
 import { client } from "@/sanity/client";
 import { breakingNewsQuery } from "@/sanity/queries";
+import { allContinentsWithCountriesQuery } from "@/sanity/queries.region";
+import UtilityNav from "./UtilityNav";
+import MainNav from "./MainNav";
 
 const Header = () => {
   const pathname = usePathname();
   const [windowWidth, setWindowWidth] = useState(0);
   const [breakingNews, setBreakingNews] = useState<any[]>([]);
+  const [continents, setContinents] = useState<any[]>([]);
 
   // Helper function to determine active link styling
   const getNavLinkClass = (href: string) => {
@@ -49,126 +46,55 @@ const Header = () => {
     };
     fetchBreakingNews();
 
-    // Refresh breaking news every 30 seconds
     const interval = setInterval(fetchBreakingNews, 30000);
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    const fetchRegions = async () => {
+      try {
+        const data = await client.fetch(allContinentsWithCountriesQuery);
+        setContinents(data);
+      } catch (error) {
+        console.error("Error fetching regions:", error);
+      }
+    };
+    fetchRegions();
+  }, []);
+
   return (
-    <header className="w-full min-h-[15vh] bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-1000">
-      <Link href="/" className="hidden text-xl font-bold z-100 md:block ">
-        <Image
-          src="/conflict-wire-logo.png"
-          alt="Logo"
-          width={180}
-          height={180}
-          className="fixed top-0 sm:left-[0em] xl:left-[7em]  lg:w-[160px] lg:h-[160px] md:absolute "
-          priority
-          unoptimized
-        />
-      </Link>
-      <Link href="/" className="text-xl font-bold  z-100 md:hidden">
-        <Image
-          src="/conflict-wire-logo.png"
-          alt="Logo"
-          width={80}
-          height={80}
-          className="md:hidden fixed top-2 sm:left-[0em] xl:left-[7em] md:w-[215px] md:h-[215px] "
-          priority
-          unoptimized
-        />
-      </Link>
-      <nav
-        className="ml-auto px-6 py-6 w-full"
-        style={{ width: windowWidth > 1650 ? "78%" : "100%" }}
-      >
-        <div className="flex w-full items-center">
-          {/* Desktop Navigation */}
-          <div
-            className="hidden md:flex items-start space-x-4 lg:space-x-6 w-full"
-            style={{ display: windowWidth > 1650 ? "flex" : "none" }}
-          >
-            <NavigationMenu style={{ marginRight: "auto" }}>
-              <NavigationMenuList className="flex-nowrap">
-                <NavigationMenuItem className="flex whitespace-nowrap">
-                  <Link
-                    href={pathname === "/myanmar" ? "/" : "/myanmar"}
-                    className={`border-r-2 border-black inline-flex h-10 w-max items-center justify-center rounded-none px-3 lg:px-4 py-2 text-xs lg:text-sm font-bold ${getNavLinkClass(pathname === "/myanmar" ? "/" : "/myanmar")}`}
-                  >
-                    {pathname === "/myanmar" ? "HOME" : "MYANMAR"}
-                  </Link>
-                  <Link
-                    href="/conflict"
-                    className={`border-r-2 border-black inline-flex h-10 w-max items-center justify-center rounded-none px-3 lg:px-4 py-2 text-xs lg:text-sm font-bold ${getNavLinkClass("/conflict")}`}
-                  >
-                    CONFLICT
-                  </Link>
-                  <Link
-                    href="/humanitarian"
-                    className={`border-r-2 border-black inline-flex h-10 w-max items-center justify-center rounded-none px-3 lg:px-4 py-2 text-xs lg:text-sm font-bold ${getNavLinkClass("/humanitarian")}`}
-                  >
-                    HUMANITARIAN
-                  </Link>
-                  <Link
-                    href="/trade"
-                    className={`border-r-2 border-black inline-flex h-10 w-max items-center justify-center rounded-none px-3 lg:px-4 py-2 text-xs lg:text-sm font-bold ${getNavLinkClass("/trade")}`}
-                  >
-                    TRADE
-                  </Link>
-                  <Link
-                    href="/geopolitics"
-                    className={`border-r-2 border-black inline-flex h-10 w-max items-center justify-center rounded-none px-3 lg:px-4 py-2 text-xs lg:text-sm font-bold ${getNavLinkClass("/geopolitics")}`}
-                  >
-                    GEOPOLITICS
-                  </Link>
-                  <Link
-                    href="/spaces"
-                    className={`border-r-2 border-black inline-flex h-10 w-max items-center justify-center rounded-none px-3 lg:px-4 py-2 text-xs lg:text-sm font-bold ${getNavLinkClass("/spaces")}`}
-                  >
-                    SPACES
-                  </Link>
-                </NavigationMenuItem>
-              </NavigationMenuList>
-            </NavigationMenu>
-          </div>
-          <div className="hidden md:flex flex-row justify-end items-center gap-2 w-[90%] p-2 ">
-            <form className="flex flex-row gap-2 items-center border border-gray-800 p-1 rounded-md">
-              <Search size="20" className="text-gray-600" />
-              <input
-                type="text"
-                placeholder="Search"
-                className="w-[200px] border-none outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
-              />
-            </form>
-            <Button
-              variant="outline"
-              className="border-2 border-red-500 bg-red-400/10 font-semibold xl:text-lg text-red-500 hover:text-red-600 hover:bg-red-400/20"
-            >
-              JOIN NOW
-            </Button>
-          </div>
-          {/* Mobile Menu Button */}
-          <Button
-            variant="default"
-            size="icon-lg"
-            className="md:hidden ml-auto rounded-full flex items-center justify-center"
-            style={{
-              display: windowWidth <= 1650 ? "flex" : "none",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-            onClick={() => {
-              console.log("Burger button clicked");
-              if (typeof window !== "undefined") {
-                window.dispatchEvent(new CustomEvent("openMobileMenu"));
-              }
-            }}
-          >
-            <Menu className="h-5 w-5" />
-          </Button>
+    <header className="w-full min-h-[15vh] bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-[1000] relative">
+      {/* 1. Utility Navigation (New) */}
+      <UtilityNav />
+
+      {/* Main Bar with Logo and MainNav */}
+      <div className="relative border-b border-gray-100">
+        {/* Desktop Logo - Adjusted positioning to stay clear of UtilityNav */}
+        <div className="hidden md:block absolute top-1/2 -translate-y-1/2 left-0 lg:left-[2em] xl:left-[7em] z-[101]">
+          <Link href="/">
+            <Image
+              src="/conflict-wire-logo.png"
+              alt="Logo"
+              width={160}
+              height={160}
+              className="object-contain lg:w-[140px] lg:h-[140px] xl:w-[160px] xl:h-[160px]"
+              priority
+              unoptimized
+            />
+          </Link>
         </div>
-      </nav>
-      {/*FOOTER Headers*/}
-      <div className="bg-red-500 w-full min-h-[20px]"></div>
+
+        {/* 2. Main Navigation (Existing but refactored) */}
+        <MainNav
+          pathname={pathname}
+          windowWidth={windowWidth}
+          continents={continents}
+          getNavLinkClass={getNavLinkClass}
+        />
+      </div>
+
+      {/* Breaking News Section (Existing) */}
+      <div className="bg-red-500 w-full min-h-[4px]"></div>
       <div className="bg-black w-full p-2 flex">
         <div className="w-[90%] md:w-1/2 mx-auto">
           <Marquee
@@ -188,9 +114,9 @@ const Header = () => {
                 >
                   {news.title}
                 </Link>
-                {news.region && (
+                {(news.region?.country?.title || news.region?.continent?.title) && (
                   <button className="hidden md:block p-1 bg-green-700 text-white font-bold text-sm">
-                    {news.region.title.toUpperCase()}
+                    {(news.region.country?.title || news.region.continent?.title).toUpperCase()}
                   </button>
                 )}
               </div>

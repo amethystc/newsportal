@@ -13,7 +13,7 @@ export function ArticleHeader({ article }: ArticleHeaderProps) {
       {/* Category and Date */}
       <div className="flex flex-wrap items-center gap-4 mb-4">
         <span className="bg-red-600 text-white text-xs font-bold uppercase px-3 py-1 rounded">
-          {article.region.title}
+          {article.region?.country?.title || article.region?.continent?.title || "NEWS"}
         </span>
         <div className="flex items-center gap-2 text-gray-600">
           <Clock size={14} />

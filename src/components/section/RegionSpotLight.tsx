@@ -51,7 +51,7 @@ export function RegionSpotlight({ articles }: RegionSpotlightProps) {
                       <div className="w-full h-full bg-gray-300" />
                     )}
                     <span className="absolute top-2 left-2 px-2 py-1 text-[10px] font-semibold uppercase text-white bg-red-600 rounded">
-                      {article.region?.title || "NEWS"}
+                      {article.region?.country?.title || article.region?.continent?.title || "NEWS"}
                     </span>
                   </div>
                   {/* content */}
@@ -94,7 +94,7 @@ export function RegionSpotlight({ articles }: RegionSpotlightProps) {
                     <div className="w-full h-full bg-gray-300" />
                   )}
                   <span className="absolute top-2 left-2 bg-gray-400 text-white text-[10px] font-semibold uppercase px-2 py-1 rounded">
-                    {rightTop.region?.title || "NEWS"}
+                    {rightTop.region?.country?.title || rightTop.region?.continent?.title || "NEWS"}
                   </span>
                 </div>
                 <div className="p-3">

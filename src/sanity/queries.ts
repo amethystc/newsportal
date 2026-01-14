@@ -1,304 +1,100 @@
-export const heroQuery = `
-  *[_type == "article" ] {
-    title,
-    slug,
-    excerpt,
-    mainImage {
-      asset-> {
-        url,
-        altText,
-        metadata {
-          dimensions,
-          lqip
-        }
-      },
-      alt
-    },
-    author-> {
-      name,
-      slug,
-      image {
-        asset-> {
-          url,
-          altText
-        }
+export const ARTICLE_FIELDS = `
+  title,
+  slug,
+  excerpt,
+  mainImage {
+    asset-> {
+      url,
+      altText,
+      metadata {
+        dimensions,
+        lqip
       }
     },
-    publishedAt,
+    alt
+  },
+  author-> {
+    name,
+    slug,
+    image {
+      asset-> {
+        url,
+        altText
+      }
+    }
+  },
+  publishedAt,
+  category-> {
+    title,
+    slug
+  },
+  "region": coalesce(
+    region {
+      continent-> {
+        title,
+        slug
+      },
+      country-> {
+        title,
+        slug
+      }
+    },
     region-> {
       title,
       slug
-    },
-    tags[]-> {
-      title,
-      slug
     }
+  ),
+  tags[]-> {
+    title,
+    slug
+  }
+`;
+
+export const heroQuery = `
+  *[_type == "article" ] {
+    ${ARTICLE_FIELDS}
   } | order(publishedAt desc) [0...9]
 `;
 
 export const EditoChoiceQuery = `
   *[_type == "article" && featured == true]{
-    title,
-    slug,
-    excerpt,
-    mainImage {
-      asset-> {
-        url,
-        altText,
-        metadata {
-          dimensions,
-          lqip
-        }
-      },
-      alt
-    },
-    author-> {
-      name,
-      slug,
-      image {
-        asset-> {
-          url,
-          altText
-        }
-      }
-    },
-    publishedAt,
-    region-> {
-      title,
-      slug
-    },
-    tags[]-> {
-      title,
-      slug
-    }
+    ${ARTICLE_FIELDS}
   } | order(publishedAt desc)
 `;
 
 export const spacesQuery = `
-  *[_type == "article" && $tag in tags[]->title]{
-    title,
-    slug,
-    excerpt,
-    mainImage {
-      asset-> {
-        url,
-        altText,
-        metadata {
-          dimensions,
-          lqip
-        }
-      },
-      alt
-    },
-    author-> {
-      name,
-      slug,
-      image {
-        asset-> {
-          url,
-          altText
-        }
-      }
-    },
-    publishedAt,
-    region-> {
-      title,
-      slug
-    },
-    tags[]-> {
-      title,
-      slug
-    }
+  *[_type == "article" && category->title == "Space"]{
+    ${ARTICLE_FIELDS}
   } | order(publishedAt desc) [0...4]
 `;
 
 export const geopoliticsQuery = `
-  *[_type == "article" && $tag in tags[]->title]{
-    title,
-    slug,
-    excerpt,
-    mainImage {
-      asset-> {
-        url,
-        altText,
-        metadata {
-          dimensions,
-          lqip
-        }
-      },
-      alt
-    },
-    author-> {
-      name,
-      slug,
-      image {
-        asset-> {
-          url,
-          altText
-        }
-      }
-    },
-    publishedAt,
-    region-> {
-      title,
-      slug
-    },
-    tags[]-> {
-      title,
-      slug
-    }
+  *[_type == "article" && category->title == "Geopolitics"]{
+    ${ARTICLE_FIELDS}
   } | order(publishedAt desc) [0...4]
 `;
 
 export const tradeQuery = `
-  *[_type == "article" && $tag in tags[]->title]{
-    title,
-    slug,
-    excerpt,
-    mainImage {
-      asset-> {
-        url,
-        altText,
-        metadata {
-          dimensions,
-          lqip
-        }
-      },
-      alt
-    },
-    author-> {
-      name,
-      slug,
-      image {
-        asset-> {
-          url,
-          altText
-        }
-      }
-    },
-    publishedAt,
-    region-> {
-      title,
-      slug
-    },
-    tags[]-> {
-      title,
-      slug
-    }
+  *[_type == "article" && category->title == "Trade"]{
+    ${ARTICLE_FIELDS}
   } | order(publishedAt desc) [0...4]
 `;
 
 export const humanitarianQuery = `
-  *[_type == "article" && $tag in tags[]->title]{
-    title,
-    slug,
-    excerpt,
-    mainImage {
-      asset-> {
-        url,
-        altText,
-        metadata {
-          dimensions,
-          lqip
-        }
-      },
-      alt
-    },
-    author-> {
-      name,
-      slug,
-      image {
-        asset-> {
-          url,
-          altText
-        }
-      }
-    },
-    publishedAt,
-    region-> {
-      title,
-      slug
-    },
-    tags[]-> {
-      title,
-      slug
-    }
+  *[_type == "article" && category->title == "Humanitarian"]{
+    ${ARTICLE_FIELDS}
   } | order(publishedAt desc) [0...4]
 `;
 
 export const conflictQuery = `
-  *[_type == "article" && $tag in tags[]->title]{
-    title,
-    slug,
-    excerpt,
-    mainImage {
-      asset-> {
-        url,
-        altText,
-        metadata {
-          dimensions,
-          lqip
-        }
-      },
-      alt
-    },
-    author-> {
-      name,
-      slug,
-      image {
-        asset-> {
-          url,
-          altText
-        }
-      }
-    },
-    publishedAt,
-    region-> {
-      title,
-      slug
-    },
-    tags[]-> {
-      title,
-      slug
-    }
+  *[_type == "article" && category->title == "Conflict"]{
+    ${ARTICLE_FIELDS}
   } | order(publishedAt desc) [0...4]
 `;
 
 export const regionSpotlightQuery = `
   *[_type == "article"]{
-    title,
-    slug,
-    excerpt,
-    mainImage {
-      asset-> {
-        url,
-        altText,
-        metadata {
-          dimensions,
-          lqip
-        }
-      },
-      alt
-    },
-    author-> {
-      name,
-      slug,
-      image {
-        asset-> {
-          url,
-          altText
-        }
-      }
-    },
-    publishedAt,
-    region-> {
-      title,
-      slug
-    },
-    tags[]-> {
-      title,
-      slug
-    }
+    ${ARTICLE_FIELDS}
   } | order(publishedAt desc) [0...11]
 `;
 
@@ -306,84 +102,53 @@ export const breakingNewsQuery = `
   *[_type == "article"] {
     title,
     slug,
-    region-> {
-      title
-    }
+    "region": coalesce(
+      region {
+        continent-> { title },
+        country-> { title }
+      },
+      region-> { title }
+    )
   } | order(publishedAt desc) [0...5]
 `;
 
 export const myanmarQuery = `
-  *[_type == "article" && $region in region->title]{
-    title,
-    slug,
-    excerpt,
-    mainImage {
-      asset-> {
-        url,
-        altText,
-        metadata {
-          dimensions,
-          lqip
-        }
-      },
-      alt
-    },
-    author-> {
-      name,
-      slug,
-      image {
-        asset-> {
-          url,
-          altText
-        }
-      }
-    },
-    publishedAt,
-    region-> {
-      title,
-      slug
-    },
-    tags[]-> {
-      title,
-      slug
-    }
+  *[_type == "article" && category->title == "Myanmar"]{
+    ${ARTICLE_FIELDS}
   } | order(publishedAt desc)
 `;
 
 export const articleQuery = `
   *[_type == "article" && slug.current == $slug][0] {
-    title,
-    slug,
-    excerpt,
+    ${ARTICLE_FIELDS},
     mainImage {
+      ...,
       asset-> {
-        url,
-        altText,
+        ...,
         metadata {
-          dimensions,
-          lqip,
+          ...,
           palette
         }
-      },
-      alt,
-      caption
+      }
     },
     author-> {
-      name,
-      slug,
+      ...,
       image {
-        asset-> {
-          url,
-          altText
-        }
+        asset->
       },
       bio
     },
-    publishedAt,
-    region-> {
-      title,
-      slug,
-      description
+    region {
+      continent-> {
+        title,
+        slug,
+        description
+      },
+      country-> {
+        title,
+        slug,
+        description
+      }
     },
     tags[]-> {
       title,
@@ -394,7 +159,8 @@ export const articleQuery = `
     featured,
     "estimatedReadTime": round(length(pt::text(body)) / 5 / 180),
     "relatedArticles": *[_type == "article" && _id != ^._id && (
-      region._ref == ^.region._ref ||
+      region.country._ref == ^.region.country._ref ||
+      region.continent._ref == ^.region.continent._ref ||
       count(tags[_ref in ^.tags[_ref]]) > 0
     )] {
       title,

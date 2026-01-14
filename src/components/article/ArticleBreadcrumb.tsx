@@ -12,13 +12,28 @@ export function ArticleBreadcrumb({ article }: ArticleBreadcrumbProps) {
         <Link href="/" className="hover:text-red-600 transition-colors">
           Home
         </Link>
-        <span>/</span>
-        <Link
-          href={`/region/${article.region.slug.current}`}
-          className="hover:text-red-600 transition-colors"
-        >
-          {article.region.title}
-        </Link>
+        {article.region?.continent && (
+          <>
+            <span>/</span>
+            <Link
+              href={`/regions/${article.region.continent.slug.current}`}
+              className="hover:text-red-600 transition-colors"
+            >
+              {article.region.continent.title}
+            </Link>
+          </>
+        )}
+        {article.region?.country && (
+          <>
+            <span>/</span>
+            <Link
+              href={`/regions/${article.region.continent?.slug.current}/${article.region.country.slug.current}`}
+              className="hover:text-red-600 transition-colors"
+            >
+              {article.region.country.title}
+            </Link>
+          </>
+        )}
         <span>/</span>
         <span className="text-gray-900">{article.title}</span>
       </nav>

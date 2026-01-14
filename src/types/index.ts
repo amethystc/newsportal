@@ -38,13 +38,26 @@ export interface Author {
 }
 
 // Region types
-export interface Region {
+export interface Continent {
   title: string;
   slug: {
     current: string;
     _type: "slug";
   };
-  description?: string;
+}
+
+export interface Country {
+  title: string;
+  slug: {
+    current: string;
+    _type: "slug";
+  };
+  continent?: Continent | string;
+}
+
+export interface ArticleRegion {
+  continent?: Continent;
+  country?: Country;
 }
 
 // Tag types
@@ -55,6 +68,15 @@ export interface Tag {
     _type: "slug";
   };
   description?: string;
+}
+
+// Category types
+export interface Category {
+  title: string;
+  slug: {
+    current: string;
+    _type: "slug";
+  };
 }
 
 // Main Image types
@@ -75,7 +97,8 @@ export interface Article {
   mainImage?: MainImage;
   author: Author;
   publishedAt: string;
-  region: Region;
+  category: Category;
+  region?: ArticleRegion;
   tags: Tag[];
   body?: any[]; // Portable Text array
   featured?: boolean;
