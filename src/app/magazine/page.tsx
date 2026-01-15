@@ -1,17 +1,36 @@
+"use client";
 
 import { client } from "@/sanity/client";
 import { magazineQuery } from "@/sanity/queries";
 import Image from "next/image";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import Header from "@/components/layout/Header";
 import { Footer } from "@/components/section/Footer";
+import { useCart } from "@/context/CartContext";
+import { ShoppingCart } from "lucide-react";
+import { useEffect, useState } from "react";
 
-// Revalidate every hour
-export const revalidate = 3600;
+export default function MagazinePage() {
+    const [magazines, setMagazines] = useState<any[]>([]);
+    const { addToCart } = useCart();
 
-export default async function MagazinePage() {
-    const magazines = await client.fetch(magazineQuery);
+    useEffect(() => {
+        const fetchMagazines = async () => {
+            const data = await client.fetch(magazineQuery);
+            setMagazines(data);
+        };
+        fetchMagazines();
+    }, []);
+
+    const handleAddToCart = (mag: any) => {
+        addToCart({
+            id: mag.slug?.current || mag.title,
+            title: mag.title,
+            price: mag.price || 0,
+            coverImage: mag.coverImage,
+            checkoutUrl: mag.checkoutUrl,
+        });
+    };
 
     return (
         <>
@@ -30,7 +49,7 @@ export default async function MagazinePage() {
                     ) : (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             {magazines.map((mag: any) => (
-                                <div key={mag.slug?.current || mag.title} className="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow bg-white">
+                                <div key={mag.slug?.current || mag.title} className="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow bg-white flex flex-col">
                                     <div className="relative h-[400px] w-full bg-gray-100 items-center justify-center flex">
                                         {mag.coverImage ? (
                                             <Image
@@ -71,22 +90,24 @@ export default async function MagazinePage() {
                                             )}
 
                                             <div className="flex flex-col gap-3">
-                                                {mag.checkoutUrl && (
-                                                    <Button asChild className="w-full bg-black hover:bg-gray-800 text-white shadow-md transition-all hover:translate-y-[-1px]">
-                                                        <a href={mag.checkoutUrl} target="_blank" rel="noopener noreferrer">
-                                                            Buy Now
-                                                        </a>
+                                                {mag.price > 0 && (
+                                                    <Button
+                                                        onClick={() => handleAddToCart(mag)}
+                                                        className="w-full bg-black hover:bg-gray-800 text-white shadow-md transition-all hover:translate-y-[-1px] flex items-center justify-center gap-2"
+                                                    >
+                                                        <ShoppingCart size={18} />
+                                                        Add to Cart
                                                     </Button>
                                                 )}
 
                                                 {mag.magazinePdf ? (
-                                                    <Button asChild variant={mag.checkoutUrl ? "outline" : "default"} className={`w-full ${!mag.checkoutUrl ? "bg-red-600 hover:bg-red-700 text-white" : "border-gray-300"}`}>
+                                                    <Button asChild variant={mag.price > 0 ? "outline" : "default"} className={`w-full ${mag.price === 0 ? "bg-red-600 hover:bg-red-700 text-white" : "border-gray-300"}`}>
                                                         <a href={mag.magazinePdf} target="_blank" rel="noopener noreferrer" download>
-                                                            {mag.checkoutUrl ? "Download Free Preview" : "Download PDF"}
+                                                            {mag.price > 0 ? "Download Free Preview" : "Download PDF"}
                                                         </a>
                                                     </Button>
                                                 ) : (
-                                                    !mag.checkoutUrl && (
+                                                    mag.price === 0 && (
                                                         <Button disabled className="w-full">
                                                             Unavailable
                                                         </Button>

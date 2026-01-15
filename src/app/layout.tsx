@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Be_Vietnam_Pro, Unbounded } from "next/font/google";
 import "./globals.css";
 import MobileNavigationWrapper from "@/components/layout/MobileNavigationWrapper";
+import ClientProviders from "@/components/layout/ClientProviders";
 
 const beVietnamPro = Be_Vietnam_Pro({
   variable: "--font-be-vietnam-pro",
@@ -102,7 +103,9 @@ export default function RootLayout({
       <body
         className={`${beVietnamPro.variable} ${unbounded.variable}  antialiased`}
       >
-        <MobileNavigationWrapper>{children}</MobileNavigationWrapper>
+        <ClientProviders>
+          <MobileNavigationWrapper>{children}</MobileNavigationWrapper>
+        </ClientProviders>
       </body>
     </html>
   );

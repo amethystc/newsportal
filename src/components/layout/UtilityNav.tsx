@@ -1,8 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import { useCart } from "@/context/CartContext";
+import { ShoppingBag } from "lucide-react";
 
 const UtilityNav = () => {
+    const { setIsOpen, items } = useCart();
+
     return (
         <div className="w-full bg-red-600 border-b border-white/10 py-2 px-4 hidden md:block">
             <div className="container mx-auto flex justify-between items-center max-w-[1400px]">
@@ -53,10 +57,23 @@ const UtilityNav = () => {
                         </Link>
                     </div>
 
-                    <div className="ml-6 pl-6 border-l border-white/30">
+                    <div className="ml-6 pl-6 border-l border-white/30 flex items-center gap-4">
+                        <button
+                            onClick={() => setIsOpen(true)}
+                            className="flex items-center gap-2 text-white hover:text-black transition-colors relative"
+                        >
+                            <ShoppingBag size={18} />
+                            <span className="text-[11px] font-unbounded-bold uppercase">Cart</span>
+                            {items.length > 0 && (
+                                <span className="absolute -top-2 -right-2 bg-[#ffe500] text-black text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                                    {items.length}
+                                </span>
+                            )}
+                        </button>
+
                         <Link
                             href="/login"
-                            className="flex items-center gap-2 text-white font-unbounded-bold text-xs hover:text-black transition-colors"
+                            className="flex items-center gap-2 text-white font-unbounded-bold text-xs hover:text-black transition-colors border-l border-white/30 pl-4"
                         >
                             <div className="w-5 h-5 rounded-full border border-white/50 flex items-center justify-center">
                                 <span className="text-[10px]">👤</span>
