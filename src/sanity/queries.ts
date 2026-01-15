@@ -185,3 +185,23 @@ export const addWaitlistQuery = `
     signedUpAt: dateTime()
   }
 `;
+
+export const magazineQuery = `
+  *[_type == "magazine"] {
+    title,
+    slug,
+    issueNumber,
+    description,
+    price,
+    checkoutUrl,
+    "coverImage": coverImage.asset->url,
+    "magazinePdf": magazinePdf.asset->url,
+    publishedAt
+  } | order(publishedAt desc)
+`;
+
+export const allArticlesQuery = `
+  *[_type == "article"] {
+    ${ARTICLE_FIELDS}
+  } | order(publishedAt desc)
+`;

@@ -17,6 +17,7 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
   const [continents, setContinents] = useState<any[]>([]);
   const [expandedContinent, setExpandedContinent] = useState<string | null>(null);
   const [isWorldExpanded, setIsWorldExpanded] = useState(false);
+  const [isArticlesExpanded, setIsArticlesExpanded] = useState(false);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -139,73 +140,51 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
               </form>
             </div>
 
-            {/* Navigation Menu - Same as Desktop */}
+            {/* Navigation Menu */}
             <nav className="p-4 bg-white z-30">
               <div className="space-y-2">
-                {/* MYANMAR */}
-                <div className="border-b border-gray-200 pb-2">
-                  <Link
-                    href="/myanmar"
-                    className="block w-full text-left font-bold text-red-600 py-3 px-4 hover:bg-gray-50 rounded transition-colors"
-                    onClick={onClose}
-                  >
-                    MYANMAR
-                  </Link>
-                </div>
 
-                {/* CONFLICT */}
+                {/* MAGAZINE */}
                 <div className="border-b border-gray-200 pb-2">
                   <Link
-                    href="/conflict"
+                    href="/magazine"
                     className="block w-full text-left font-bold py-3 px-4 hover:bg-gray-50 rounded transition-colors"
                     onClick={onClose}
                   >
-                    CONFLICT
+                    MAGAZINE
                   </Link>
                 </div>
 
-                {/* HUMANITARIAN */}
+                {/* ARTICLES - Accordion */}
                 <div className="border-b border-gray-200 pb-2">
-                  <Link
-                    href="/humanitarian"
-                    className="block w-full text-left font-bold py-3 px-4 hover:bg-gray-50 rounded transition-colors"
-                    onClick={onClose}
+                  <button
+                    className="flex items-center justify-between w-full text-left font-bold py-3 px-4 hover:bg-gray-50 rounded transition-colors"
+                    onClick={() => setIsArticlesExpanded(!isArticlesExpanded)}
                   >
-                    HUMANITARIAN
-                  </Link>
-                </div>
+                    <span>ARTICLES</span>
+                    {isArticlesExpanded ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
+                  </button>
 
-                {/* TRADE */}
-                <div className="border-b border-gray-200 pb-2">
-                  <Link
-                    href="/trade"
-                    className="block w-full text-left font-bold py-3 px-4 hover:bg-gray-50 rounded transition-colors"
-                    onClick={onClose}
-                  >
-                    TRADE
-                  </Link>
-                </div>
-
-                {/* GEOPOLITICS */}
-                <div className="border-b border-gray-200 pb-2">
-                  <Link
-                    href="/geopolitics"
-                    className="block w-full text-left font-bold py-3 px-4 hover:bg-gray-50 rounded transition-colors"
-                    onClick={onClose}
-                  >
-                    GEOPOLITICS
-                  </Link>
-                </div>
-
-                {/* SPACES */}
-                <div className="border-b border-gray-200 pb-2">
-                  <Link
-                    href="/spaces"
-                    className="block w-full text-left font-bold py-3 px-4 hover:bg-gray-50 rounded transition-colors"
-                    onClick={onClose}
-                  >
-                    SPACES
-                  </Link>
+                  {isArticlesExpanded && (
+                    <div className="ml-4 mt-2 space-y-1">
+                      {[
+                        { label: "Conflict", href: "/conflict" },
+                        { label: "Humanitarian", href: "/humanitarian" },
+                        { label: "Trade", href: "/trade" },
+                        { label: "Geopolitics", href: "/geopolitics" },
+                        { label: "Spaces", href: "/spaces" },
+                      ].map((item) => (
+                        <Link
+                          key={item.href}
+                          href={item.href}
+                          className="block text-sm text-gray-600 py-2 px-2 hover:bg-gray-100 rounded transition-colors"
+                          onClick={onClose}
+                        >
+                          {item.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 {/* WORLD / REGIONS - Dynamic */}
@@ -232,7 +211,7 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
 
                           {expandedContinent === continent._id && (
                             <div className="ml-4 flex flex-col space-y-1 py-1">
-                              {continent.countries?.map((country: any) => (
+                              {continent.countries?.slice(0, 5).map((country: any) => (
                                 <Link
                                   key={country._id}
                                   href={`/regions/${continent.slug.current}/${country.slug.current}`}
@@ -242,6 +221,15 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
                                   {country.title}
                                 </Link>
                               ))}
+                              {continent.countries && continent.countries.length > 5 && (
+                                <Link
+                                  href={`/regions/${continent.slug.current}`}
+                                  className="text-sm text-gray-400 py-1.5 px-2 hover:bg-gray-100 rounded transition-colors"
+                                  onClick={onClose}
+                                >
+                                  ...
+                                </Link>
+                              )}
                               {(!continent.countries || continent.countries.length === 0) && (
                                 <span className="text-xs text-gray-400 italic px-2">No countries</span>
                               )}
@@ -255,6 +243,29 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
                     </div>
                   )}
                 </div>
+
+                {/* ABOUT */}
+                <div className="border-b border-gray-200 pb-2">
+                  <Link
+                    href="/about"
+                    className="block w-full text-left font-bold py-3 px-4 hover:bg-gray-50 rounded transition-colors"
+                    onClick={onClose}
+                  >
+                    ABOUT
+                  </Link>
+                </div>
+
+                {/* CONTACT */}
+                <div className="border-b border-gray-200 pb-2">
+                  <Link
+                    href="/contact"
+                    className="block w-full text-left font-bold py-3 px-4 hover:bg-gray-50 rounded transition-colors"
+                    onClick={onClose}
+                  >
+                    CONTACT
+                  </Link>
+                </div>
+
               </div>
 
               {/* JOIN NOW Button */}
@@ -266,38 +277,6 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
                 >
                   JOIN NOW
                 </Button>
-              </div>
-
-              {/* Utility Links (New for Mobile) */}
-              <div className="mt-8 pt-6 border-t grid grid-cols-2 gap-4">
-                <Link
-                  href="/magazine"
-                  className="text-xs font-bold text-gray-500 hover:text-black transition-colors uppercase tracking-wider px-4"
-                  onClick={onClose}
-                >
-                  Magazine
-                </Link>
-                <Link
-                  href="/articles"
-                  className="text-xs font-bold text-gray-500 hover:text-black transition-colors uppercase tracking-wider px-4"
-                  onClick={onClose}
-                >
-                  Articles
-                </Link>
-                <Link
-                  href="/about"
-                  className="text-xs font-bold text-gray-500 hover:text-black transition-colors uppercase tracking-wider px-4"
-                  onClick={onClose}
-                >
-                  About
-                </Link>
-                <Link
-                  href="/contact"
-                  className="text-xs font-bold text-gray-500 hover:text-black transition-colors uppercase tracking-wider px-4"
-                  onClick={onClose}
-                >
-                  Contact
-                </Link>
               </div>
             </nav>
           </div>
