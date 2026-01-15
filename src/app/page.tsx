@@ -81,6 +81,7 @@ async function getHomepageData(): Promise<HomepageData> {
       humanitarian: [],
       conflict: [],
       regionSpotlight: [],
+      exclusive: [],
     };
   }
 }
@@ -140,7 +141,7 @@ export default async function Home() {
           background="bg-gray-200"
           article={data.conflict}
         />
-        <Exclusive />
+        <Exclusive articles={data.exclusive} />
         <EditorsChoiceV2 title="HUMANITARIAN" articles={data.humanitarian} />
         <EditorsChoiceV2 title="TRADE" articles={data.trade} />
         <SubscriptionCTA />

@@ -47,7 +47,8 @@ export const ARTICLE_FIELDS = `
   tags[]-> {
     title,
     slug
-  }
+  },
+  exclusive,
 `;
 
 export const heroQuery = `
@@ -198,6 +199,41 @@ export const magazineQuery = `
     "magazinePdf": magazinePdf.asset->url,
     publishedAt
   } | order(publishedAt desc)
+`;
+
+export const EXCLUSIVE_FIELDS = `
+  title,
+  slug,
+  contentType,
+  mainImage {
+    asset-> { url, metadata { lqip } },
+    alt
+  },
+  excerpt,
+  author-> { name, image { asset-> { url } } },
+  publishedAt
+`;
+
+export const exclusiveQuery = `
+  *[_type == "exclusive"] {
+    ${EXCLUSIVE_FIELDS}
+  } | order(publishedAt desc)
+`;
+
+export const exclusiveDetailQuery = `
+  *[_type == "exclusive" && slug.current == $slug][0] {
+    ${EXCLUSIVE_FIELDS},
+    content
+  }
+`;
+
+export const memberByEmailQuery = `
+  *[_type == "member" && email == $email && status == "active"][0] {
+    fullName,
+    email,
+    membershipType,
+    status
+  }
 `;
 
 export const allArticlesQuery = `

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Clock } from "lucide-react";
+import { Clock, Lock } from "lucide-react";
 import moment from "moment";
 import { Article } from "@/types";
 
@@ -71,6 +71,11 @@ export default function EditorChoise({
                       <span>
                         {moment(post.publishedAt).format("MMMM DD, YYYY")}
                       </span>
+                      {post.exclusive && (
+                        <span className="flex items-center gap-1 text-red-600 ml-2">
+                          <Lock size={12} />
+                        </span>
+                      )}
                     </div>
                   </div>
                 </div>

@@ -1,11 +1,11 @@
-"use client";
-
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
-import { ShoppingBag } from "lucide-react";
+import { useMember } from "@/context/MemberContext";
+import { ShoppingBag, User, LogOut } from "lucide-react";
 
 const UtilityNav = () => {
     const { setIsOpen, items } = useCart();
+    const { member, logout, setIsSignInModalOpen } = useMember();
 
     return (
         <div className="w-full bg-red-600 border-b border-white/10 py-2 px-4 hidden md:block">
@@ -71,15 +71,35 @@ const UtilityNav = () => {
                             )}
                         </button>
 
-                        <Link
-                            href="/login"
-                            className="flex items-center gap-2 text-white font-unbounded-bold text-xs hover:text-black transition-colors border-l border-white/30 pl-4"
-                        >
-                            <div className="w-5 h-5 rounded-full border border-white/50 flex items-center justify-center">
-                                <span className="text-[10px]">👤</span>
-                            </div>
-                            Sign in
-                        </Link>
+                        <div className="flex items-center border-l border-white/30 pl-4 gap-4">
+                            {!member ? (
+                                <button
+                                    onClick={() => setIsSignInModalOpen(true)}
+                                    className="flex items-center gap-2 text-white font-unbounded-bold text-[11px] hover:text-black transition-colors uppercase tracking-wider"
+                                >
+                                    <User size={16} />
+                                    Sign in
+                                </button>
+                            ) : (
+                                <div className="flex items-center gap-3">
+                                    <div className="flex flex-col items-end">
+                                        <span className="text-[10px] text-white/70 font-bold uppercase tracking-tighter leading-none">
+                                            {member.membershipType.replace('_', ' ')}
+                                        </span>
+                                        <span className="text-[11px] text-white font-unbounded-bold uppercase leading-tight">
+                                            {member.fullName.split(' ')[0]}
+                                        </span>
+                                    </div>
+                                    <button
+                                        onClick={logout}
+                                        className="text-white hover:text-black transition-colors"
+                                        title="Sign out"
+                                    >
+                                        <LogOut size={16} />
+                                    </button>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>

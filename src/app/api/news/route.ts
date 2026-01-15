@@ -8,6 +8,7 @@ import {
   humanitarianQuery,
   conflictQuery,
   regionSpotlightQuery,
+  exclusiveQuery
 } from "@/sanity/queries";
 import { NewsResponse } from "@/types";
 
@@ -23,6 +24,7 @@ export async function GET(): Promise<Response> {
     const humanitarian = await client.fetch(humanitarianQuery);
     const conflict = await client.fetch(conflictQuery);
     const regionSpotlight = await client.fetch(regionSpotlightQuery);
+    const exclusive = await client.fetch(exclusiveQuery);
 
     const response: NewsResponse = {
       message: "Success Get News Homepage",
@@ -36,6 +38,7 @@ export async function GET(): Promise<Response> {
         humanitarian,
         conflict,
         regionSpotlight,
+        exclusive,
       },
     };
 

@@ -102,24 +102,31 @@ export interface Article {
   tags: Tag[];
   body?: any[]; // Portable Text array
   featured?: boolean;
+  exclusive?: boolean;
   estimatedReadTime?: number;
   relatedArticles?: Article[];
+}
+
+// Exclusive Content types
+export interface ExclusiveContent {
+  title: string;
+  slug: {
+    current: string;
+    _type: "slug";
+  };
+  contentType: string;
+  mainImage?: MainImage;
+  excerpt: string;
+  author: Author;
+  publishedAt: string;
+  content?: any[];
 }
 
 // API Response types
 export interface NewsResponse {
   message: string;
   success: boolean;
-  data: {
-    hero: Article[];
-    editoChoice: Article[];
-    spaces: Article[];
-    geopolitics: Article[];
-    trade: Article[];
-    humanitarian: Article[];
-    conflict: Article[];
-    regionSpotlight: Article[];
-  };
+  data: HomepageData;
 }
 
 export interface ErrorResponse {
@@ -138,4 +145,5 @@ export interface HomepageData {
   humanitarian: Article[];
   conflict: Article[];
   regionSpotlight: Article[];
+  exclusive: ExclusiveContent[];
 }

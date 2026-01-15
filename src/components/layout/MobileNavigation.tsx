@@ -7,12 +7,16 @@ import { Button } from "@/components/ui/button";
 import { client } from "@/sanity/client";
 import { allContinentsWithCountriesQuery } from "@/sanity/queries.region";
 
+import { useMember } from "@/context/MemberContext";
+import { User, LogOut } from "lucide-react";
+
 interface MobileNavigationProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
 const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
+  const { member, logout, setIsSignInModalOpen } = useMember();
   const [searchQuery, setSearchQuery] = useState("");
   const [continents, setContinents] = useState<any[]>([]);
   const [expandedContinent, setExpandedContinent] = useState<string | null>(null);
@@ -142,6 +146,47 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
 
             {/* Navigation Menu */}
             <nav className="p-4 bg-white z-30">
+              {/* Member Access (Mobile) */}
+              <div className="mb-6 p-4 bg-gray-50 border border-gray-100 rounded-lg">
+                {!member ? (
+                  <button
+                    onClick={() => {
+                      setIsSignInModalOpen(true);
+                      onClose();
+                    }}
+                    className="flex items-center gap-3 w-full font-unbounded-bold text-xs uppercase tracking-wider text-red-600"
+                  >
+                    <User size={18} />
+                    Member Sign In
+                  </button>
+                ) : (
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center text-white text-xs font-bold">
+                        {member.fullName.charAt(0)}
+                      </div>
+                      <div>
+                        <p className="text-[10px] text-gray-400 font-bold uppercase leading-none mb-1">
+                          {member.membershipType.replace('_', ' ')}
+                        </p>
+                        <p className="text-sm font-unbounded-bold uppercase leading-none">
+                          {member.fullName}
+                        </p>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => {
+                        logout();
+                        onClose();
+                      }}
+                      className="text-gray-400 hover:text-red-600"
+                    >
+                      <LogOut size={18} />
+                    </button>
+                  </div>
+                )}
+              </div>
+
               <div className="space-y-2">
 
                 {/* MAGAZINE */}
