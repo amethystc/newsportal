@@ -82,7 +82,7 @@ export default async function MagazinePage() {
                                                 {mag.magazinePdf ? (
                                                     <Button asChild variant={mag.checkoutUrl ? "outline" : "default"} className={`w-full ${!mag.checkoutUrl ? "bg-red-600 hover:bg-red-700 text-white" : "border-gray-300"}`}>
                                                         <a href={mag.magazinePdf} target="_blank" rel="noopener noreferrer" download>
-                                                            {mag.checkoutUrl ? "Download Preview" : "Download PDF"}
+                                                            {mag.checkoutUrl ? "Download Free Preview" : "Download PDF"}
                                                         </a>
                                                     </Button>
                                                 ) : (
