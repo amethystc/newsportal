@@ -33,83 +33,23 @@ const MainNav = ({ pathname, windowWidth, continents, getNavLinkClass }: MainNav
                 >
                     <NavigationMenu style={{ marginRight: "auto" }}>
                         <NavigationMenuList className="flex-nowrap">
-                            {/* MAGAZINE */}
-                            <NavigationMenuItem>
-                                <Link
-                                    href="/magazine"
-                                    className={`border-r-2 border-black inline-flex h-10 w-max items-center justify-center rounded-none px-3 lg:px-4 py-2 text-xs lg:text-sm font-bold ${getNavLinkClass("/magazine")}`}
-                                >
-                                    MAGAZINE
-                                </Link>
-                            </NavigationMenuItem>
-
-                            {/* ARTICLES Dropdown */}
-                            <NavigationMenuItem>
-                                <NavigationMenuTrigger
-                                    className={`border-r-2 border-black h-10 rounded-none bg-transparent hover:bg-gray-300 text-xs lg:text-sm font-bold px-3 lg:px-4 ${pathname.startsWith('/articles') ||
-                                        pathname === "/conflict" ||
-                                        pathname === "/humanitarian" ||
-                                        pathname === "/trade" ||
-                                        pathname === "/geopolitics" ||
-                                        pathname === "/spaces"
-                                        ? 'text-red-600' : 'text-gray-800'
-                                        }`}
-                                >
-                                    ARTICLES
-                                </NavigationMenuTrigger>
-                                <NavigationMenuContent>
-                                    <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 bg-white border shadow-lg">
-                                        <li className="row-span-3">
-                                            <div className="text-sm font-bold leading-none mb-2 text-red-600 uppercase tracking-wider">
-                                                By Topic
-                                            </div>
-                                            <div className="grid grid-cols-1 gap-1">
-                                                {[
-                                                    { label: "Conflict", href: "/conflict", desc: "Global conflict reports" },
-                                                    { label: "Humanitarian", href: "/humanitarian", desc: "Crises and aid updates" },
-                                                    { label: "Trade", href: "/trade", desc: "Economic impact & trade wars" },
-                                                    { label: "Geopolitics", href: "/geopolitics", desc: "Power dynamics & strategy" },
-                                                    { label: "Spaces", href: "/spaces", desc: "The new frontier of defense" },
-                                                ].map((item) => (
-                                                    <Link
-                                                        key={item.label}
-                                                        href={item.href}
-                                                        className={`block select-none space-y-1 rounded-md p-2 leading-none no-underline outline-none transition-colors hover:bg-gray-100 hover:text-accent-foreground ${pathname === item.href ? 'text-red-600 font-bold' : 'text-gray-800'}`}
-                                                    >
-                                                        <div className="text-sm font-bold leading-none">{item.label}</div>
-                                                        <p className="line-clamp-2 text-xs leading-snug text-muted-foreground text-gray-500">
-                                                            {item.desc}
-                                                        </p>
-                                                    </Link>
-                                                ))}
-                                            </div>
-                                        </li>
-                                        <li className="flex flex-col justify-between">
-                                            <div>
-                                                <div className="text-sm font-bold leading-none mb-2 text-red-600 uppercase tracking-wider">
-                                                    Featured
-                                                </div>
-                                                <Link
-                                                    href="/articles"
-                                                    className="block select-none space-y-1 rounded-md p-2 leading-none no-underline outline-none transition-colors hover:bg-gray-100 hover:text-accent-foreground"
-                                                >
-                                                    <div className="text-sm font-bold leading-none mb-1">View All Articles →</div>
-                                                    <p className="text-xs text-gray-500">
-                                                        Browse the complete archive of all our reporting.
-                                                    </p>
-                                                </Link>
-                                            </div>
-
-                                            {/* Decorative or extra link space */}
-                                            <div className="mt-4 p-3 bg-gray-50 rounded-md border border-gray-100">
-                                                <p className="text-xs text-gray-600 italic">
-                                                    "Truth is the first casualty of war."
-                                                </p>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </NavigationMenuContent>
-                            </NavigationMenuItem>
+                            {/* TOPICS / CATEGORIES */}
+                            {[
+                                { label: "Conflict", href: "/conflict" },
+                                { label: "Humanitarian", href: "/humanitarian" },
+                                { label: "Trade", href: "/trade" },
+                                { label: "Geopolitics", href: "/geopolitics" },
+                                { label: "Spaces", href: "/spaces" },
+                            ].map((item) => (
+                                <NavigationMenuItem key={item.label}>
+                                    <Link
+                                        href={item.href}
+                                        className={`border-r-2 border-black inline-flex h-10 w-max items-center justify-center rounded-none px-3 lg:px-4 py-2 text-xs lg:text-sm font-bold uppercase ${pathname === item.href ? 'text-red-600' : 'text-gray-800 hover:bg-gray-300'}`}
+                                    >
+                                        {item.label}
+                                    </Link>
+                                </NavigationMenuItem>
+                            ))}
 
                             {/* WORLD / REGIONS Dropdown */}
                             <NavigationMenuItem>
@@ -154,26 +94,6 @@ const MainNav = ({ pathname, windowWidth, continents, getNavLinkClass }: MainNav
                                         )}
                                     </ul>
                                 </NavigationMenuContent>
-                            </NavigationMenuItem>
-
-                            {/* ABOUT */}
-                            <NavigationMenuItem>
-                                <Link
-                                    href="/about"
-                                    className={`border-r-2 border-black inline-flex h-10 w-max items-center justify-center rounded-none px-3 lg:px-4 py-2 text-xs lg:text-sm font-bold ${getNavLinkClass("/about")}`}
-                                >
-                                    ABOUT
-                                </Link>
-                            </NavigationMenuItem>
-
-                            {/* CONTACT */}
-                            <NavigationMenuItem>
-                                <Link
-                                    href="/contact"
-                                    className={`border-r-2 border-black inline-flex h-10 w-max items-center justify-center rounded-none px-3 lg:px-4 py-2 text-xs lg:text-sm font-bold ${getNavLinkClass("/contact")}`}
-                                >
-                                    CONTACT
-                                </Link>
                             </NavigationMenuItem>
                         </NavigationMenuList>
                     </NavigationMenu>
