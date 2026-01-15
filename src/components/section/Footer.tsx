@@ -110,8 +110,11 @@ export function Footer() {
 
           {/* copyright */}
           <div className="text-xs text-gray-500 md:text-right">
-            <p>© {new Date().getFullYear()} ConflictWire</p>
-            <p>Privacy</p>
+            <p>© {new Date().getFullYear()} Conflict Wire. All rights reserved.</p>
+            <div className="flex gap-4 mt-1 justify-center md:justify-end">
+              <a href="/privacy" className="hover:text-red-400 transition-colors">Privacy Policy</a>
+              <a href="/cookies" className="hover:text-red-400 transition-colors">Cookie Policy</a>
+            </div>
           </div>
         </div>
       </div>
