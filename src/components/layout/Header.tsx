@@ -14,6 +14,7 @@ import MainNav from "./MainNav";
 const Header = () => {
   const pathname = usePathname();
   const [windowWidth, setWindowWidth] = useState(0);
+  const [isMounted, setIsMounted] = useState(false);
   const [breakingNews, setBreakingNews] = useState<any[]>([]);
   const [continents, setContinents] = useState<any[]>([]);
 
@@ -26,6 +27,7 @@ const Header = () => {
   };
 
   useEffect(() => {
+    setIsMounted(true);
     const handleResize = () => setWindowWidth(window.innerWidth);
     handleResize();
     window.addEventListener("resize", handleResize);
@@ -85,12 +87,13 @@ const Header = () => {
         </div>
 
         {/* 2. Main Navigation (Existing but refactored) */}
-        <MainNav
-          pathname={pathname}
-          windowWidth={windowWidth}
-          continents={continents}
-          getNavLinkClass={getNavLinkClass}
-        />
+        {isMounted && (
+          <MainNav
+            pathname={pathname}
+            continents={continents}
+            getNavLinkClass={getNavLinkClass}
+          />
+        )}
       </div>
 
       {/* Breaking News Section (Existing) */}

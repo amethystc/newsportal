@@ -14,23 +14,16 @@ import Image from "next/image";
 
 interface MainNavProps {
     pathname: string;
-    windowWidth: number;
     continents: any[];
     getNavLinkClass: (href: string) => string;
 }
 
-const MainNav = ({ pathname, windowWidth, continents, getNavLinkClass }: MainNavProps) => {
+const MainNav = ({ pathname, continents, getNavLinkClass }: MainNavProps) => {
     return (
-        <nav
-            className="ml-auto px-6 py-4 w-full"
-            style={{ width: windowWidth > 1650 ? "78%" : "100%" }}
-        >
+        <nav className="ml-auto px-6 py-4 w-full min-[1651px]:w-[78%]">
             <div className="flex w-full items-center">
                 {/* Desktop Navigation */}
-                <div
-                    className="hidden md:flex items-start space-x-4 lg:space-x-6 w-full"
-                    style={{ display: windowWidth > 1650 ? "flex" : "none" }}
-                >
+                <div className="hidden min-[1651px]:flex items-start space-x-4 lg:space-x-6 w-full">
                     <NavigationMenu style={{ marginRight: "auto" }}>
                         <NavigationMenuList className="flex-nowrap">
                             {/* TOPICS / CATEGORIES */}
@@ -98,7 +91,7 @@ const MainNav = ({ pathname, windowWidth, continents, getNavLinkClass }: MainNav
                         </NavigationMenuList>
                     </NavigationMenu>
                 </div>
-                <div className="hidden md:flex flex-row justify-end items-center gap-2 w-[90%] p-2 ">
+                <div className="hidden md:flex flex-row justify-end items-center gap-2 w-full min-[1651px]:w-[90%] p-2 ">
                     <form className="flex flex-row gap-2 items-center border border-gray-800 p-1 rounded-md">
                         <Search size="20" className="text-gray-600" />
                         <input
@@ -130,16 +123,11 @@ const MainNav = ({ pathname, windowWidth, continents, getNavLinkClass }: MainNav
                     </Link>
                 </div>
 
-                {/* Mobile Menu Button */}
+                {/* Mobile Menu Button - Shown when width <= 1650 or on small screens */}
                 <Button
                     variant="default"
                     size="icon-lg"
-                    className="md:hidden ml-auto rounded-full flex items-center justify-center"
-                    style={{
-                        display: windowWidth <= 1650 ? "flex" : "none",
-                        alignItems: "center",
-                        justifyContent: "center",
-                    }}
+                    className="md:hidden min-[1651px]:hidden ml-auto rounded-full flex items-center justify-center"
                     onClick={() => {
                         if (typeof window !== "undefined") {
                             window.dispatchEvent(new CustomEvent("openMobileMenu"));
