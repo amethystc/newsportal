@@ -20,10 +20,10 @@ interface MainNavProps {
 
 const MainNav = ({ pathname, continents, getNavLinkClass }: MainNavProps) => {
     return (
-        <nav className="ml-auto px-6 py-4 w-full min-[1651px]:w-[78%]">
+        <nav className="ml-auto px-6 py-4 w-full lg:w-[78%]">
             <div className="flex w-full items-center">
                 {/* Desktop Navigation */}
-                <div className="hidden min-[1651px]:flex items-start space-x-4 lg:space-x-6 w-full">
+                <div className="hidden lg:flex items-start space-x-4 lg:space-x-6 w-full">
                     <NavigationMenu style={{ marginRight: "auto" }}>
                         <NavigationMenuList className="flex-nowrap">
                             {/* TOPICS / CATEGORIES */}
@@ -91,18 +91,18 @@ const MainNav = ({ pathname, continents, getNavLinkClass }: MainNavProps) => {
                         </NavigationMenuList>
                     </NavigationMenu>
                 </div>
-                <div className="hidden md:flex flex-row justify-end items-center gap-2 w-full min-[1651px]:w-[90%] p-2 ">
+                <div className="hidden md:flex flex-row justify-end items-center gap-2 w-full lg:w-[90%] p-2 ">
                     <form className="flex flex-row gap-2 items-center border border-gray-800 p-1 rounded-md">
                         <Search size="20" className="text-gray-600" />
                         <input
                             type="text"
                             placeholder="Search"
-                            className="w-[200px] border-none outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                            className="w-[150px] xl:w-[200px] border-none outline-none focus-visible:ring-0 focus-visible:ring-offset-0 bg-transparent"
                         />
                     </form>
                     <Button
                         variant="outline"
-                        className="border-2 border-red-500 bg-red-400/10 font-semibold xl:text-lg text-red-500 hover:text-red-600 hover:bg-red-400/20"
+                        className="border-2 border-red-500 bg-red-400/10 font-semibold text-sm xl:text-lg text-red-500 hover:text-red-600 hover:bg-red-400/20"
                     >
                         JOIN NOW
                     </Button>
@@ -123,11 +123,11 @@ const MainNav = ({ pathname, continents, getNavLinkClass }: MainNavProps) => {
                     </Link>
                 </div>
 
-                {/* Mobile Menu Button - Shown when width <= 1650 or on small screens */}
+                {/* Mobile Menu Button - Shown when width <= 1024 or on small screens */}
                 <Button
                     variant="default"
                     size="icon-lg"
-                    className="md:hidden min-[1651px]:hidden ml-auto rounded-full flex items-center justify-center"
+                    className="md:hidden lg:hidden ml-auto rounded-full flex items-center justify-center bg-black text-white"
                     onClick={() => {
                         if (typeof window !== "undefined") {
                             window.dispatchEvent(new CustomEvent("openMobileMenu"));

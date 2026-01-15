@@ -55,11 +55,7 @@ export function Footer() {
               <p className="text-xs text-gray-400 uppercase tracking-wide">
                 Contact us
               </p>
-              <p className="text-sm">+1 987-889-11-91</p>
-              <p className="text-sm">hello@loopjournal.com</p>
-              <button className="mt-2 text-sm text-red-400 hover:text-red-300">
-                Call me back
-              </button>
+              <p className="text-sm">info@conflictwire.com</p>
             </div>
 
             {/* address */}
