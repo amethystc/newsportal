@@ -21,7 +21,7 @@ const UtilityNav = () => {
                         </span>
                     </div>
                     <Link
-                        href="/support"
+                        href="/#waitlist"
                         className="bg-[#ffe500] hover:bg-[#ffe500]/90 text-black text-[11px] font-bold px-4 py-1.5 rounded-full flex items-center gap-1 transition-colors font-unbounded transition-transform active:scale-95 shadow-sm"
                     >
                         Support us <span className="text-lg leading-none">→</span>
@@ -45,13 +45,13 @@ const UtilityNav = () => {
                         </Link>
                         <Link
                             href="/about"
-                            className="text-[11px] font-unbounded text-white/80 hover:text-white transition-colors uppercase tracking-wider px-3 border-r border-white/20"
+                            className="text-[11px] font-unbounded-light text-white hover:text-black transition-colors uppercase tracking-wider px-3 border-r border-white/20"
                         >
                             About
                         </Link>
                         <Link
                             href="/contact"
-                            className="text-[11px] font-unbounded text-white/80 hover:text-white transition-colors uppercase tracking-wider px-3"
+                            className="text-[11px] font-unbounded-light text-white hover:text-black transition-colors uppercase tracking-wider px-3"
                         >
                             Contact
                         </Link>
@@ -71,6 +71,8 @@ const UtilityNav = () => {
                             )}
                         </button>
 
+                        {/* Hide Sign In for early stage/waitlist as requested by user */}
+                        {/* 
                         <div className="flex items-center border-l border-white/30 pl-4 gap-4">
                             {!member ? (
                                 <button
@@ -100,6 +102,7 @@ const UtilityNav = () => {
                                 </div>
                             )}
                         </div>
+                        */}
                     </div>
                 </div>
             </div>

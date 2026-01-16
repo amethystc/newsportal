@@ -23,7 +23,7 @@ export default function CartModal() {
     const handleCheckout = () => {
         // Use the checkoutUrl from the first item if it exists, otherwise fallback to a default
         // In a better flow, we use the specific link you added in Sanity
-        const checkoutUrl = items[0]?.checkoutUrl || "https://wise.com/pay/me/conflictnews";
+        const checkoutUrl = items[0]?.checkoutUrl || "https://buy.stripe.com/8x26oJboH2b83Xfb274gg00";
 
         // We open the payment link
         window.open(checkoutUrl, "_blank");
@@ -125,12 +125,12 @@ export default function CartModal() {
                                             }`}
                                         onClick={handleCheckout}
                                     >
-                                        Complete Payment on Wise <ExternalLink size={18} className="ml-2" />
+                                        Complete Payment on Stripe <ExternalLink size={18} className="ml-2" />
                                     </Button>
 
                                     <div className="flex items-center justify-center gap-2 text-[10px] text-gray-400 font-medium">
                                         <span className="w-1.5 h-1.5 rounded-full bg-green-500"></span>
-                                        SECURE MANUAL CHECKOUT
+                                        SECURE CHECKOUT VIA STRIPE
                                     </div>
                                 </div>
                             </>
@@ -150,7 +150,7 @@ export default function CartModal() {
                             <div className="bg-gray-50 p-4 rounded-xl border border-gray-100 text-left">
                                 <h4 className="font-bold text-gray-900 mb-2 uppercase text-[11px] tracking-wider">What happens next?</h4>
                                 <ol className="list-decimal list-inside space-y-2 text-xs">
-                                    <li>Complete your payment on the Wise page</li>
+                                    <li>Complete your payment on the Stripe page</li>
                                     <li>We will verify the transfer manually</li>
                                     <li>Your magazine will be emailed to <strong className="text-red-600">{email}</strong></li>
                                 </ol>

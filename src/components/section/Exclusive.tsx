@@ -96,7 +96,7 @@ export default function Exclusive({ articles }: { articles: ExclusiveContent[] }
             <h4 className="font-unbounded-bold text-lg uppercase mb-2">Join investigation</h4>
             <p className="text-[11px] font-bold uppercase tracking-widest opacity-80 mb-6">Access Intelligence Unit Reports</p>
             <Link
-              href="/support"
+              href="/#waitlist"
               className="w-full py-3 bg-white text-red-600 font-unbounded-bold text-xs uppercase tracking-widest hover:bg-black hover:text-white transition-all shadow-xl"
             >
               Apply for Access

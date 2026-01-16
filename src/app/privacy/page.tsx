@@ -38,7 +38,7 @@ export default function PrivacyPolicy() {
                             <li>Deliver digital magazine issues to your email address.</li>
                             <li>Send you updates, news, and promotional content (with your consent).</li>
                             <li>Respond to your comments, questions, and provide customer service.</li>
-                            <li>Verify manual payments made via third-party providers like Wise.</li>
+                            <li>Verify manual payments made via third-party providers like Stripe.</li>
                         </ul>
                     </section>
 
@@ -49,7 +49,7 @@ export default function PrivacyPolicy() {
                         </p>
                         <ul className="list-disc list-inside text-gray-700 space-y-2 mb-4">
                             <li><strong>Sanity.io:</strong> For content management and storage.</li>
-                            <li><strong>Wise:</strong> For processing payments. We do not store your financial details on our servers; payments are handled directly by Wise.</li>
+                            <li><strong>Stripe:</strong> For processing payments. We do not store your financial details on our servers; payments are handled directly by Stripe.</li>
                         </ul>
                     </section>
 

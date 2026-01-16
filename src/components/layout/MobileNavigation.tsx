@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Search, X, ChevronDown, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { client } from "@/sanity/client";
-import { allContinentsWithCountriesQuery } from "@/sanity/queries.region";
+import { allWorldTagsQuery } from "@/sanity/queries.region";
 
 import { useMember } from "@/context/MemberContext";
 import { User, LogOut } from "lucide-react";
@@ -18,8 +18,7 @@ interface MobileNavigationProps {
 const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
   const { member, logout, setIsSignInModalOpen } = useMember();
   const [searchQuery, setSearchQuery] = useState("");
-  const [continents, setContinents] = useState<any[]>([]);
-  const [expandedContinent, setExpandedContinent] = useState<string | null>(null);
+  const [worldTags, setWorldTags] = useState<any[]>([]);
   const [isWorldExpanded, setIsWorldExpanded] = useState(false);
   const [isArticlesExpanded, setIsArticlesExpanded] = useState(false);
 
@@ -45,21 +44,21 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
   }, [isOpen]);
 
   useEffect(() => {
-    const fetchRegions = async () => {
+    const fetchWorldTags = async () => {
       try {
-        const data = await client.fetch(allContinentsWithCountriesQuery);
-        setContinents(data);
+        const data = await client.fetch(allWorldTagsQuery);
+        setWorldTags(data);
       } catch (error) {
-        console.error("Error fetching regions:", error);
+        console.error("Error fetching world tags:", error);
       }
     };
     if (isOpen) {
-      fetchRegions();
+      fetchWorldTags();
     }
   }, [isOpen]);
 
-  const toggleContinent = (id: string) => {
-    setExpandedContinent(expandedContinent === id ? null : id);
+  const closeAndReset = () => {
+    onClose();
   };
 
   console.log("MobileNavigation render, isOpen:", isOpen);
@@ -148,6 +147,8 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
             <nav className="p-4 bg-white z-30">
               {/* Member Access (Mobile) */}
               <div className="mb-6 p-4 bg-gray-50 border border-gray-100 rounded-lg">
+                {/* Hide Member Access for early stage/waitlist as requested by user */}
+                {/* 
                 {!member ? (
                   <button
                     onClick={() => {
@@ -185,6 +186,7 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
                     </button>
                   </div>
                 )}
+                */}
               </div>
 
               <div className="space-y-2">
@@ -244,46 +246,18 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
 
                   {isWorldExpanded && (
                     <div className="ml-4 mt-2 space-y-1">
-                      {continents.map((continent) => (
-                        <div key={continent._id} className="border-l-2 border-gray-100 pl-2">
-                          <button
-                            className="flex items-center justify-between w-full text-left font-semibold py-2 px-2 text-sm text-gray-700 hover:bg-gray-50 rounded"
-                            onClick={() => toggleContinent(continent._id)}
-                          >
-                            <span className="uppercase tracking-wider">{continent.title}</span>
-                            {expandedContinent === continent._id ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
-                          </button>
-
-                          {expandedContinent === continent._id && (
-                            <div className="ml-4 flex flex-col space-y-1 py-1">
-                              {continent.countries?.slice(0, 5).map((country: any) => (
-                                <Link
-                                  key={country._id}
-                                  href={`/regions/${continent.slug.current}/${country.slug.current}`}
-                                  className="text-sm text-gray-600 py-1.5 px-2 hover:bg-gray-100 rounded transition-colors"
-                                  onClick={onClose}
-                                >
-                                  {country.title}
-                                </Link>
-                              ))}
-                              {continent.countries && continent.countries.length > 5 && (
-                                <Link
-                                  href={`/regions/${continent.slug.current}`}
-                                  className="text-sm text-gray-400 py-1.5 px-2 hover:bg-gray-100 rounded transition-colors"
-                                  onClick={onClose}
-                                >
-                                  ...
-                                </Link>
-                              )}
-                              {(!continent.countries || continent.countries.length === 0) && (
-                                <span className="text-xs text-gray-400 italic px-2">No countries</span>
-                              )}
-                            </div>
-                          )}
-                        </div>
+                      {worldTags.map((tag) => (
+                        <Link
+                          key={tag._id}
+                          href={`/regions/${tag.slug.current}`}
+                          className="block text-sm text-gray-800 py-3 px-4 hover:bg-gray-50 rounded transition-colors uppercase font-bold tracking-tight"
+                          onClick={onClose}
+                        >
+                          {tag.title}
+                        </Link>
                       ))}
-                      {continents.length === 0 && (
-                        <div className="text-sm text-gray-500 italic p-2">Loading regions...</div>
+                      {worldTags.length === 0 && (
+                        <div className="text-sm text-gray-500 italic p-2">No tags found...</div>
                       )}
                     </div>
                   )}
@@ -314,6 +288,8 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
               </div>
 
               {/* JOIN NOW Button */}
+              {/* Hide JOIN NOW for early stage/waitlist as requested by user */}
+              {/* 
               <div className="mt-6 pt-4 border-t">
                 <Button
                   variant="outline"
@@ -323,6 +299,7 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
                   JOIN NOW
                 </Button>
               </div>
+              */}
             </nav>
           </div>
         </div>

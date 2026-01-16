@@ -7,7 +7,7 @@ import Image from "next/image";
 import Marquee from "react-fast-marquee";
 import { client } from "@/sanity/client";
 import { breakingNewsQuery } from "@/sanity/queries";
-import { allContinentsWithCountriesQuery } from "@/sanity/queries.region";
+import { allWorldTagsQuery } from "@/sanity/queries.region";
 import UtilityNav from "./UtilityNav";
 import MainNav from "./MainNav";
 
@@ -16,7 +16,7 @@ const Header = () => {
   const [windowWidth, setWindowWidth] = useState(0);
   const [isMounted, setIsMounted] = useState(false);
   const [breakingNews, setBreakingNews] = useState<any[]>([]);
-  const [continents, setContinents] = useState<any[]>([]);
+  const [worldTags, setWorldTags] = useState<any[]>([]);
 
   // Helper function to determine active link styling
   const getNavLinkClass = (href: string) => {
@@ -53,15 +53,15 @@ const Header = () => {
   }, []);
 
   useEffect(() => {
-    const fetchRegions = async () => {
+    const fetchWorldTags = async () => {
       try {
-        const data = await client.fetch(allContinentsWithCountriesQuery);
-        setContinents(data);
+        const data = await client.fetch(allWorldTagsQuery);
+        setWorldTags(data);
       } catch (error) {
-        console.error("Error fetching regions:", error);
+        console.error("Error fetching world tags:", error);
       }
     };
-    fetchRegions();
+    fetchWorldTags();
   }, []);
 
   return (
@@ -90,7 +90,7 @@ const Header = () => {
         {isMounted && (
           <MainNav
             pathname={pathname}
-            continents={continents}
+            worldTags={worldTags}
             getNavLinkClass={getNavLinkClass}
           />
         )}

@@ -56,7 +56,7 @@ export function SubscriptionCTA() {
   };
 
   return (
-    <section className="w-full ">
+    <section id="waitlist" className="w-full ">
       <div className="relative w-full mx-auto h-72 md:h-[600px] overflow-hidden">
         {/* background image */}
         <Image

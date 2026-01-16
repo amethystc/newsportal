@@ -241,3 +241,14 @@ export const allArticlesQuery = `
     ${ARTICLE_FIELDS}
   } | order(publishedAt desc)
 `;
+
+export const settingsQuery = `
+  *[_type == "siteSettings"][0] {
+    title,
+    description,
+    email,
+    paymentSettings {
+      stripeUrl
+    }
+  }
+`;

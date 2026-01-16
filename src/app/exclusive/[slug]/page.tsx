@@ -73,12 +73,12 @@ export default function ExclusivePage({ params }: { params: Promise<{ slug: stri
                             </p>
                         </div>
 
-                        <button
-                            onClick={() => setIsSignInModalOpen(true)}
-                            className="w-full h-14 bg-black hover:bg-red-600 text-white font-unbounded-bold uppercase text-sm tracking-widest transition-all mb-4"
+                        <Link
+                            href="/#waitlist"
+                            className="w-full h-14 bg-black hover:bg-red-600 text-white font-unbounded-bold uppercase text-sm tracking-widest transition-all mb-4 flex items-center justify-center"
                         >
-                            Sign In to Read
-                        </button>
+                            Join Waitlist to Read
+                        </Link>
 
                         <p className="text-xs text-gray-400">
                             Approved members from the waitlist can sign in with their email.

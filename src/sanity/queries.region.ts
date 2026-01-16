@@ -219,3 +219,33 @@ export const continentWithCountriesAndStatsQuery = `
     "totalArticles": count(*[_type == "article" && region.continent._ref == ^._id && !(_id in path("drafts.**"))])
   }
 `
+
+// ============================================
+// WORLD TAG QUERIES
+// ============================================
+
+export const allWorldTagsQuery = `
+  *[_type == "worldTag"] | order(title asc) {
+    _id,
+    title,
+    slug,
+    description
+  }
+`
+
+export const worldTagBySlugQuery = `
+  *[_type == "worldTag" && slug.current == $slug][0] {
+    _id,
+    title,
+    slug,
+    description
+  }
+`
+
+export const articlesByWorldTagSlugQuery = `
+  *[_type == "article" && references(*[_type == "worldTag" && slug.current == $slug]._id) && !(_id in path("drafts.**"))] | order(publishedAt desc) {
+    ${ARTICLE_WITH_REGION}
+  }
+`
+
+

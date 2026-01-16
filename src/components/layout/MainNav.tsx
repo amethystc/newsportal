@@ -14,11 +14,11 @@ import Image from "next/image";
 
 interface MainNavProps {
     pathname: string;
-    continents: any[];
+    worldTags: any[];
     getNavLinkClass: (href: string) => string;
 }
 
-const MainNav = ({ pathname, continents, getNavLinkClass }: MainNavProps) => {
+const MainNav = ({ pathname, worldTags, getNavLinkClass }: MainNavProps) => {
     return (
         <nav className="ml-auto px-6 py-4 w-full lg:w-[78%]">
             <div className="flex w-full items-center">
@@ -53,37 +53,23 @@ const MainNav = ({ pathname, continents, getNavLinkClass }: MainNavProps) => {
                                 </NavigationMenuTrigger>
                                 <NavigationMenuContent>
                                     <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] bg-white border shadow-lg">
-                                        {continents.map((continent) => (
-                                            <li key={continent._id} className="row-span-3">
-                                                <div className="text-sm font-bold leading-none mb-2 text-red-600 uppercase tracking-wider">
-                                                    {continent.title}
-                                                </div>
-                                                <div className="grid grid-cols-1 gap-1">
-                                                    {continent.countries?.slice(0, 5).map((country: any) => (
-                                                        <Link
-                                                            key={country._id}
-                                                            href={`/regions/${continent.slug.current}/${country.slug.current}`}
-                                                            className="block select-none space-y-1 rounded-md p-2 leading-none no-underline outline-none transition-colors hover:bg-gray-100 hover:text-accent-foreground"
-                                                        >
-                                                            <div className="text-xs font-medium leading-none">{country.title}</div>
-                                                        </Link>
-                                                    ))}
-                                                    {continent.countries && continent.countries.length > 5 && (
-                                                        <Link
-                                                            href={`/regions/${continent.slug.current}`}
-                                                            className="block select-none space-y-1 rounded-md p-2 leading-none no-underline outline-none transition-colors hover:bg-gray-100 hover:text-accent-foreground"
-                                                        >
-                                                            <div className="text-xs font-medium leading-none text-gray-500">...</div>
-                                                        </Link>
+                                        {worldTags.map((tag) => (
+                                            <li key={tag._id}>
+                                                <Link
+                                                    href={`/regions/${tag.slug.current}`}
+                                                    className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-100 hover:text-red-600"
+                                                >
+                                                    <div className="text-sm font-bold uppercase tracking-tight">{tag.title}</div>
+                                                    {tag.description && (
+                                                        <p className="line-clamp-2 text-xs leading-snug text-gray-500 mt-1">
+                                                            {tag.description}
+                                                        </p>
                                                     )}
-                                                    {(!continent.countries || continent.countries.length === 0) && (
-                                                        <div className="text-xs text-gray-400 italic p-2">No countries listed</div>
-                                                    )}
-                                                </div>
+                                                </Link>
                                             </li>
                                         ))}
-                                        {continents.length === 0 && (
-                                            <li className="p-4 text-sm text-gray-500 italic">Loading regions...</li>
+                                        {worldTags.length === 0 && (
+                                            <li className="p-4 text-sm text-gray-500 italic">No world tags found...</li>
                                         )}
                                     </ul>
                                 </NavigationMenuContent>
@@ -100,12 +86,15 @@ const MainNav = ({ pathname, continents, getNavLinkClass }: MainNavProps) => {
                             className="w-[150px] xl:w-[200px] border-none outline-none focus-visible:ring-0 focus-visible:ring-offset-0 bg-transparent"
                         />
                     </form>
+                    {/* Hide JOIN NOW for early stage/waitlist as requested by user */}
+                    {/* 
                     <Button
                         variant="outline"
                         className="border-2 border-red-500 bg-red-400/10 font-semibold text-sm xl:text-lg text-red-500 hover:text-red-600 hover:bg-red-400/20"
                     >
                         JOIN NOW
                     </Button>
+                    */}
                 </div>
 
                 {/* Mobile Logo (Center) */}

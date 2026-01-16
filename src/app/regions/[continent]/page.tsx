@@ -4,7 +4,7 @@ import Header from "@/components/layout/Header";
 import { Footer } from "@/components/section/Footer";
 import { EditorsChoiceV2 } from "@/components/section/EditorChoiseV2";
 import { client } from "@/sanity/client";
-import { articlesByContinentQuery, continentBySlugQuery } from "@/sanity/queries.region";
+import { articlesByWorldTagSlugQuery, worldTagBySlugQuery } from "@/sanity/queries.region";
 import { notFound } from "next/navigation";
 
 // Cache for 1 hour
@@ -12,18 +12,18 @@ export const revalidate = 3600;
 
 interface PageProps {
     params: {
-        continent: string;
+        continent: string; // Keeping 'continent' param name to avoid folder move issues, but it represents 'tagSlug'
     };
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-    const { continent } = params;
+    const { continent: slug } = params;
     try {
-        const continentData = await client.fetch(continentBySlugQuery, { slug: continent });
-        if (!continentData) return { title: "Region Not Found" };
+        const tagData = await client.fetch(worldTagBySlugQuery, { slug });
+        if (!tagData) return { title: "Region Not Found" };
         return {
-            title: `${continentData.title} News - Conflict News Portal`,
-            description: `Latest news and events from ${continentData.title}.`,
+            title: `${tagData.title} News - Conflict News Portal`,
+            description: `Latest news and events from ${tagData.title}.`,
         };
     } catch (e) {
         return {
@@ -32,15 +32,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     }
 }
 
-export default async function ContinentPage({ params }: PageProps) {
-    const { continent } = params;
+export default async function WorldTagPage({ params }: PageProps) {
+    const { continent: slug } = params;
 
-    const continentData = await client.fetch(continentBySlugQuery, { slug: continent });
-    if (!continentData) {
+    const tagData = await client.fetch(worldTagBySlugQuery, { slug });
+    if (!tagData) {
         notFound();
     }
 
-    const articles = await client.fetch(articlesByContinentQuery, { continentSlug: continent });
+    const articles = await client.fetch(articlesByWorldTagSlugQuery, { slug });
 
     return (
         <>
@@ -50,37 +50,19 @@ export default async function ContinentPage({ params }: PageProps) {
                 <div className="bg-gray-900 text-white py-12">
                     <div className="container mx-auto px-4 sm:px-6">
                         <h1 className="text-4xl md:text-5xl font-bold mb-4 font-unbounded uppercase">
-                            {continentData.title}
+                            {tagData.title}
                         </h1>
                         <p className="text-xl opacity-90">
-                            Coverage and updates from {continentData.title}
+                            {tagData.description || `Coverage and updates from ${tagData.title}`}
                         </p>
                     </div>
                 </div>
-
-                {/* Countries List */}
-                <section className="py-8 bg-gray-50 border-b">
-                    <div className="container mx-auto px-4">
-                        <h3 className="text-sm font-bold uppercase text-gray-500 mb-4">Countries in {continentData.title}</h3>
-                        <div className="flex flex-wrap gap-2">
-                            {continentData.countries?.map((country: any) => (
-                                <a
-                                    key={country._id}
-                                    href={`/regions/${continent}/${country.slug.current}`}
-                                    className="text-sm px-3 py-1 bg-white border rounded-full hover:bg-red-50 hover:border-red-200 hover:text-red-600 transition-colors"
-                                >
-                                    {country.title}
-                                </a>
-                            ))}
-                        </div>
-                    </div>
-                </section>
 
                 {/* Articles Section */}
                 <section className="py-12">
                     {articles.length > 0 ? (
                         <EditorsChoiceV2
-                            title={`LATEST FROM ${continentData.title.toUpperCase()}`}
+                            title={`LATEST FROM ${tagData.title.toUpperCase()}`}
                             articles={articles}
                         />
                     ) : (
