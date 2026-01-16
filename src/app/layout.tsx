@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Be_Vietnam_Pro, Unbounded } from "next/font/google";
+import { Be_Vietnam_Pro } from "next/font/google";
 import "./globals.css";
 import MobileNavigationWrapper from "@/components/layout/MobileNavigationWrapper";
 import ClientProviders from "@/components/layout/ClientProviders";
@@ -10,15 +10,6 @@ const beVietnamPro = Be_Vietnam_Pro({
   weight: ["300", "400", "500", "600", "700", "800"], // All weights needed
   display: "swap",
   preload: true, // Enable preload for primary font
-  fallback: ["system-ui", "sans-serif"],
-});
-
-const unbounded = Unbounded({
-  variable: "--font-unbounded",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"], // Reduced weights for performance
-  display: "swap",
-  preload: false, // Don't preload secondary font
   fallback: ["system-ui", "sans-serif"],
 });
 
@@ -101,7 +92,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://cdn.sanity.io" />
       </head>
       <body
-        className={`${beVietnamPro.variable} ${unbounded.variable}  antialiased`}
+        className={`${beVietnamPro.variable} antialiased`}
       >
         <ClientProviders>
           <MobileNavigationWrapper>{children}</MobileNavigationWrapper>
