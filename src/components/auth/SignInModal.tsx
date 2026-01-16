@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useMember } from "@/context/MemberContext";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Dialog } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Mail, Loader2, Lock, CheckCircle2, XCircle } from "lucide-react";
@@ -35,19 +35,19 @@ export default function SignInModal() {
     };
 
     return (
-        <Dialog open={isSignInModalOpen} onOpenChange={setIsSignInModalOpen}>
-            <DialogContent className="sm:max-w-[400px] bg-white border-2 border-black rounded-none">
-                <DialogHeader className="pb-4">
+        <Dialog isOpen={isSignInModalOpen} onClose={() => setIsSignInModalOpen(false)}>
+            <div className="sm:max-w-[400px] bg-white">
+                <div className="pb-4">
                     <div className="mx-auto w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mb-4 text-red-600">
                         <Lock size={24} />
                     </div>
-                    <DialogTitle className="text-center font-unbounded-bold text-xl uppercase">
+                    <h2 className="text-center font-bold text-xl uppercase font-unbounded mb-2">
                         Member Access
-                    </DialogTitle>
-                    <DialogDescription className="text-center text-gray-500 font-medium pt-2">
+                    </h2>
+                    <p className="text-center text-gray-500 font-medium pt-2 text-sm">
                         Enter your email to access exclusive member-only investigations and reports.
-                    </DialogDescription>
-                </DialogHeader>
+                    </p>
+                </div>
 
                 <form onSubmit={handleSubmit} className="space-y-4 pt-2">
                     <div className="relative">
@@ -79,7 +79,7 @@ export default function SignInModal() {
 
                     <Button
                         type="submit"
-                        className="w-full h-12 bg-black hover:bg-red-600 text-white font-unbounded-bold uppercase text-xs tracking-widest transition-all"
+                        className="w-full h-12 bg-black hover:bg-red-600 text-white font-bold uppercase text-xs tracking-widest transition-all"
                         disabled={status === "loading" || status === "success"}
                     >
                         {status === "loading" ? (
@@ -95,7 +95,7 @@ export default function SignInModal() {
                         Join the waitlist to get exclusive access.
                     </p>
                 </form>
-            </DialogContent>
+            </div>
         </Dialog>
     );
 }
