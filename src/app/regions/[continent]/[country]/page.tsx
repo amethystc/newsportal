@@ -10,14 +10,14 @@ import { articlesByCountryQuery, countryBySlugQuery } from "@/sanity/queries.reg
 export const revalidate = 3600;
 
 interface PageProps {
-    params: {
+    params: Promise<{
         continent: string;
         country: string;
-    };
+    }>;
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-    const { country } = params;
+    const { country } = await params;
     // Fetch country title for better metadata
     try {
         const countryData = await client.fetch(countryBySlugQuery, { slug: country });
@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function RegionCountryPage({ params }: PageProps) {
-    const { country } = params;
+    const { country } = await params;
 
     // Fetch country details for the header
     const countryData = await client.fetch(countryBySlugQuery, { slug: country });

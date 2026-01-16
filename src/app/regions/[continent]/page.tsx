@@ -11,13 +11,13 @@ import { notFound } from "next/navigation";
 export const revalidate = 3600;
 
 interface PageProps {
-    params: {
+    params: Promise<{
         continent: string; // Keeping 'continent' param name to avoid folder move issues, but it represents 'tagSlug'
-    };
+    }>;
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-    const { continent: slug } = params;
+    const { continent: slug } = await params;
     try {
         const tagData = await client.fetch(worldTagBySlugQuery, { slug });
         if (!tagData) return { title: "Region Not Found" };
@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function WorldTagPage({ params }: PageProps) {
-    const { continent: slug } = params;
+    const { continent: slug } = await params;
 
     const tagData = await client.fetch(worldTagBySlugQuery, { slug });
     if (!tagData) {
