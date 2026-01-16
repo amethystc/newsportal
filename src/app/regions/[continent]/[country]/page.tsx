@@ -2,7 +2,7 @@
 import { Metadata } from "next";
 import Header from "@/components/layout/Header";
 import { Footer } from "@/components/section/Footer";
-import { EditorsChoiceV2 } from "@/components/section/EditorChoiseV2";
+import { EditorChoiceV2 } from "@/components/section/EditorChoiceV2";
 import { client } from "@/sanity/client";
 import { articlesByCountryQuery, countryBySlugQuery } from "@/sanity/queries.region";
 
@@ -60,7 +60,7 @@ export default async function RegionCountryPage({ params }: PageProps) {
                 {/* Articles Section */}
                 <section className="py-12">
                     {articles.length > 0 ? (
-                        <EditorsChoiceV2
+                        <EditorChoiceV2
                             title={`LATEST FROM ${countryData?.title || country.toUpperCase()}`}
                             articles={articles}
                         />

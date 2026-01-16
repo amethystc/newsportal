@@ -2,7 +2,7 @@
 import { Metadata } from "next";
 import Header from "@/components/layout/Header";
 import { Footer } from "@/components/section/Footer";
-import { EditorsChoiceV2 } from "@/components/section/EditorChoiseV2";
+import { EditorChoiceV2 } from "@/components/section/EditorChoiceV2";
 import { client } from "@/sanity/client";
 import { articlesByWorldTagSlugQuery, worldTagBySlugQuery } from "@/sanity/queries.region";
 import { notFound } from "next/navigation";
@@ -61,7 +61,7 @@ export default async function WorldTagPage({ params }: PageProps) {
                 {/* Articles Section */}
                 <section className="py-12">
                     {articles.length > 0 ? (
-                        <EditorsChoiceV2
+                        <EditorChoiceV2
                             title={`LATEST FROM ${tagData.title.toUpperCase()}`}
                             articles={articles}
                         />

@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import Header from "@/components/layout/Header";
 import { Footer } from "@/components/section/Footer";
-import { EditorsChoiceV2 } from "@/components/section/EditorChoiseV2";
+import { EditorChoiceV2 } from "@/components/section/EditorChoiceV2";
 import { client } from "@/sanity/client";
 import { spacesQuery } from "@/sanity/queries";
 
@@ -39,7 +39,7 @@ export default async function SpacesPage() {
 
         {/* Articles Section */}
         <section className="py-12">
-          <EditorsChoiceV2
+          <EditorChoiceV2
             title="SPACE NEWS"
             articles={articles}
           />

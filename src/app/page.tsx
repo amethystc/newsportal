@@ -1,12 +1,12 @@
 import { Metadata } from "next";
 import Header from "@/components/layout/Header";
-import EditorChoise from "@/components/section/EditorChoise";
-import { EditorsChoiceV2 } from "@/components/section/EditorChoiseV2";
+import EditorChoice from "@/components/section/EditorChoice";
+import { EditorChoiceV2 } from "@/components/section/EditorChoiceV2";
 import Exclusive from "@/components/section/Exclusive";
 import { Footer } from "@/components/section/Footer";
 import Hero from "@/components/section/Hero";
-import { RegionSpotlight } from "@/components/section/RegionSpotLight";
-import { SubscriptionCTA } from "@/components/section/SubscribtionCTA";
+import { RegionSpotlight } from "@/components/section/RegionSpotlight";
+import { SubscriptionCTA } from "@/components/section/SubscriptionCTA";
 import { BackToTop } from "@/components/ui/BackToTop";
 import { HomepageData, NewsResponse } from "@/types";
 
@@ -136,17 +136,17 @@ export default async function Home() {
       <main>
         <Header />
         <Hero articles={data.hero} />
-        <EditorChoise
+        <EditorChoice
           title="Conflict"
           background="bg-gray-200"
           article={data.conflict}
         />
         <Exclusive articles={data.exclusive} />
-        <EditorsChoiceV2 title="HUMANITARIAN" articles={data.humanitarian} />
-        <EditorsChoiceV2 title="TRADE" articles={data.trade} />
+        <EditorChoiceV2 title="HUMANITARIAN" articles={data.humanitarian} />
+        <EditorChoiceV2 title="TRADE" articles={data.trade} />
         <SubscriptionCTA />
         <RegionSpotlight articles={data.regionSpotlight} />
-        <EditorChoise
+        <EditorChoice
           title="GEOPOLITICS"
           background="bg-gray-200"
           article={data.geopolitics}

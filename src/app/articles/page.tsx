@@ -2,7 +2,7 @@
 import { Metadata } from "next";
 import Header from "@/components/layout/Header";
 import { Footer } from "@/components/section/Footer";
-import { EditorsChoiceV2 } from "@/components/section/EditorChoiseV2";
+import { EditorChoiceV2 } from "@/components/section/EditorChoiceV2";
 import { client } from "@/sanity/client";
 import { allArticlesQuery } from "@/sanity/queries";
 
@@ -33,7 +33,7 @@ export default async function ArticlesPage() {
 
                 {/* Articles Section */}
                 <section className="py-12">
-                    <EditorsChoiceV2
+                    <EditorChoiceV2
                         title="LATEST ARTICLES"
                         articles={articles}
                     />

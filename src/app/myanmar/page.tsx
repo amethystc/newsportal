@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Header from "@/components/layout/Header";
 import { Footer } from "@/components/section/Footer";
 import { MyanmarSubscriptionModal } from "@/components/modal/MyanmarSubscriptionModal";
-import { EditorsChoiceV2 } from "@/components/section/EditorChoiseV2";
+import { EditorChoiceV2 } from "@/components/section/EditorChoiceV2";
 import { Article } from "@/types";
 import { client } from "@/sanity/client";
 import { myanmarQuery } from "@/sanity/queries";
@@ -65,7 +65,7 @@ export default function MyanmarPage() {
 
         {/* Articles Section */}
         <section className="py-12">
-          <EditorsChoiceV2
+          <EditorChoiceV2
             title="MYANMAR UPDATE"
             articles={articles}
           />
