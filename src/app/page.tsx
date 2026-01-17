@@ -8,7 +8,19 @@ import Hero from "@/components/section/Hero";
 import { RegionSpotlight } from "@/components/section/RegionSpotlight";
 import { SubscriptionCTA } from "@/components/section/SubscriptionCTA";
 import { BackToTop } from "@/components/ui/BackToTop";
-import { HomepageData, NewsResponse } from "@/types";
+import { HomepageData } from "@/types";
+import { client } from "@/sanity/client";
+import {
+  heroQuery,
+  EditoChoiceQuery,
+  spacesQuery,
+  geopoliticsQuery,
+  tradeQuery,
+  humanitarianQuery,
+  conflictQuery,
+  regionSpotlightQuery,
+  exclusiveQuery,
+} from "@/sanity/queries";
 
 // SEO Metadata
 export const metadata: Metadata = {
@@ -45,30 +57,45 @@ export const metadata: Metadata = {
   },
 };
 
-// Data fetching function through API
+// Data fetching function directly from Sanity
 async function getHomepageData(): Promise<HomepageData> {
   try {
-    console.log("Fetching homepage data from API...");
+    console.log("Fetching homepage data directly from Sanity...");
 
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-    const response = await fetch(
-      `${baseUrl}/api/news`,
-      {
-        next: { revalidate: 0 }, // No caching - always fetch fresh data
-      }
-    );
+    // We can fetch all data in parallel for better performance
+    const [
+      hero,
+      editoChoice,
+      spaces,
+      geopolitics,
+      trade,
+      humanitarian,
+      conflict,
+      regionSpotlight,
+      exclusive,
+    ] = await Promise.all([
+      client.fetch(heroQuery),
+      client.fetch(EditoChoiceQuery),
+      client.fetch(spacesQuery),
+      client.fetch(geopoliticsQuery),
+      client.fetch(tradeQuery),
+      client.fetch(humanitarianQuery),
+      client.fetch(conflictQuery),
+      client.fetch(regionSpotlightQuery),
+      client.fetch(exclusiveQuery),
+    ]);
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    const result: NewsResponse = await response.json();
-
-    if (!result.success) {
-      throw new Error(result.message || "API request failed");
-    }
-
-    return result.data;
+    return {
+      hero,
+      editoChoice,
+      spaces,
+      geopolitics,
+      trade,
+      humanitarian,
+      conflict,
+      regionSpotlight,
+      exclusive,
+    };
   } catch (error) {
     console.error("Error fetching homepage data:", error);
     // Return empty data as fallback
