@@ -41,7 +41,7 @@ export default function SignInModal() {
                     <div className="mx-auto w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mb-4 text-red-600">
                         <Lock size={24} />
                     </div>
-                    <h2 className="text-center font-bold text-xl uppercase font-unbounded mb-2">
+                    <h2 className="text-center font-bold text-xl uppercase mb-2">
                         Member Access
                     </h2>
                     <p className="text-center text-gray-500 font-medium pt-2 text-sm">

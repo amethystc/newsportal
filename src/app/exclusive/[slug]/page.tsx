@@ -43,7 +43,7 @@ export default function ExclusivePage({ params }: { params: Promise<{ slug: stri
     if (!content) {
         return (
             <div className="min-h-screen flex flex-col items-center justify-center bg-white p-4 text-center">
-                <h1 className="text-2xl font-unbounded-bold uppercase mb-4">Content Not Found</h1>
+                <h1 className="text-2xl font-bold uppercase mb-4">Content Not Found</h1>
                 <Link href="/" className="text-red-600 font-bold hover:underline">Return Home</Link>
             </div>
         );
@@ -59,7 +59,7 @@ export default function ExclusivePage({ params }: { params: Promise<{ slug: stri
                         <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6 text-red-600">
                             <Lock size={32} />
                         </div>
-                        <h1 className="text-2xl md:text-3xl font-unbounded-bold uppercase mb-4 leading-tight">
+                        <h1 className="text-2xl md:text-3xl font-bold uppercase mb-4 leading-tight">
                             Exclusive Investigation
                         </h1>
                         <p className="text-gray-600 mb-8 font-medium">
@@ -75,7 +75,7 @@ export default function ExclusivePage({ params }: { params: Promise<{ slug: stri
 
                         <Link
                             href="/#waitlist"
-                            className="w-full h-14 bg-black hover:bg-red-600 text-white font-unbounded-bold uppercase text-sm tracking-widest transition-all mb-4 flex items-center justify-center"
+                            className="w-full h-14 bg-black hover:bg-red-600 text-white font-bold uppercase text-sm tracking-widest transition-all mb-4 flex items-center justify-center"
                         >
                             Join Waitlist to Read
                         </Link>
@@ -84,7 +84,7 @@ export default function ExclusivePage({ params }: { params: Promise<{ slug: stri
                             Approved members from the waitlist can sign in with their email.
                         </p>
                     </div>
-                </main>
+                </main >
                 <Footer />
             </>
         );
@@ -101,7 +101,7 @@ export default function ExclusivePage({ params }: { params: Promise<{ slug: stri
                     </Link>
 
                     <div className="flex items-center gap-3 mb-6">
-                        <span className="bg-black text-white text-[10px] font-unbounded-bold px-3 py-1 uppercase tracking-wider">
+                        <span className="bg-black text-white text-[10px] font-bold px-3 py-1 uppercase tracking-wider">
                             EXCLUSIVE {content.contentType}
                         </span>
                         <span className="text-gray-400 text-xs font-bold uppercase tracking-widest">
@@ -109,7 +109,7 @@ export default function ExclusivePage({ params }: { params: Promise<{ slug: stri
                         </span>
                     </div>
 
-                    <h1 className="text-4xl md:text-6xl font-unbounded-bold uppercase mb-8 leading-[1.1] tracking-tighter">
+                    <h1 className="text-4xl md:text-6xl font-bold uppercase mb-8 leading-[1.1] tracking-tighter">
                         {content.title}
                     </h1>
 
@@ -139,12 +139,12 @@ export default function ExclusivePage({ params }: { params: Promise<{ slug: stri
 
                         <div className="flex items-center gap-3 text-red-600 ml-auto">
                             <UserIcon size={16} />
-                            <p className="text-xs font-unbounded-bold uppercase">Member Only Access</p>
+                            <p className="text-xs font-bold uppercase">Member Only Access</p>
                         </div>
                     </div>
 
                     {/* PROTECTED CONTENT */}
-                    <div className="prose prose-lg max-w-none pt-4 pb-20 prose-headings:font-unbounded-bold prose-headings:uppercase prose-p:leading-relaxed prose-p:text-gray-800 prose-img:rounded-none">
+                    <div className="prose prose-lg max-w-none pt-4 pb-20 prose-headings:font-bold prose-headings:uppercase prose-p:leading-relaxed prose-p:text-gray-800 prose-img:rounded-none">
                         <PortableText value={content.content} />
                     </div>
                 </div>

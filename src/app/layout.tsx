@@ -7,9 +7,9 @@ import ClientProviders from "@/components/layout/ClientProviders";
 const beVietnamPro = Be_Vietnam_Pro({
   variable: "--font-be-vietnam-pro",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800"], // All weights needed
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
   display: "swap",
-  preload: true, // Enable preload for primary font
+  preload: true,
   fallback: ["system-ui", "sans-serif"],
 });
 

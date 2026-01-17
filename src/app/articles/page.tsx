@@ -24,7 +24,7 @@ export default async function ArticlesPage() {
                 {/* Hero Section */}
                 <div className="bg-gray-900 text-white py-12">
                     <div className="container mx-auto px-4 sm:px-6">
-                        <h1 className="text-4xl md:text-5xl font-bold mb-4 font-unbounded">All Articles</h1>
+                        <h1 className="text-4xl md:text-5xl font-bold mb-4">All Articles</h1>
                         <p className="text-xl opacity-90">
                             Comprehensive coverage of global events, analysis, and reports.
                         </p>

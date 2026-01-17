@@ -49,7 +49,7 @@ export default async function WorldTagPage({ params }: PageProps) {
                 {/* Hero Section */}
                 <div className="bg-gray-900 text-white py-12">
                     <div className="container mx-auto px-4 sm:px-6">
-                        <h1 className="text-4xl md:text-5xl font-bold mb-4 font-unbounded uppercase">
+                        <h1 className="text-4xl md:text-5xl font-bold mb-4 uppercase">
                             {tagData.title}
                         </h1>
                         <p className="text-xl opacity-90">

@@ -37,7 +37,7 @@ export default function MagazinePage() {
             <Header />
             <main className="min-h-screen">
                 <div className="container mx-auto px-4 py-12">
-                    <h1 className="text-4xl font-bold mb-8 font-unbounded">Magazine Issues</h1>
+                    <h1 className="text-4xl font-bold mb-8">Magazine Issues</h1>
                     <p className="mb-12 text-gray-600 max-w-2xl">
                         Download our latest digital magazine issues. Deep dives into conflict, humanitarian crises, and geopolitics.
                     </p>
@@ -64,7 +64,7 @@ export default function MagazinePage() {
                                     </div>
                                     <div className="p-6 flex flex-col flex-grow">
                                         <div className="flex justify-between items-start mb-2 gap-2">
-                                            <h2 className="text-xl font-bold font-unbounded leading-tight">{mag.title}</h2>
+                                            <h2 className="text-xl font-bold leading-tight">{mag.title}</h2>
                                             {mag.issueNumber && (
                                                 <span className="text-xs font-semibold bg-gray-200 text-gray-800 px-2 py-1 rounded whitespace-nowrap">
                                                     Issue #{mag.issueNumber}

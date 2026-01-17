@@ -46,17 +46,16 @@ export default function Hero({ articles }: HeroProps) {
               style={{ zIndex: 2 }}
             >
               <span
-                className={`inline-block ${
-                  idx === 0
+                className={`inline-block ${idx === 0
                     ? "bg-red-600"
                     : idx === 1
                       ? "bg-yellow-500"
                       : "bg-green-600"
-                } px-3 py-1 text-[10px] font-bold uppercase rounded w-1/3 text-white`}
+                  } px-3 py-1 text-[10px] font-bold uppercase rounded w-1/3 text-white`}
               >
                 {post.tags[0]?.title || "NEWS"}
               </span>
-              <h2 className="text-white text-2xl font-unbounded-bold leading-tight">
+              <h2 className="text-white text-2xl font-bold leading-tight">
                 {post.title}
               </h2>
               <p className="text-xs text-white/80 flex gap-2 items-center">
@@ -77,9 +76,8 @@ export default function Hero({ articles }: HeroProps) {
             <Link
               key={post.slug.current}
               href={`/article/${post.slug.current}`}
-              className={`relative overflow-hidden min-h-[280px] block ${
-                idx === 0 ? "md:col-span-1" : ""
-              }`}
+              className={`relative overflow-hidden min-h-[280px] block ${idx === 0 ? "md:col-span-1" : ""
+                }`}
               style={{ zIndex: 1 }}
             >
               {/* wrapper buat image */}
@@ -115,9 +113,8 @@ export default function Hero({ articles }: HeroProps) {
                   {post.tags[0]?.title || "NEWS"}
                 </span>
                 <h2
-                  className={`text-white font-unbounded-bold leading-tight ${
-                    idx === 0 ? "text-3xl" : "text-2xl"
-                  }`}
+                  className={`text-white font-bold leading-tight ${idx === 0 ? "text-3xl" : "text-2xl"
+                    }`}
                 >
                   {post.title}
                 </h2>
