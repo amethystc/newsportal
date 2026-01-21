@@ -15,12 +15,12 @@ const beVietnamPro = Be_Vietnam_Pro({
 
 export const metadata: Metadata = {
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000",
+    process.env.NEXT_PUBLIC_BASE_URL || "https://conflictwire.co.uk",
   ),
   title: {
     default:
-      "Conflict News Portal - Latest Global Conflict & Humanitarian News",
-    template: "%s | Conflict News Portal",
+      "Conflict Wire - Latest Global Conflict & Humanitarian News",
+    template: "%s | Conflict Wire",
   },
   description:
     "Stay informed with comprehensive coverage of global conflicts, humanitarian crises, and peacebuilding efforts. Expert analysis and on-the-ground reporting from conflict zones worldwide.",
@@ -33,9 +33,9 @@ export const metadata: Metadata = {
     "military analysis",
     "diplomatic relations",
   ],
-  authors: [{ name: "Conflict News Portal" }],
-  creator: "Conflict News Portal",
-  publisher: "Conflict News Portal",
+  authors: [{ name: "Conflict Wire" }],
+  creator: "Conflict Wire",
+  publisher: "Conflict Wire",
   robots: {
     index: true,
     follow: true,
@@ -50,22 +50,22 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    title: "Conflict News Portal - Latest Global Conflict & Humanitarian News",
+    title: "Conflict Wire - Latest Global Conflict & Humanitarian News",
     description:
       "Comprehensive coverage of global conflicts and humanitarian crises with expert analysis.",
-    siteName: "Conflict News Portal",
+    siteName: "Conflict Wire",
     images: [
       {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Conflict News Portal",
+        alt: "Conflict Wire",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Conflict News Portal",
+    title: "Conflict Wire",
     description:
       "Latest global conflict and humanitarian news with expert analysis.",
     images: ["/twitter-image.jpg"],

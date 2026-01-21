@@ -7,127 +7,149 @@ import Image from "next/image";
 import Marquee from "react-fast-marquee";
 import { client } from "@/sanity/client";
 import { breakingNewsQuery } from "@/sanity/queries";
-import { allWorldTagsQuery } from "@/sanity/queries.region";
-import UtilityNav from "./UtilityNav";
-import MainNav from "./MainNav";
+import { Menu, Search, X, User } from "lucide-react";
 
 const Header = () => {
   const pathname = usePathname();
-  const [windowWidth, setWindowWidth] = useState(0);
   const [isMounted, setIsMounted] = useState(false);
   const [breakingNews, setBreakingNews] = useState<any[]>([]);
-  const [worldTags, setWorldTags] = useState<any[]>([]);
-
-  // Helper function to determine active link styling
-  const getNavLinkClass = (href: string) => {
-    const isActive = pathname === href;
-    return isActive
-      ? "text-red-600"
-      : "text-gray-800 hover:bg-gray-300";
-  };
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
-    const handleResize = () => setWindowWidth(window.innerWidth);
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   useEffect(() => {
     const fetchBreakingNews = async () => {
       try {
-        const fetchOptions = {
-          next: { revalidate: 0 }, // No caching - always fetch fresh data
-        };
-        const news = await client.fetch(breakingNewsQuery, {}, fetchOptions);
-        setBreakingNews(news);
+        const news = await client.fetch(breakingNewsQuery, {}, { next: { revalidate: 0 } });
+        setBreakingNews(news || []);
       } catch (error) {
         console.error("Error fetching breaking news:", error);
       }
     };
     fetchBreakingNews();
-
     const interval = setInterval(fetchBreakingNews, 30000);
     return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
-    const fetchWorldTags = async () => {
-      try {
-        const data = await client.fetch(allWorldTagsQuery);
-        setWorldTags(data);
-      } catch (error) {
-        console.error("Error fetching world tags:", error);
-      }
-    };
-    fetchWorldTags();
-  }, []);
+  const navLinks = [
+    { label: "Conflict", href: "/conflict" },
+    { label: "Humanitarian", href: "/humanitarian" },
+    { label: "Trade", href: "/trade" },
+    { label: "Geopolitics", href: "/geopolitics" },
+    { label: "Analysis", href: "/spaces" },
+  ];
 
   return (
-    <header className="w-full min-h-[15vh] bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-[1000] relative">
-      {/* 1. Utility Navigation (New) */}
-      <UtilityNav />
+    <>
+      <header className="w-full z-[1000] relative h-[64px] md:h-[80px] bg-red-600 border-b-2 border-black">
+        <div className="cw-container h-full flex items-center justify-between relative">
 
-      {/* Main Bar with Logo and MainNav */}
-      <div className="relative border-b border-gray-100">
-        {/* Desktop Logo - Adjusted positioning to stay clear of UtilityNav */}
-        <div className="hidden md:block absolute top-1/2 -translate-y-1/2 left-0 lg:left-[2em] xl:left-[7em] z-[101]">
-          <Link href="/">
-            <Image
-              src="/conflict-wire-logo.png"
-              alt="Logo"
-              width={160}
-              height={160}
-              className="object-contain lg:w-[140px] lg:h-[140px] xl:w-[160px] xl:h-[160px]"
-              priority
-              unoptimized
-            />
-          </Link>
-        </div>
+          {/* Oversized Logo - Breaking the Grid */}
+          <div className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 md:translate-y-0 md:top-2 z-[1001]">
+            <Link href="/" className="block transition-transform hover:scale-[1.02] active:scale-[0.98]">
+              <div className="bg-white rounded-full p-2 border-2 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] 
+                                w-[70px] h-[70px] md:w-[130px] md:h-[130px] lg:w-[150px] lg:h-[150px] 
+                                flex items-center justify-center
+                                md:translate-y-[10px] lg:translate-y-[5px]">
+                <Image
+                  src="/conflict-wire-logo.png"
+                  alt="Conflict Wire"
+                  width={150}
+                  height={150}
+                  className="object-contain w-[50px] md:w-[90px] lg:w-[110px]"
+                  priority
+                  unoptimized
+                />
+              </div>
+            </Link>
+          </div>
 
-        {/* 2. Main Navigation (Existing but refactored) */}
-        {isMounted && (
-          <MainNav
-            pathname={pathname}
-            worldTags={worldTags}
-            getNavLinkClass={getNavLinkClass}
-          />
-        )}
-      </div>
-
-      {/* Breaking News Section (Existing) */}
-      <div className="bg-red-500 w-full min-h-[4px]"></div>
-      <div className="bg-black w-full p-2 flex">
-        <div className="w-[90%] md:w-1/2 mx-auto">
-          <Marquee
-            gradient={false}
-            speed={40}
-            pauseOnHover
-            className="flex flex-row items-center gap-10 p-2"
-          >
-            <p className="text-white font-bold text-[12px] whitespace-nowrap mr-2">
-              LIVE NEWS UPDATE!
-            </p>
-            {breakingNews.map((news, index) => (
-              <div key={index} className="flex items-center gap-4">
+          {/* Navigation - Tabular Grid Style */}
+          <div className="flex-1 flex justify-end h-full">
+            <nav className="hidden lg:flex items-center h-full border-l border-black/20">
+              {navLinks.map((link) => (
                 <Link
-                  href={`/article/${news.slug.current}`}
-                  className="text-white text-sm mr-2 hover:text-red-400 hover:underline transition-colors ml-1"
+                  key={link.label}
+                  href={link.href}
+                  className={`h-full px-10 flex items-center text-[11px] font-black uppercase tracking-[0.25em] transition-colors border-r border-black/20
+                                        ${pathname === link.href ? 'bg-black text-white' : 'text-black hover:bg-black/10'}`}
                 >
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
+
+            {/* Right Actions */}
+            <div className="flex items-center gap-2 md:gap-4 ml-8">
+              <button
+                onClick={() => setIsSearchOpen(true)}
+                className="p-2 text-black/80 hover:text-white transition-colors"
+              >
+                <Search size={22} strokeWidth={3} />
+              </button>
+
+              <Link
+                href="/membership"
+                className="bg-black text-white px-8 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest border-2 border-white hover:bg-white hover:text-black transition-all shadow-[6px_6px_0px_0px_rgba(0,0,0,0.1)] hidden sm:block"
+              >
+                Subscribe
+              </Link>
+
+              <button
+                onClick={() => window.dispatchEvent(new CustomEvent("openMobileMenu"))}
+                className="w-12 h-12 bg-black text-white hover:bg-white hover:text-black transition-all rounded-full flex items-center justify-center border-2 border-white"
+              >
+                <Menu size={24} strokeWidth={3} />
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Sub-header Marquee */}
+      <div className="bg-white border-b border-gray-100 py-3.5 relative z-[999]">
+        <div className="cw-container flex items-center overflow-hidden">
+          <span className="text-[10px] font-black uppercase tracking-[0.25em] text-black whitespace-nowrap mr-8 flex items-center gap-2 pl-[80px] md:pl-[150px] lg:pl-[180px]">
+            <div className="w-2 h-2 bg-red-600 animate-pulse" />
+            Trending Now:
+          </span>
+          <div className="flex-1">
+            <Marquee gradient={false} speed={45} pauseOnHover>
+              {breakingNews.map((news, index) => (
+                <Link
+                  key={index}
+                  href={`/article/${news.slug.current}`}
+                  className="text-[11px] font-bold uppercase tracking-tight mx-12 hover:text-red-600 transition-colors flex items-center gap-3 text-gray-800"
+                >
+                  <span className="text-red-600 font-black">/</span>
                   {news.title}
                 </Link>
-                {(news.region?.country?.title || news.region?.continent?.title) && (
-                  <button className="hidden md:block p-1 bg-green-700 text-white font-bold text-sm">
-                    {(news.region.country?.title || news.region.continent?.title).toUpperCase()}
-                  </button>
-                )}
-              </div>
-            ))}
-          </Marquee>
+              ))}
+            </Marquee>
+          </div>
         </div>
       </div>
-    </header>
+
+      {/* Float Search Bar */}
+      {isSearchOpen && (
+        <div className="fixed inset-0 bg-red-600 z-[10001] flex items-center animate-in slide-in-from-top duration-500">
+          <div className="cw-container flex items-center gap-10">
+            <Search size={60} className="text-black" />
+            <input
+              type="text"
+              className="flex-1 bg-transparent border-none text-4xl md:text-7xl font-black uppercase tracking-widest text-black placeholder:text-black/10 focus:outline-none"
+              placeholder="SEARCH CONTENT..."
+              autoFocus
+            />
+            <button onClick={() => setIsSearchOpen(false)} className="text-black hover:text-white transition-colors">
+              <X size={60} />
+            </button>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

@@ -41,7 +41,7 @@ export default function MembershipPage() {
     const memberBenefits = [
         {
             icon: Lock,
-            title: "Exclusive Intelligence Reports",
+            title: "Exclusive Reports",
             description: "Access in-depth investigative reports unavailable to the public",
         },
         {
@@ -77,7 +77,7 @@ export default function MembershipPage() {
         {
             icon: Users,
             title: "Community Access",
-            description: "Connect with like-minded professionals and analysts",
+            description: "Connect with like-minded readers and professionals",
         },
     ];
 
@@ -110,7 +110,7 @@ export default function MembershipPage() {
                     </h1>
 
                     <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-12 leading-relaxed">
-                        Join our community of informed readers and gain access to exclusive intelligence reports,
+                        Join our community of informed readers and gain access to exclusive reports,
                         in-depth analysis, and premium content from the frontlines.
                     </p>
 
@@ -177,7 +177,7 @@ export default function MembershipPage() {
                         <h2 className="text-4xl md:text-5xl font-bold uppercase mb-4 tracking-tighter">
                             What You'll Get
                         </h2>
-                        <p className="text-gray-600 text-lg">Full access to premium intelligence and analysis</p>
+                        <p className="text-gray-600 text-lg">Full access to premium stories and analysis</p>
                     </div>
 
                     <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">

@@ -2,6 +2,7 @@ import moment from "moment";
 import Image from "next/image";
 import Link from "next/link";
 import { Article } from "@/types";
+import { ArrowRight } from "lucide-react";
 
 interface RelatedArticlesProps {
   articles: Article[];
@@ -11,20 +12,23 @@ export function RelatedArticles({ articles }: RelatedArticlesProps) {
   if (!articles || articles.length === 0) return null;
 
   return (
-    <section className="border-t border-gray-200 pt-12">
-      <h2 className="text-2xl font-bold text-gray-900 mb-8">
-        Related Articles
-      </h2>
-      <div className="grid gap-6 md:grid-cols-3">
+    <section className="pt-20">
+      <div className="flex items-center justify-between mb-12 border-b-2 border-black pb-4">
+        <h2 className="text-xl md:text-2xl font-black uppercase tracking-tight">
+          Related <span className="text-red-600">Intelligence</span>
+        </h2>
+      </div>
+
+      <div className="grid gap-12 md:grid-cols-3">
         {articles.map((relatedArticle: Article) => (
           <Link
             key={relatedArticle.slug.current}
             href={`/article/${relatedArticle.slug.current}`}
             className="group block"
           >
-            <article className="border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-200">
+            <article className="flex flex-col gap-4">
               {relatedArticle.mainImage?.asset && (
-                <div className="relative h-48">
+                <div className="relative aspect-[16/10] overflow-hidden border border-gray-100">
                   <Image
                     src={
                       "url" in relatedArticle.mainImage.asset
@@ -36,25 +40,20 @@ export function RelatedArticles({ articles }: RelatedArticlesProps) {
                       relatedArticle.title
                     }
                     fill
-                    className="object-cover"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
+                  <span className="absolute top-3 left-3 px-2 py-1 text-[8px] font-black uppercase text-white bg-black">
+                    Related Intel
+                  </span>
                 </div>
               )}
-              <div className="p-4">
-                <h3 className="font-semibold text-gray-900 mb-2 group-hover:text-red-600 transition-colors">
+              <div className="flex flex-col gap-2">
+                <h3 className="font-black text-base leading-tight group-hover:text-red-600 transition-colors line-clamp-2">
                   {relatedArticle.title}
                 </h3>
-                <p className="text-sm text-gray-600 mb-2 line-clamp-2">
-                  {relatedArticle.excerpt}
-                </p>
-                <div className="flex items-center gap-2 text-xs text-gray-500">
-                  <span>By {relatedArticle.author.name}</span>
-                  <span>•</span>
-                  <span>
-                    {moment(relatedArticle.publishedAt).format(
-                      "MMM DD, YYYY",
-                    )}
-                  </span>
+                <div className="flex items-center justify-between pt-4 border-t border-gray-50 text-[9px] font-black uppercase tracking-widest text-gray-400">
+                  <span>{relatedArticle.author.name}</span>
+                  <span>{moment(relatedArticle.publishedAt).format("DD MMM YYYY")}</span>
                 </div>
               </div>
             </article>

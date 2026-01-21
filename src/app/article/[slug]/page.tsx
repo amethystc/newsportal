@@ -1,26 +1,22 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Clock, User as UserIcon } from "lucide-react";
 import Header from "@/components/layout/Header";
 import { Footer } from "@/components/section/Footer";
 import { client } from "@/sanity/client";
 import { articleQuery } from "@/sanity/queries";
 import { Tag } from "@/types";
 import { PortableText } from "@/components/ui/portable-text";
+import moment from "moment";
+import Image from "next/image";
 import { ArticleBreadcrumb } from "@/components/article/ArticleBreadcrumb";
-import { ArticleHeader } from "@/components/article/ArticleHeader";
-import { ArticleMainImage } from "@/components/article/ArticleMainImage";
-import { ArticleTags } from "@/components/article/ArticleTags";
 import { RelatedArticles } from "@/components/article/RelatedArticles";
 
 // Direct article fetching function
 async function getArticleBySlug(slug: string) {
   try {
-    const fetchOptions = {
-      next: { revalidate: 0 } // No caching - always fetch fresh data
-    };
-    const article = await client.fetch(articleQuery, { slug }, fetchOptions);
+    const article = await client.fetch(articleQuery, { slug }, { next: { revalidate: 0 } });
     return article;
   } catch (error) {
     console.error("Error fetching article:", error);
@@ -28,7 +24,7 @@ async function getArticleBySlug(slug: string) {
   }
 }
 
-// Generate metadata untuk SEO
+// Generate metadata for SEO
 export async function generateMetadata({
   params,
 }: {
@@ -40,13 +36,13 @@ export async function generateMetadata({
 
     if (!article) {
       return {
-        title: "Article Not Found - Conflict News Portal",
-        description: "The article you're looking for doesn't exist.",
+        title: "Article Not Found | Conflict Wire",
+        description: "The requested intelligence report could not be located.",
       };
     }
 
     return {
-      title: `${article.title} - Conflict News Portal`,
+      title: article.title,
       description: article.excerpt,
       keywords: article.tags?.map((tag: Tag) => tag.title).join(", "),
       authors: [{ name: article.author.name }],
@@ -58,35 +54,30 @@ export async function generateMetadata({
         authors: [article.author.name],
         images: article.mainImage?.asset?.url
           ? [
-              {
-                url: article.mainImage.asset.url,
-                width:
-                  article.mainImage.asset.metadata?.dimensions?.width || 1200,
-                height:
-                  article.mainImage.asset.metadata?.dimensions?.height || 630,
-                alt: article.mainImage.alt || article.title,
-              },
-            ]
+            {
+              url: article.mainImage.asset.url,
+              width: article.mainImage.asset.metadata?.dimensions?.width || 1200,
+              height: article.mainImage.asset.metadata?.dimensions?.height || 630,
+              alt: article.mainImage.alt || article.title,
+            },
+          ]
           : [],
       },
       twitter: {
         card: "summary_large_image",
         title: article.title,
         description: article.excerpt,
-        images: article.mainImage?.asset?.url
-          ? [article.mainImage.asset.url]
-          : [],
+        images: article.mainImage?.asset?.url ? [article.mainImage.asset.url] : [],
       },
     };
   } catch {
     return {
-      title: "Article - Conflict News Portal",
-      description: "Read latest articles from Conflict News Portal.",
+      title: "Article | Conflict Wire",
+      description: "Field reports and investigations from Conflict Wire.",
     };
   }
 }
 
-// Main article page component
 export default async function ArticlePage({
   params,
 }: {
@@ -95,12 +86,10 @@ export default async function ArticlePage({
   const { slug } = await params;
   const article = await getArticleBySlug(slug);
 
-  // Handle not found
   if (!article) {
     notFound();
   }
 
-  // Structured data untuk SEO
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "NewsArticle",
@@ -112,76 +101,127 @@ export default async function ArticlePage({
     author: {
       "@type": "Person",
       name: article.author.name,
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}/author/${article.author.slug.current}`,
+      url: `https://conflictwire.co.uk/author/${article.author.slug.current}`,
     },
     publisher: {
       "@type": "Organization",
-      name: "Conflict News Portal",
+      name: "Conflict Wire",
       logo: {
         "@type": "ImageObject",
-        url: `${process.env.NEXT_PUBLIC_BASE_URL}/logo.png`,
+        url: `https://conflictwire.co.uk/logo.png`,
       },
     },
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `${process.env.NEXT_PUBLIC_BASE_URL}/article/${article.slug.current}`,
+      "@id": `https://conflictwire.co.uk/article/${article.slug.current}`,
     },
   };
 
   return (
     <>
-      {/* Structured Data */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(structuredData),
-        }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
 
       <div className="min-h-screen bg-white">
-        {/* Header */}
         <Header />
 
-        {/* Breadcrumb */}
-        <ArticleBreadcrumb article={article} />
+        <main className="pb-20">
+          {/* 1. Impact Hero Header */}
+          <div className="bg-gray-50 border-b border-gray-100 py-12 md:py-20">
+            <div className="cw-container">
+              <div className="max-w-4xl mx-auto">
+                <Link href="/" className="inline-flex items-center gap-2 text-red-600 font-black text-[10px] uppercase tracking-widest mb-12 hover:underline">
+                  <ArrowLeft size={14} /> Back to Intel Feed
+                </Link>
 
-        {/* Article Content */}
-        <article className="container mx-auto px-4 sm:px-6 py-8">
-          <div className="max-w-4xl mx-auto">
-            {/* Article Header */}
-            <ArticleHeader article={article} />
+                <div className="flex items-center gap-4 mb-8">
+                  <span className="bg-black text-white text-[10px] font-black px-4 py-1.5 uppercase tracking-[0.2em]">
+                    {article.category?.title || "Field Report"}
+                  </span>
+                  <span className="text-gray-400 text-[10px] font-black uppercase tracking-[0.3em]">
+                    Published {moment(article.publishedAt).format("DD MMM YYYY")}
+                  </span>
+                </div>
 
-            {/* Main Image */}
-            <ArticleMainImage article={article} />
+                <h1 className="text-4xl md:text-6xl lg:text-7xl font-black leading-[0.95] tracking-tighter mb-12">
+                  {article.title}
+                </h1>
 
-            {/* Article Body */}
-            {article.body && (
-              <PortableText
-                value={article.body}
-                className="max-w-none mb-12 text-gray-800 leading-relaxed"
-              />
-            )}
-
-            {/* Tags */}
-            <ArticleTags article={article} />
-
-            {/* Back Button */}
-            <div className="mb-12">
-              <Link
-                href="/"
-                className="inline-flex items-center gap-2 text-red-600 hover:text-red-700 transition-colors"
-              >
-                <ArrowLeft size={18} />
-                Back to Articles
-              </Link>
+                <div className="flex flex-wrap items-center gap-10 pt-10 border-t border-black/5">
+                  <div className="flex items-center gap-4">
+                    {article.author?.image?.asset?.url && (
+                      <Image
+                        src={article.author.image.asset.url}
+                        alt={article.author.name}
+                        width={48}
+                        height={48}
+                        className="rounded-full object-cover border-2 border-white shadow-xl"
+                      />
+                    )}
+                    <div className="flex flex-col">
+                      <span className="text-[9px] text-gray-400 font-black uppercase tracking-[0.2em]">Filed By</span>
+                      <span className="font-black text-sm uppercase tracking-widest">{article.author?.name}</span>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Clock size={16} className="text-red-600" />
+                    <span className="text-[10px] font-black uppercase tracking-widest text-gray-400">
+                      {article.estimatedReadTime || 5} Min Read
+                    </span>
+                  </div>
+                </div>
+              </div>
             </div>
-
-            {/* Related Articles */}
-            <RelatedArticles articles={article.relatedArticles || []} />
           </div>
-        </article>
 
-        {/* Footer */}
+          {/* 2. Main content area */}
+          <div className="cw-container pt-12">
+            <div className="max-w-3xl mx-auto">
+              {/* Featured Image */}
+              {article.mainImage?.asset?.url && (
+                <div className="relative aspect-[16/9] mb-12 shadow-[20px_20px_0px_0px_rgba(0,0,0,0.05)] border-4 border-white overflow-hidden bg-gray-100">
+                  <Image
+                    src={article.mainImage.asset.url}
+                    alt={article.mainImage.alt || article.title}
+                    fill
+                    priority
+                    className="object-cover"
+                  />
+                  {article.mainImage.caption && (
+                    <div className="absolute bottom-4 left-4 right-4 bg-black/60 backdrop-blur-md p-3 text-white text-[10px] font-bold uppercase tracking-widest border-l-4 border-red-600">
+                      {article.mainImage.caption}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Body text */}
+              <div className="mb-20">
+                {article.body && <PortableText value={article.body} />}
+              </div>
+
+              {/* Tags & Related */}
+              <div className="pt-12 border-t border-gray-100">
+                <div className="flex flex-wrap gap-3 mb-20">
+                  {article.tags?.map((tag: Tag) => (
+                    <Link
+                      key={tag.slug.current}
+                      href={`/tag/${tag.slug.current}`}
+                      className="px-4 py-2 bg-gray-50 border border-gray-100 text-[9px] font-black uppercase tracking-widest hover:bg-black hover:text-white transition-colors"
+                    >
+                      #{tag.title}
+                    </Link>
+                  ))}
+                </div>
+
+                <RelatedArticles articles={article.relatedArticles || []} />
+              </div>
+            </div>
+          </div>
+        </main>
+
         <Footer />
       </div>
     </>

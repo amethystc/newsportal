@@ -1,7 +1,6 @@
 import { Metadata } from "next";
 import Header from "@/components/layout/Header";
-import EditorChoice from "@/components/section/EditorChoice";
-import { EditorChoiceV2 } from "@/components/section/EditorChoiceV2";
+import { ArticleSection } from "@/components/section/ArticleSection";
 import Exclusive from "@/components/section/Exclusive";
 import { Footer } from "@/components/section/Footer";
 import Hero from "@/components/section/Hero";
@@ -24,19 +23,19 @@ import {
 
 // SEO Metadata
 export const metadata: Metadata = {
-  title: "Conflict News Portal - Latest Global Conflict & Humanitarian News",
+  title: "Conflict Wire - Latest Global Conflict & Humanitarian News",
   description:
     "Stay informed with comprehensive coverage of global conflicts, humanitarian crises, and peacebuilding efforts. Expert analysis and on-the-ground reporting from conflict zones worldwide.",
   keywords:
     "conflict news, humanitarian crisis, war reporting, peacebuilding, global security, military analysis, diplomatic relations",
-  authors: [{ name: "Conflict News Portal" }],
+  authors: [{ name: "Conflict Wire" }],
   openGraph: {
-    title: "Conflict News Portal - Latest Global Conflict & Humanitarian News",
+    title: "Conflict Wire - Latest Global Conflict & Humanitarian News",
     description:
       "Comprehensive coverage of global conflicts and humanitarian crises with expert analysis.",
     type: "website",
     locale: "en_US",
-    siteName: "Conflict News Portal",
+    siteName: "Conflict Wire",
   },
   twitter: {
     card: "summary_large_image",
@@ -118,11 +117,11 @@ function generateStructuredData(data: HomepageData) {
   return {
     "@context": "https://schema.org",
     "@type": "NewsMediaOrganization",
-    name: "Conflict News Portal",
+    name: "Conflict Wire",
     description:
       "Comprehensive coverage of global conflicts and humanitarian crises",
-    url: process.env.NEXT_PUBLIC_BASE_URL,
-    logo: `${process.env.NEXT_PUBLIC_BASE_URL}/logo.png`,
+    url: "https://conflictwire.co.uk",
+    logo: `https://conflictwire.co.uk/logo.png`,
     mainEntity: {
       "@type": "ItemList",
       numberOfItems: data.hero.length,
@@ -130,7 +129,7 @@ function generateStructuredData(data: HomepageData) {
         "@type": "NewsArticle",
         position: index + 1,
         name: article.title,
-        url: `${process.env.NEXT_PUBLIC_BASE_URL}/article/${article.slug.current}`,
+        url: `https://conflictwire.co.uk/article/${article.slug.current}`,
         datePublished: article.publishedAt,
         author: {
           "@type": "Person",
@@ -138,7 +137,7 @@ function generateStructuredData(data: HomepageData) {
         },
         publisher: {
           "@type": "Organization",
-          name: "Conflict News Portal",
+          name: "Conflict Wire",
         },
       })),
     },
@@ -165,22 +164,38 @@ export default async function Home() {
       <main>
         <Header />
         <Hero articles={data.hero} />
-        <EditorChoice
-          title="Conflict"
-          background="bg-gray-200"
-          article={data.conflict}
+
+        <ArticleSection
+          title="Latest Field Stories"
+          articles={data.conflict}
+          columns={4}
         />
+
         <Exclusive articles={data.exclusive} />
+
         <MembershipCTA />
-        <EditorChoiceV2 title="HUMANITARIAN" articles={data.humanitarian} />
-        <EditorChoiceV2 title="TRADE" articles={data.trade} />
-        <SubscriptionCTA />
-        <RegionSpotlight articles={data.regionSpotlight} />
-        <EditorChoice
-          title="GEOPOLITICS"
-          background="bg-gray-200"
-          article={data.geopolitics}
+
+        <ArticleSection
+          title="Humanitarian News"
+          articles={data.humanitarian}
         />
+
+        <ArticleSection
+          title="Trade & Security"
+          articles={data.trade}
+          columns={3}
+        />
+
+        <SubscriptionCTA />
+
+        <RegionSpotlight articles={data.regionSpotlight} />
+
+        <ArticleSection
+          title="Geopolitics"
+          articles={data.geopolitics}
+          columns={4}
+        />
+
         <Footer />
       </main>
 
