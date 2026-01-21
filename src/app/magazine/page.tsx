@@ -13,12 +13,28 @@ import { useEffect, useState } from "react";
 
 export default function MagazinePage() {
     const [magazines, setMagazines] = useState<Magazine[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
     const { addToCart } = useCart();
 
     useEffect(() => {
         const fetchMagazines = async () => {
-            const data = await client.fetch(magazineQuery);
-            setMagazines(data);
+            try {
+                setLoading(true);
+                console.log('Fetching magazines from Sanity...');
+                console.log('Project ID:', process.env.NEXT_PUBLIC_SANITY_PROJECT_ID);
+                console.log('Dataset:', process.env.NEXT_PUBLIC_SANITY_DATASET);
+
+                const data = await client.fetch(magazineQuery);
+                console.log('Magazines fetched:', data?.length || 0, data);
+                setMagazines(data || []);
+                setError(null);
+            } catch (err) {
+                console.error('Error fetching magazines:', err);
+                setError(err instanceof Error ? err.message : 'Failed to load magazines');
+            } finally {
+                setLoading(false);
+            }
         };
         fetchMagazines();
     }, []);
@@ -43,7 +59,18 @@ export default function MagazinePage() {
                         Download our latest digital magazine issues. Deep dives into conflict, humanitarian crises, and geopolitics.
                     </p>
 
-                    {magazines.length === 0 ? (
+                    {loading ? (
+                        <div className="text-center py-20">
+                            <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-red-600"></div>
+                            <p className="mt-4 text-gray-500">Loading magazines...</p>
+                        </div>
+                    ) : error ? (
+                        <div className="text-center py-20 text-red-600">
+                            <p className="font-bold mb-2">Error loading magazines</p>
+                            <p className="text-sm text-gray-600">{error}</p>
+                            <p className="text-xs text-gray-400 mt-4">Check the browser console for more details</p>
+                        </div>
+                    ) : magazines.length === 0 ? (
                         <div className="text-center py-20 text-gray-500">
                             <p>No magazine issues found.</p>
                         </div>
