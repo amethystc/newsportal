@@ -49,20 +49,15 @@ const Header = () => {
           {/* Oversized Logo - Breaking the Grid */}
           <div className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 md:translate-y-0 md:top-2 z-[1001]">
             <Link href="/" className="block transition-transform hover:scale-[1.02] active:scale-[0.98]">
-              <div className="bg-white rounded-full p-2 border-2 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] 
-                                w-[70px] h-[70px] md:w-[130px] md:h-[130px] lg:w-[150px] lg:h-[150px] 
-                                flex items-center justify-center
-                                md:translate-y-[10px] lg:translate-y-[5px]">
-                <Image
-                  src="/conflict-wire-logo.png"
-                  alt="Conflict Wire"
-                  width={150}
-                  height={150}
-                  className="object-contain w-[50px] md:w-[90px] lg:w-[110px]"
-                  priority
-                  unoptimized
-                />
-              </div>
+              <Image
+                src="/conflict-wire-logo.png"
+                alt="Conflict Wire"
+                width={150}
+                height={150}
+                className="object-contain w-[70px] md:w-[130px] lg:w-[150px] drop-shadow-lg"
+                priority
+                unoptimized
+              />
             </Link>
           </div>
 
@@ -116,18 +111,24 @@ const Header = () => {
             Trending Now:
           </span>
           <div className="flex-1">
-            <Marquee gradient={false} speed={45} pauseOnHover>
-              {breakingNews.map((news, index) => (
-                <Link
-                  key={index}
-                  href={`/article/${news.slug.current}`}
-                  className="text-[11px] font-bold uppercase tracking-tight mx-12 hover:text-red-600 transition-colors flex items-center gap-3 text-gray-800"
-                >
-                  <span className="text-red-600 font-black">/</span>
-                  {news.title}
-                </Link>
-              ))}
-            </Marquee>
+            {breakingNews.length > 0 ? (
+              <Marquee gradient={false} speed={45} pauseOnHover>
+                {breakingNews.map((news, index) => (
+                  <Link
+                    key={index}
+                    href={`/article/${news.slug.current}`}
+                    className="text-[11px] font-bold uppercase tracking-tight mx-12 hover:text-red-600 transition-colors flex items-center gap-3 text-gray-800"
+                  >
+                    <span className="text-red-600 font-black">/</span>
+                    {news.title}
+                  </Link>
+                ))}
+              </Marquee>
+            ) : (
+              <div className="text-[11px] font-medium uppercase tracking-tight text-gray-500 italic">
+                No breaking news at the moment. Check back soon for updates.
+              </div>
+            )}
           </div>
         </div>
       </div>
