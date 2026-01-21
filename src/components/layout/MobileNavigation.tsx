@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Search, X, ChevronDown, ChevronRight, ShieldAlert, Zap, Globe, Mail } from "lucide-react";
+import { Search, X, ChevronDown, ChevronRight, ShieldAlert, Zap, Globe, Mail, FileText, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { client } from "@/sanity/client";
 import { allWorldTagsQuery } from "@/sanity/queries.region";
@@ -110,7 +110,10 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
               onClick={() => setIsArticlesExpanded(!isArticlesExpanded)}
               className="flex items-center justify-between w-full py-4 px-2 hover:bg-gray-50 group transition-colors"
             >
-              <span className="text-sm font-black uppercase tracking-widest group-hover:text-red-600">Stories</span>
+              <div className="flex items-center gap-3">
+                <FileText size={18} className="text-red-600" />
+                <span className="text-sm font-black uppercase tracking-widest group-hover:text-red-600">Stories</span>
+              </div>
               {isArticlesExpanded ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
             </button>
             {isArticlesExpanded && (
@@ -158,7 +161,7 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
           </div>
 
           {/* Secondary Links */}
-          <MobileLink href="/about" label="About Us" onClick={onClose} />
+          <MobileLink href="/about" label="About Us" icon={Info} onClick={onClose} />
           <MobileLink href="/contact" label="Contact Us" icon={Mail} onClick={onClose} />
 
           <div className="pt-8">
