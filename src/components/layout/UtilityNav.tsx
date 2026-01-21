@@ -44,6 +44,12 @@ const UtilityNav = () => {
                             Articles
                         </Link>
                         <Link
+                            href="/membership"
+                            className="text-[11px] font-bold text-white hover:text-black transition-colors uppercase tracking-wider px-3 border-r border-white/20"
+                        >
+                            Membership
+                        </Link>
+                        <Link
                             href="/about"
                             className="text-[11px] font-light text-white hover:text-black transition-colors uppercase tracking-wider px-3 border-r border-white/20"
                         >

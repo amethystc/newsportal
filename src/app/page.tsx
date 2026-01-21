@@ -145,6 +145,8 @@ function generateStructuredData(data: HomepageData) {
   };
 }
 
+import MembershipCTA from "@/components/section/MembershipCTA";
+
 // Main page component
 export default async function Home() {
   const data = await getHomepageData();
@@ -169,6 +171,7 @@ export default async function Home() {
           article={data.conflict}
         />
         <Exclusive articles={data.exclusive} />
+        <MembershipCTA />
         <EditorChoiceV2 title="HUMANITARIAN" articles={data.humanitarian} />
         <EditorChoiceV2 title="TRADE" articles={data.trade} />
         <SubscriptionCTA />

@@ -122,6 +122,22 @@ export interface ExclusiveContent {
   content?: any[];
 }
 
+// Magazine types
+export interface Magazine {
+  title: string;
+  slug: {
+    current: string;
+    _type: "slug";
+  };
+  issueNumber?: number;
+  description?: string;
+  price: number;
+  checkoutUrl?: string;
+  coverImage?: string;
+  magazinePdf?: string;
+  publishedAt: string;
+}
+
 // API Response types
 export interface NewsResponse {
   message: string;

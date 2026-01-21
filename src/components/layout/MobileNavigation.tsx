@@ -285,6 +285,17 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
                   </Link>
                 </div>
 
+                {/* MEMBERSHIP */}
+                <div className="pb-2">
+                  <Link
+                    href="/membership"
+                    className="block w-full text-left font-bold py-3 px-4 bg-red-50 text-red-600 hover:bg-red-100 rounded transition-colors"
+                    onClick={onClose}
+                  >
+                    MEMBERSHIP
+                  </Link>
+                </div>
+
               </div>
 
               {/* JOIN NOW Button */}

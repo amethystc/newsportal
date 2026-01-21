@@ -8,10 +8,11 @@ import Header from "@/components/layout/Header";
 import { Footer } from "@/components/section/Footer";
 import { useCart } from "@/context/CartContext";
 import { ShoppingCart } from "lucide-react";
+import { Magazine } from "@/types";
 import { useEffect, useState } from "react";
 
 export default function MagazinePage() {
-    const [magazines, setMagazines] = useState<any[]>([]);
+    const [magazines, setMagazines] = useState<Magazine[]>([]);
     const { addToCart } = useCart();
 
     useEffect(() => {
@@ -22,7 +23,7 @@ export default function MagazinePage() {
         fetchMagazines();
     }, []);
 
-    const handleAddToCart = (mag: any) => {
+    const handleAddToCart = (mag: Magazine) => {
         addToCart({
             id: mag.slug?.current || mag.title,
             title: mag.title,
@@ -48,7 +49,7 @@ export default function MagazinePage() {
                         </div>
                     ) : (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            {magazines.map((mag: any) => (
+                            {magazines.map((mag: Magazine) => (
                                 <div key={mag.slug?.current || mag.title} className="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow bg-white flex flex-col">
                                     <div className="relative h-[400px] w-full bg-gray-100 items-center justify-center flex">
                                         {mag.coverImage ? (

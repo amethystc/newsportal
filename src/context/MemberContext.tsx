@@ -28,7 +28,12 @@ export const MemberProvider = ({ children }: { children: React.ReactNode }) => {
     useEffect(() => {
         const savedMember = localStorage.getItem("cw_member");
         if (savedMember) {
-            setMember(JSON.parse(savedMember));
+            try {
+                setMember(JSON.parse(savedMember));
+            } catch (e) {
+                console.error("Failed to parse saved member", e);
+                localStorage.removeItem("cw_member");
+            }
         }
         setIsLoading(false);
     }, []);
